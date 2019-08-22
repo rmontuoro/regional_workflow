@@ -70,7 +70,7 @@ if [ "$target" = "jet" ] ; then
     export NCEPLIBS=/mnt/lfs3/projects/hfv3gfs/gwv/ljtjet/lib
     echo NCEPLIBS HARD SET to  $NCEPLIBS in `pwd`/module_setup.sh.inc
     module use $NCEPLIBS/modulefiles
-elif [ "$target" = "theia" || "$target" = "hera" ] ; then
+elif [ "$target" = "theia" ] || [ "$target" = "hera" ] ; then
     # We are on NOAA Theia or Hera
     if ( ! eval module help > /dev/null 2>&1 ) ; then
 	echo load the module command 1>&2
