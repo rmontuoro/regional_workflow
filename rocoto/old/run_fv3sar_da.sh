@@ -1,12 +1,16 @@
 #!/bin/bash -l
+
 set +x
-. /usrx/local/prod/lmod/lmod/init/sh
+. /apps/lmod/lmod/init/sh
 set -x
 
-module load impi/18.0.1
-module load lsf/10.1
+. /scratch2/NCEPDEV/fv3-cam/Eric.Rogers/regional_workflow/rocoto/machine-setup.sh
+export machine=${target}
 
-module use /gpfs/dell3/usrx/local/dev/emc_rocoto/modulefiles/
-module load ruby/2.5.1 rocoto/1.2.4
+module use ${HOMEfv3}/modulefiles/${machine}
+module load fv3
 
-rocotorun -v 10 -w /gpfs/dell2/emc/modeling/noscrub/${USER}/regional_workflow/rocoto/drive_fv3sar_da.xml -d /gpfs/dell2/emc/modeling/noscrub/${USER}/regional_workflow/rocoto/drive_fv3sar_da.db
+module use /apps/modules/modulefiles
+module load rocoto/1.3.1
+
+rocotorun -v 10 -w /scratch2/NCEPDEV/fv3-cam/Eric.Rogers/regional_workflow/rocoto/old/drive_fv3sar_da.xml -d /scratch2/NCEPDEV/fv3-cam/Eric.Rogers/regional_workflow/rocoto/old/drive_fv3sar_da.db
