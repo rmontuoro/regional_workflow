@@ -53,7 +53,12 @@ export pgm=regional_post.x
 
 startmsg
 ${APRUNC} ${POSTGPEXEC} < itag > $pgmout 2> err
-export err=$?;err_chk
+export err=$?
+###export err=$?;err_chk
+
+if [ $err -ne 0 ] ; then
+exit 99
+fi
 
 # Run wgrib2
 domain=conus
@@ -88,5 +93,3 @@ cat ${domain}fv3.hiresf${fhr}.${tmmark}.nn ${domain}fv3.hiresf${fhr}.${tmmark}.b
 mv ${domain}fv3.hiresf${fhr}.${tmmark} $COMOUT/${RUN}.t${cyc}z.conus.tm06ges.grib2
 mv BGDAWP${fhr}.${tmmark} $COMOUT/${RUN}.t${cyc}z.conus.natprs.tm06ges.grib2
 mv BGRD3D${fhr}.${tmmark} $COMOUT/${RUN}.t${cyc}z.conus.natlev.tm06ges.grib2
-
-exit

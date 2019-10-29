@@ -49,7 +49,12 @@ export pgm=regional_post.x
 
 startmsg
 ${APRUNC} ${POSTGPEXEC} < itag > $pgmout 2> err
-export err=$?; err_chk
+export err=$?
+###export err=$?;err_chk
+
+if [ $err -ne 0 ] ; then
+exit 99
+fi
 
 # Run wgrib2
 domain=${dom}
@@ -133,5 +138,3 @@ then
 fi
 
 echo done > ${INPUT_DATA}/postdone${fhr}.${tmmark}
-
-exit

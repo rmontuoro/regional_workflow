@@ -19,7 +19,7 @@ ulimit -s unlimited
 ulimit -a
 
 mkdir -p INPUT RESTART
-cp ${NWGES}/anl.${dom}.${tmmark}/*.nc INPUT
+cp ${COMOUT}/anl.${dom}.${tmmark}/*.nc INPUT
 
 numbndy=`ls -l INPUT/gfs_bndy.tile7*.nc | wc -l`
 let "numbndy_check=$NHRS/3+1"
@@ -28,13 +28,13 @@ if [ $tmmark = tm00 ] ; then
   if [ $numbndy -ne $numbndy_check ] ; then
     export err=13
     echo "Don't have all BC files at tm00, abort run"
-    err_exit "Don't have all BC files at tm00, abort run"
+    exit $err
   fi
 else
   if [ $numbndy -ne 2 ] ; then
     export err=2
     echo "Don't have both BC files at ${tmmark}, abort run"
-    err_exit "Don't have all BC files at ${tmmark}, abort run"
+    exit $err
   fi
 fi
 
@@ -107,7 +107,9 @@ CCPP_SUITE=${CCPP_SUITE:-"FV3_GFS_2017_gfdlmp_regional"}
 if [ $tmmark = tm00 ] ; then
 # Free forecast with DA (warm start)
   if [ $model = fv3sar_da ] ; then
-    cp ${PARMfv3}/input_sar_da.nml input.nml 
+    cp ${PARMfv3}/input_sar_da.nml input.nml.tmp 
+    cat input.nml.tmp | \
+        sed s/_TASK_X_/${TASK_X}/ | sed s/_TASK_Y_/${TASK_Y}/  >  input.nml
 # Free forecast without DA (cold start)
   elif [ $model = fv3sar ] ; then 
     if [ $CCPP  = true ] || [ $CCPP = TRUE ] ; then
@@ -128,7 +130,9 @@ if [ $tmmark = tm00 ] ; then
   cp ${PARMfv3}/model_configure_sar.tmp_${dom} model_configure.tmp
 
 else
-  cp ${PARMfv3}/input_sar_da_hourly.nml input.nml
+  cp ${PARMfv3}/input_sar_da_hourly.nml input.nml.tmp
+  cat input.nml.tmp | \
+        sed s/_TASK_X_/${TASK_X}/ | sed s/_TASK_Y_/${TASK_Y}/  >  input.nml
   cp ${PARMfv3}/model_configure_sar_da_hourly.tmp model_configure.tmp
 fi
 
@@ -176,7 +180,12 @@ export pgm=regional_forecast.x
 
 startmsg
 ${APRUNC} $EXECfv3/regional_forecast.x >$pgmout 2>err
-export err=$?;err_chk
+export err=$?
+###export err=$?;err_chk
+
+if [ $err -ne 0 ] ; then
+exit 99
+fi
 
 # Copy files needed for next analysis
 # use grid_spec.nc file output from model in working directory,

@@ -19,12 +19,27 @@ export ntiles=1
 export TILE_NUM=7
 
 if [ $tmmark = tm00 ] ; then
-  # input data is FV3GFS (ictype is 'pfv3gfs')
-  export ANLDIR=$INIDIR
+# input data is FV3GFS (ictype is 'pfv3gfs')
+export ATMANL=$INIDIR/${CDUMP}.t${cyc}z.atmanl.nemsio
+export SFCANL=$INIDIR/${CDUMP}.t${cyc}z.sfcanl.nemsio
+export ANLDIR=$INIDIR
+atmfile=${CDUMP}.t${cyc}z.atmanl.nemsio
+sfcfile=${CDUMP}.t${cyc}z.sfcanl.nemsio
+export input_dir=$INIDIR
+monthguess=`echo ${CDATE} | cut -c 5-6`
+dayguess=`echo ${CDATE} | cut -c 7-8`
+cycleguess=`echo ${CDATE} | cut -c 9-10`
 fi
 if [ $tmmark = tm12 ] ; then
-  # input data is FV3GFS (ictype is 'pfv3gfs')
-  export ANLDIR=$INIDIRtm12
+# input data is FV3GFS (ictype is 'pfv3gfs')
+export ATMANL=$INIDIRtm12/${CDUMP}.t${cycguess}z.atmanl.nemsio
+export SFCANL=$INIDIRtm12/${CDUMP}.t${cycguess}z.sfcanl.nemsio
+export ANLDIR=$INIDIRtm12
+export input_dir=$INIDIRtm12
+atmfile=${CDUMP}.t${cycguess}z.atmanl.nemsio
+sfcfile=${CDUMP}.t${cycguess}z.sfcanl.nemsio
+monthguess=`echo ${CYCLEguess} | cut -c 5-6`
+dayguess=`echo ${CYCLEguess} | cut -c 7-8`
 fi
 
 #
@@ -57,11 +72,11 @@ cat <<EOF >fort.41
  orog_dir_input_grid="NULL"
  orog_files_input_grid="NULL"
  data_dir_input_grid="${ANLDIR}"
- atm_files_input_grid="gfs.t${cyc}z.atmanl.nemsio"
- sfc_files_input_grid="gfs.t${cyc}z.sfcanl.nemsio"
- cycle_mon=$month
- cycle_day=$day
- cycle_hour=$cyc
+ atm_files_input_grid="$atmfile"
+ sfc_files_input_grid="$sfcfile"
+ cycle_mon=$monthguess
+ cycle_day=$dayguess
+ cycle_hour=$cycguess
  convert_atm=.true.
  convert_sfc=.true.
  convert_nst=.true.
@@ -73,7 +88,24 @@ cat <<EOF >fort.41
 /
 EOF
 
-time ${APRUNC} ./regional_chgres_cube.x
+export pgm=regional_chgres_cube.x
+. prep_step
+
+startmsg
+time ${APRUNC} -l ./regional_chgres_cube.x
+export err=$?
+###export err=$?;err_chk
+
+if [ $err -ne 0 ] ; then
+exit 99
+fi
+
+numfiles=`ls -1 gfs_ctrl.nc gfs.bndy.nc out.atm.tile1.nc out.sfc.tile1.nc | wc -l`
+if [ $numfiles -ne 4 ] ; then
+  export err=4
+  echo "Don't have all IC files at ${tmmark}, abort run"
+  exit 99
+fi
 
 #
 # move output files to save directory
@@ -82,6 +114,3 @@ mv gfs_ctrl.nc $INPdir/.
 mv gfs.bndy.nc $INPdir/gfs_bndy.tile7.000.nc
 mv out.atm.tile1.nc $INPdir/gfs_data.tile7.nc
 mv out.sfc.tile1.nc $INPdir/sfc_data.tile7.nc
-
-
-exit 0

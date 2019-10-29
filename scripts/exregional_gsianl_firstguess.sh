@@ -33,7 +33,8 @@ export nens=81
 export nhr_assimilation=03
 ##typeset -Z2 nhr_assimilation
 
-python $UTIL/getbest_EnKF_FV3GDAS.py -v $vlddate --exact=no --minsize=${nens} -d ${COMINgfspll}/enkfgdas -o filelist${nhr_assimilation} --o3fname=gfs_sigf${nhr_assimilation} --gfs_nemsio=yes
+# waiting for python v3 version
+python $UTIL/getbest_EnKF_FV3GDAS.py -v $vlddate --exact=no --minsize=${nens} -d ${COMINgdas}/enkfgdas -o filelist${nhr_assimilation} --o3fname=gfs_sigf${nhr_assimilation} --gfs_nemsio=yes
 
 #Check to see if ensembles were found 
 numfiles=`cat filelist03 | wc -l`
@@ -271,60 +272,60 @@ mesonetuselist=$fixgsi/nam_mesonet_uselist.txt
 stnuselist=$fixgsi/nam_mesonet_stnuselist.txt
 
 # Copy executable and fixed files to $DATA
-$ncp $gsiexec ./regional_gsi.x
+cp $gsiexec ./regional_gsi.x
 
-$ncp $anavinfo ./anavinfo
-$ncp $berror   ./berror_stats
-$ncp $emiscoef_IRwater ./Nalli.IRwater.EmisCoeff.bin
-$ncp $emiscoef_IRice ./NPOESS.IRice.EmisCoeff.bin
-$ncp $emiscoef_IRsnow ./NPOESS.IRsnow.EmisCoeff.bin
-$ncp $emiscoef_IRland ./NPOESS.IRland.EmisCoeff.bin
-$ncp $emiscoef_VISice ./NPOESS.VISice.EmisCoeff.bin
-$ncp $emiscoef_VISland ./NPOESS.VISland.EmisCoeff.bin
-$ncp $emiscoef_VISsnow ./NPOESS.VISsnow.EmisCoeff.bin
-$ncp $emiscoef_VISwater ./NPOESS.VISwater.EmisCoeff.bin
-$ncp $emiscoef_MWwater ./FASTEM6.MWwater.EmisCoeff.bin
-$ncp $aercoef  ./AerosolCoeff.bin
-$ncp $cldcoef  ./CloudCoeff.bin
-$ncp $satangl  ./satbias_angle
-$ncp $atmsbeamdat  ./atms_beamwidth.txt
-$ncp $satinfo  ./satinfo
-$ncp $scaninfo ./scaninfo
-$ncp $pcpinfo  ./pcpinfo
-$ncp $ozinfo   ./ozinfo
-$ncp $convinfo ./convinfo
-$ncp $errtable ./errtable
-$ncp $mesonetuselist ./mesonetuselist
-$ncp $stnuselist ./mesonet_stnuselist
-$ncp $fixgsi/prepobs_prep.bufrtable ./prepobs_prep.bufrtable
+cp $anavinfo ./anavinfo
+cp $berror   ./berror_stats
+cp $emiscoef_IRwater ./Nalli.IRwater.EmisCoeff.bin
+cp $emiscoef_IRice ./NPOESS.IRice.EmisCoeff.bin
+cp $emiscoef_IRsnow ./NPOESS.IRsnow.EmisCoeff.bin
+cp $emiscoef_IRland ./NPOESS.IRland.EmisCoeff.bin
+cp $emiscoef_VISice ./NPOESS.VISice.EmisCoeff.bin
+cp $emiscoef_VISland ./NPOESS.VISland.EmisCoeff.bin
+cp $emiscoef_VISsnow ./NPOESS.VISsnow.EmisCoeff.bin
+cp $emiscoef_VISwater ./NPOESS.VISwater.EmisCoeff.bin
+cp $emiscoef_MWwater ./FASTEM6.MWwater.EmisCoeff.bin
+cp $aercoef  ./AerosolCoeff.bin
+cp $cldcoef  ./CloudCoeff.bin
+cp $satangl  ./satbias_angle
+cp $atmsbeamdat  ./atms_beamwidth.txt
+cp $satinfo  ./satinfo
+cp $scaninfo ./scaninfo
+cp $pcpinfo  ./pcpinfo
+cp $ozinfo   ./ozinfo
+cp $convinfo ./convinfo
+cp $errtable ./errtable
+cp $mesonetuselist ./mesonetuselist
+cp $stnuselist ./mesonet_stnuselist
+cp $fixgsi/prepobs_prep.bufrtable ./prepobs_prep.bufrtable
 
 # Copy CRTM coefficient files based on entries in satinfo file
 for file in `awk '{if($1!~"!"){print $1}}' ./satinfo | sort | uniq` ;do
-    $ncp $fixcrtm/${file}.SpcCoeff.bin ./
-    $ncp $fixcrtm/${file}.TauCoeff.bin ./
+    cp $fixcrtm/${file}.SpcCoeff.bin ./
+    cp $fixcrtm/${file}.TauCoeff.bin ./
 done
 
 export nmmb_nems_obs=${COMINrap}/rap.${PDYa}
 export nmmb_nems_bias=${COMINbias}
 
 # Copy observational data to $tmpdir
-$ncp $nmmb_nems_obs/rap.t${cya}z.prepbufr.tm00  ./prepbufr
-$ncp $nmmb_nems_obs/rap.t${cya}z.prepbufr.acft_profiles.tm00 prepbufr_profl
-$ncp $nmmb_nems_obs/rap.t${cya}z.satwnd.tm00.bufr_d ./satwndbufr
-$ncp $nmmb_nems_obs/rap.t${cya}z.1bhrs3.tm00.bufr_d ./hirs3bufr
-$ncp $nmmb_nems_obs/rap.t${cya}z.1bhrs4.tm00.bufr_d ./hirs4bufr
-$ncp $nmmb_nems_obs/rap.t${cya}z.mtiasi.tm00.bufr_d ./iasibufr
-$ncp $nmmb_nems_obs/rap.t${cya}z.1bamua.tm00.bufr_d ./amsuabufr
-$ncp $nmmb_nems_obs/rap.t${cya}z.esamua.tm00.bufr_d ./amsuabufrears
-$ncp $nmmb_nems_obs/rap.t${cya}z.1bamub.tm00.bufr_d ./amsubbufr
-$ncp $nmmb_nems_obs/rap.t${cya}z.1bmhs.tm00.bufr_d  ./mhsbufr
-$ncp $nmmb_nems_obs/rap.t${cya}z.goesnd.tm00.bufr_d ./gsnd1bufr
-$ncp $nmmb_nems_obs/rap.t${cya}z.airsev.tm00.bufr_d ./airsbufr
-$ncp $nmmb_nems_obs/rap.t${cya}z.cris.tm00.bufr_d ./crisbufr
-$ncp $nmmb_nems_obs/rap.t${cya}z.atms.tm00.bufr_d ./atmsbufr
-$ncp $nmmb_nems_obs/rap.t${cya}z.sevcsr.tm00.bufr_d ./seviribufr
-$ncp $nmmb_nems_obs/rap.t${cya}z.radwnd.tm00.bufr_d ./radarbufr
-$ncp $nmmb_nems_obs/rap.t${cya}z.nexrad.tm00.bufr_d ./l2rwbufr
+cp $nmmb_nems_obs/rap.t${cya}z.prepbufr.tm00  ./prepbufr
+cp $nmmb_nems_obs/rap.t${cya}z.prepbufr.acft_profiles.tm00 prepbufr_profl
+cp $nmmb_nems_obs/rap.t${cya}z.satwnd.tm00.bufr_d ./satwndbufr
+cp $nmmb_nems_obs/rap.t${cya}z.1bhrs3.tm00.bufr_d ./hirs3bufr
+cp $nmmb_nems_obs/rap.t${cya}z.1bhrs4.tm00.bufr_d ./hirs4bufr
+cp $nmmb_nems_obs/rap.t${cya}z.mtiasi.tm00.bufr_d ./iasibufr
+cp $nmmb_nems_obs/rap.t${cya}z.1bamua.tm00.bufr_d ./amsuabufr
+cp $nmmb_nems_obs/rap.t${cya}z.esamua.tm00.bufr_d ./amsuabufrears
+cp $nmmb_nems_obs/rap.t${cya}z.1bamub.tm00.bufr_d ./amsubbufr
+cp $nmmb_nems_obs/rap.t${cya}z.1bmhs.tm00.bufr_d  ./mhsbufr
+cp $nmmb_nems_obs/rap.t${cya}z.goesnd.tm00.bufr_d ./gsnd1bufr
+cp $nmmb_nems_obs/rap.t${cya}z.airsev.tm00.bufr_d ./airsbufr
+cp $nmmb_nems_obs/rap.t${cya}z.cris.tm00.bufr_d ./crisbufr
+cp $nmmb_nems_obs/rap.t${cya}z.atms.tm00.bufr_d ./atmsbufr
+cp $nmmb_nems_obs/rap.t${cya}z.sevcsr.tm00.bufr_d ./seviribufr
+cp $nmmb_nems_obs/rap.t${cya}z.radwnd.tm00.bufr_d ./radarbufr
+cp $nmmb_nems_obs/rap.t${cya}z.nexrad.tm00.bufr_d ./l2rwbufr
 
 export GDAS_SATBIAS=NO
 
@@ -332,19 +333,19 @@ if [ $GDAS_SATBIAS = NO ] ; then
 
 # Copy bias correction from prev cycle
 
-$ncp $nmmb_nems_bias/${RUN}.t${cyctm06}z.satbias.tm01 ./satbias_in
+cp $nmmb_nems_bias/${RUN}.t${cyctm06}z.satbias.tm01 ./satbias_in
 err1=$?
 if [ $err1 -ne 0 ] ; then
   cp $GESROOT_HOLD/satbias_in ./satbias_in
 fi
 
-$ncp $nmmb_nems_bias/${RUN}.t${cyctm06}z.satbias_pc.tm01 ./satbias_pc
+cp $nmmb_nems_bias/${RUN}.t${cyctm06}z.satbias_pc.tm01 ./satbias_pc
 err2=$?
 if [ $err2 -ne 0 ] ; then
   cp $GESROOT_HOLD/satbias_pc ./satbias_pc
 fi
 
-$ncp $nmmb_nems_bias/${RUN}.t${cyctm06}z.radstat.tm01    ./radstat.gdas
+cp $nmmb_nems_bias/${RUN}.t${cyctm06}z.radstat.tm01    ./radstat.gdas
 err3=$?
 if [ $err3 -ne 0 ] ; then
   cp $GESROOT_HOLD/radstat.nam ./radstat.gdas
@@ -359,13 +360,8 @@ cp $GESROOT_HOLD/gdas.radstat_out ./radstat.gdas
 fi
 
 # Aircraft bias correction ; get from GDAS for tm06, cycle through FV3DA
-# Try my GDAS dir first
 
-$ncp $MYGDAS/gdas.t${cya}z.abias_air ./aircftbias_in
-err4=$?
-if [ $err4 -ne 0 ] ; then
-  $ncp $GBGDAS/gdas.t${cya}z.abias_air ./aircftbias_in
-fi
+cp $COMINgdas/gdas.${PDYa}/${cya}/gdas.t${cya}z.abias_air ./aircftbias_in
 
 #if we don't find aircraft bias file from FV3GDAS dirs, get best available one
 if [ -s aircftbias_in ] ; then
@@ -401,8 +397,13 @@ export pgm=regional_gsi.x
 . prep_step
 
 startmsg
-mpirun -l -n 240 ./regional_gsi.x < gsiparm.anl > $pgmout 2> stderr
-export err=$?;err_chk
+${APRUNC} ./regional_gsi.x < gsiparm.anl > $pgmout 2> stderr
+export err=$?
+###export err=$?;err_chk
+
+if [ $err -ne 0 ] ; then
+exit 99
+fi
 
 mv fort.201 fit_p1
 mv fort.202 fit_w1
@@ -499,5 +500,3 @@ mv fv3_dynvars $ANLdir/fv_core.res.tile1.nc
 mv fv3_tracer $ANLdir/fv_tracer.res.tile1.nc
 mv fv3_sfcdata $ANLdir/sfc_data.nc
 cp $COMOUT/gfsanl.tm12/gfs_ctrl.nc $ANLdir/.
-
-exit

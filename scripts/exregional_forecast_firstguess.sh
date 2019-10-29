@@ -19,14 +19,14 @@ ulimit -s unlimited
 ulimit -a
 
 mkdir -p INPUT RESTART
-cp ${NWGES}/gfsanl.tm12/*.nc INPUT
+cp ${COMOUT}/gfsanl.tm12/*.nc INPUT
 
 numbndy=`ls -l INPUT/gfs_bndy.tile7*.nc | wc -l`
 
 if [ $numbndy -ne 3 ] ; then
   export err=3
   echo "Don't have all 3 BC files, abort run"
-  err_exit "Don't have all 3 BC files, abort run"
+  exit $err
 fi
 
 #---------------------------------------------- 
@@ -90,7 +90,10 @@ cd ..
 #   input.nml, input_nest02.nml, model_configure, and nems.configure
 #-------------------------------------------------------------------
 
-cp ${PARMfv3}/input_sar_firstguess.nml input.nml
+cp ${PARMfv3}/input_sar_firstguess.nml input.nml.tmp
+cat input.nml.tmp | \
+     sed s/_TASK_X_/${TASK_X}/ | sed s/_TASK_Y_/${TASK_Y}/  >  input.nml
+
 cp ${PARMfv3}/model_configure_sar_firstguess.tmp model_configure.tmp
 cp ${PARMfv3}/d* .
 cp ${PARMfv3}/field_table .
@@ -121,7 +124,12 @@ export pgm=regional_forecast.x
 
 startmsg
 ${APRUNC} $EXECfv3/regional_forecast.x >$pgmout 2>err
-export err=$?;err_chk
+export err=$?
+###export err=$?;err_chk
+
+if [ $err -ne 0 ] ; then
+exit 99
+fi
 
 # Copy files needed for tm06 analysis
 # use grid_spec.nc file output from model in working directory,
