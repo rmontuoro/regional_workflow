@@ -5,6 +5,7 @@ export envir=para
 
 export NET=fv3cam
 export RUN=fv3sar
+####export model=fv3sar_da	# fv3sar (cold start) or fv3sar_da (with DA)
 export model=fv3sar	# fv3sar (cold start) or fv3sar_da (with DA)
 export CCPP=false
 export CCPP_SUITE=FV3_GFS_2017_gfdlmp_regional
@@ -42,32 +43,20 @@ export NHOUR=/gpfs/hps/nco/ops/nwprod/prod_util.v1.1.0/exec/nhour
 elif [ ${machine} = "hera" ]
 then
 
-export COMINgdas=${COMINgdas:-/scratch2/NCEPDEV/fv3-cam/emc.campara/fv3-input/COMGFS}
-export GBCOMINgfs=${GBCOMINgfs:-/scratch2/NCEPDEV/fv3-cam/emc.campara/fv3-input/COMGFS}
-export COMINgfs=${COMINgfs:-/scratch2/NCEPDEV/fv3-cam/emc.campara/fv3-input/COMGFS}
+export COMINgdas=${COMINgdas:-/scratch4/NCEPDEV/rstprod/com/gfs/prod}
+if [ $tmmark -ne tm00 ] ; then
+export COMINgfs=${COMINgfs:-/scratch4/NCEPDEV/rstprod/com/gfs/prod}
+else
+export COMINgfs=${COMINgfs:-/scratch2/NCEPDEV/fv3-cam/noscrub/Eric.Rogers/prfv3rt1}
+fi
    
 export PTMP=${PTMP:-/scratch2/NCEPDEV/stmp3/${USER}}
 export STMP=${STMP:-/scratch2/NCEPDEV/stmp3/${USER}}
-export rzdmuser=mpyle
+export rzdmuser=wd20er
 
 export NDATE=/scratch2/NCEPDEV/nwprod/NCEPLIBS/utils/prod_util.v1.1.0/exec/ndate
 export NHOUR=/scratch2/NCEPDEV/nwprod/NCEPLIBS/utils/prod_util.v1.1.0/exec/nhour
 export HOMEfv3=${HOMEfv3:-/scratch2/NCEPDEV/fv3-cam/$USER/regional_workflow}
-
-elif [ ${machine} = "theia" ]
-then
-
-export COMINgdas=${COMINgdas:-/scratch3/NCEPDEV/hwrf/noscrub/hafs-input/COMGFS}
-export GBCOMINgfs=${GBCOMINgfs:-/scratch3/NCEPDEV/hwrf/noscrub/hafs-input/COMGFS}
-export COMINgfs=${COMINgfs:-/scratch3/NCEPDEV/hwrf/noscrub/hafs-input/COMGFS}
-   
-export PTMP=${PTMP:-/scratch4/NCEPDEV/stmp3/${USER}}
-export STMP=${STMP:-/scratch4/NCEPDEV/stmp3/${USER}}
-export rzdmuser=mpyle
-
-export NDATE=/scratch3/NCEPDEV/nwprod/lib/prod_util/v1.1.0/exec/ndate
-export NHOUR=/scratch3/NCEPDEV/nwprod/lib/prod_util/v1.1.0/exec/nhour
-export HOMEfv3=${HOMEfv3:-/scratch4/NCEPDEV/fv3-cam/noscrub/$USER/regional_workflow}
 
 else
 

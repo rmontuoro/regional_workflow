@@ -2,6 +2,7 @@
  set -x
 
 . $HOMEfv3/jobs/JREGIONAL_ENVIR
+. $USHfv3/run_commands_forecast.sh
 
 hostname > hname
 hl=`cut -c 1-1 hname`
@@ -22,6 +23,8 @@ fi
 
 export CYCLEtm12=`$NDATE -12 $CDATE`
 export CYCLEtm06=`$NDATE -06 $CDATE`
+export PDYtm12=`echo $CYCLEtm12 | cut -c 1-8`
+export cyctm12=`echo $CYCLEtm12 | cut -c 9-10`
 export PDYtm06=`echo $CYCLEtm06 | cut -c 1-8`
 export cyctm06=`echo $CYCLEtm06 | cut -c 9-10`
 export PDYa=$PDYtm06
@@ -56,9 +59,9 @@ export COMOUTtm06=${COMROOT}/${NET}/${envir}/${RUN}.${PDYtm06}/${cyctm06}
 export NWGES=${GESROOT}/${NET}/${envir}/${RUN}.${PDYrun}/${CYCrun}
 mkdir -p $NWGES
 
-export GUESSdir=$NWGES/guess.${tmmark}
+export GUESSdir=$COMOUT/guess.${tmmark}
 mkdir -p $GUESSdir
-export ANLdir=$NWGES/anl.${tmmark}
+export ANLdir=$COMOUT/anl.${dom}.${tmmark}
 mkdir -p $ANLdir
 
 ##############################################
@@ -84,10 +87,17 @@ if [ $machine = wcoss_dell_p3 ] ; then
   export fixgsi=${HOMEfv3}/sorc/gsi.fd/fix
   export fixcrtm=/gpfs/dell1/nco/ops/nwprod/lib/crtm/v2.2.6/fix
 fi
+if [ $machine = hera ] ; then
+  export UTIL=${HOMEfv3}/util/ush
+  export gsiexec=${EXECfv3}/regional_gsi.x
+  export fixgsi=${HOMEfv3}/sorc/regional_gsi.fd/fix
+  export fixcrtm=/scratch2/NCEPDEV/nwprod/NCEPLIBS/fix/crtm_v2.2.6
+fi
+
 
 # setup ensemble filelist03
 
-if [ $machine = theia ] ; then
+if [ $machine = hera ] ; then
    export COMINgfs=/scratch4/NCEPDEV/rstprod/com/gfs/prod
    export COMINrap=/scratch4/NCEPDEV/rstprod/com/rap/prod
    export COMINrtma=/scratch4/NCEPDEV/rstprod/com/rtma2p5/prod
@@ -108,17 +118,17 @@ fi
 # Execute the script.
 ##############################################
 ${HOMEfv3}/scripts/exregional_gsianl_firstguess.sh
+exit $err
 
-if [ -e $pgmout ] ; then
-cat $pgmout
-fi
+##if [ -e $pgmout ] ; then
+##cat $pgmout
+##fi
 
-if [ -e $pgmerr ] ; then
-cat $pgmerr
-fi
+##if [ -e $pgmerr ] ; then
+##cat $pgmerr
+##fi
 
-if [ ${RM_TMPDIR:-YES} = YES ] ; then rm -rf $DATA ; fi
-
-date
-
-exit
+##if [ ${RM_TMPDIR:-YES} = YES ]
+##then
+##rm -rf $DATA
+##fi

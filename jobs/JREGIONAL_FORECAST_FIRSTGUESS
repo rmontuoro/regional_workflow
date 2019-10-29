@@ -2,6 +2,7 @@
 set -x
 
 . $HOMEfv3/jobs/JREGIONAL_ENVIR
+. $USHfv3/run_commands_forecast.sh
 
 ####################################
 # Run setpdy and initialize PDY variables
@@ -39,7 +40,7 @@ mkdir -p $NWGES
 
 export GUESSdir=$COMOUT/guess.tm06
 mkdir -p $GUESSdir
-export ANLdir=$NWGES/anl.tm06
+export ANLdir=$COMOUT/anl.${dom}.tm06
 mkdir -p $ANLdir
 
 #####################################

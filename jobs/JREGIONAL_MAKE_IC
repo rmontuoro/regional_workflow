@@ -19,16 +19,18 @@ export CHGRESEXEC=$EXECfv3/regional_chgres_cube.x
 export month=`echo $CDATE | cut -c 5-6`
 export day=`echo $CDATE | cut -c 7-8`
 
-export CYCLEguess=`$NDATE -12 $CDATE`
+offset=`echo $tmmark | cut -c 3-4`
+export CYCLEguess=`$NDATE -${offset} $CDATE`
 export ymd=`echo $CDATE | cut -c 1-8`
 export hhcyc=`echo $CDATE | cut -c 9-10`
+
 export PDYtm12=`echo $CYCLEguess | cut -c 1-8`
 export cycguess=`echo $CYCLEguess | cut -c 9-10`
 
 #####################################
 # Working directories
 #####################################
-export DATA=${DATA:-${STMP}/tmpnwprd/${job}}
+export DATA=${DATA:-${STMP}/tmpnwprd/${job}_${cyc}}
 mkdir -p $DATA
 cd $DATA
 
@@ -40,7 +42,6 @@ export pgmerr=errfile
 # Define COM directories
 #####################################
 export COMINgdas=${COMINgdas:-/gpfs/dell1/nco/ops/com/gfs/prod}
-export GBCOMINgfs=${GBCOMINgfs:-/gpfs/dell1/nco/ops/com/gfs/prod}
 export COMINgfs=${COMINgfs:-/gpfs/dell1/nco/ops/com/gfs/prod}
 export INIDIR=${COMINgfs}/gfs.$PDY/$cyc
 export INIDIRtm12=${COMINgfs}/gfs.$PDYtm12/$cycguess
@@ -51,9 +52,9 @@ export NWGES=${GESROOT}/${NET}/${envir}/${RUN}.${PDY}/${cyc}
 mkdir -p $NWGES
 
 if [ $tmmark = tm12 ] ; then	# SAR-DA
-  export INPdir=$NWGES/gfsanl.$tmmark
+  export INPdir=$COMOUT/gfsanl.$tmmark
 elif [ $tmmark = tm00 ] ; then	# SAR without DA
-  export INPdir=$NWGES/anl.${dom}.$tmmark
+  export INPdir=$COMOUT/anl.${dom}.$tmmark
 fi
 mkdir -p $INPdir
 
@@ -81,38 +82,6 @@ env
 ${HOMEfv3}/scripts/exregional_make_ic.sh
 export err=$?
 #####################################
-
-
-#####################################
-# Generate BCs for NHRSguess for SAR-DA
-#####################################
-if [ $tmmark = tm12 ] ; then
-  export REGIONAL=2
-
-# NHRSguess comes from JREGIONAL_ENVIR
-  hour=3
-  end_hour=$NHRSguess
-  while (test "$hour" -le "$end_hour")
-  do
-    if [ $hour -lt 10 ] ; then
-      hour_name='00'$hour
-    elif [ $hour -lt 100 ] ; then
-      hour_name='0'$hour
-    else
-      hour_name=$hour
-    fi
-
-    export bchour=$hour_name
-    ${HOMEfv3}/scripts/exregional_make_ic.sh
-
-    err=$?
-    if [ $err -ne 0 ] ; then
-      echo "bndy file not created, abort"
-      exit 10
-    fi
-    hour=`expr $hour + 3`
-  done
-fi
 
 if [ -e $pgmerr ] ; then
 cat $pgmerr

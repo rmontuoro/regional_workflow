@@ -20,7 +20,7 @@ export SENDCOM=${SENDCOM:-YES}
 # Obtain unique process id (pid) and make temp directory
 ##############################################
 export INPUT_DATA=${STMP}/tmpnwprd/forecast_firstguess_${cyc}
-export DATA=${STMP}/tmpnwprd/${job}
+export DATA=${DATA:-${STMP}/tmpnwprd/${job}_${cyc}}
 mkdir -p $DATA
 cd $DATA
 
@@ -31,7 +31,7 @@ export pgmerr=errfile
 ##############################################
 # Specify Execution Areas
 ##############################################
-export POSTGPEXEC=${EXECfv3}/regional_post.x
+export POSTGPEXEC=${EXECfv3}/regional_post.x_fromwen
 export WGRIB2=${WGRIB2:-${EXECfv3}/wgrib2new}
 
 ##############################################
@@ -55,9 +55,7 @@ if [ -e $pgmout ] ; then
 cat $pgmout
 fi
 
-if [ ${RM_TMPDIR:-YES} = YES ] ; then rm -rf $INPUT_DATA ; fi
-if [ ${RM_TMPDIR:-YES} = YES ] ; then rm -rf $DATA ; fi
+##if [ ${RM_TMPDIR:-YES} = YES ] ; then rm -rf $INPUT_DATA ; fi
+##if [ ${RM_TMPDIR:-YES} = YES ] ; then rm -rf $DATA ; fi
 
 date
-
-exit

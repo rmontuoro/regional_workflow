@@ -12,7 +12,7 @@ export SENDCOM=${SENDCOM:-YES}
 ####################################
 # Specify Execution Areas
 ####################################
-export POSTGPEXEC=${EXECfv3}/regional_post.x
+export POSTGPEXEC=${EXECfv3}/regional_post.x_fromwen
 export WGRIB2=${WGRIB2:-${EXECfv3}/wgrib2new}
 
 ####################################
@@ -25,8 +25,9 @@ export WGRIB2=${WGRIB2:-${EXECfv3}/wgrib2new}
 #####################################
 # Working directories
 #####################################
-export INPUT_DATA=${INPUT_DATA:-${STMP}/tmpnwprd/regional_forecast_${tmmark}_${dom}_${PDY}${cyc}}
-export DATA=${DATA:-${STMP}/tmpnwprd/${job}}
+###export INPUT_DATA=${INPUT_DATA:-${STMP}/tmpnwprd/regional_forecast_${tmmark}_${dom}_${PDY}${cyc}}
+export INPUT_DATA=${INPUT_DATA:-${STMP}/tmpnwprd/forecast_${tmmark}_${cyc}}
+export DATA=${DATA:-${STMP}/tmpnwprd/${job}_${cyc}}
 if [ -d $DATA ]; then
   rm -rf $DATA
 fi
