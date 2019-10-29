@@ -38,21 +38,21 @@ import sys,os,getopt,time,errno
 from datetime import datetime,timedelta
 
 def usage():
-    print ("Usage: python %s -d [COM_EnKF] -v [valid time in YYYYMMDDHH] -t [hours] -r [resolution] \n" 
+    print (("Usage: python %s -d [COM_EnKF] -v [valid time in YYYYMMDDHH] -t [hours] -r [resolution] \n" 
            "\t\t\t\t-o [output file] -m [ens mean?] -s [starting fhr] --retro=yes/no --exact=yes/no \n"
-           "\t\t\t\t--minsize=x --o3fname=filename --4d=[start,stop,inchrs] -h") % (sys.argv[0])
-    print
-    print " -d [COM_EnKF] = Directory where EnKF output resides, e.g. /com/gfs/prod/enkf (omit the .YYYYMMDDHH)"
-    print " -v [vtime] = valid time in YYYYMMDDHH (i.e. GSI analysis time)"
-    print " -t [hours] = Look back time, in hours from vtime, to start search for best set of EnKF members"
-    print " -r [resolution] = Full res or low res enkf members (f or l)."
-    print " -o [output file] = Name of the outputfile"
-    print " -m [ens mean?] = yes/no on whether or not to return the ens mean (default is yes)"
-    print " -s [starting fhr] = Minimum limit on EnKF member forecast length (i.e. return no matches less than or equal this number)"
-    print " --retro=yes/no: whether or not this is a retro run (default is no). If yes it grabs the INPUT envar and searches only that directory"
-    print " --exact=yes/no: whether the retrieved EnKF members must be valid exactly at vtime (default is NO)"
-    print " --minsize=x : minimum acceptable number of ensemble members (default=81 w/ mean, 80 w/o; includes the mean if -m is YES)"
-    print " --o3fname=filename : file name to use as sym link to ensemble mean.  Will not run unless -m is True (default=None)"
+           "\t\t\t\t--minsize=x --o3fname=filename --4d=[start,stop,inchrs] -h") % (sys.argv[0]))
+    print()
+    print(" -d [COM_EnKF] = Directory where EnKF output resides, e.g. /com/gfs/prod/enkf (omit the .YYYYMMDDHH)")
+    print(" -v [vtime] = valid time in YYYYMMDDHH (i.e. GSI analysis time)")
+    print(" -t [hours] = Look back time, in hours from vtime, to start search for best set of EnKF members")
+    print(" -r [resolution] = Full res or low res enkf members (f or l).")
+    print(" -o [output file] = Name of the outputfile")
+    print(" -m [ens mean?] = yes/no on whether or not to return the ens mean (default is yes)")
+    print(" -s [starting fhr] = Minimum limit on EnKF member forecast length (i.e. return no matches less than or equal this number)")
+    print(" --retro=yes/no: whether or not this is a retro run (default is no). If yes it grabs the INPUT envar and searches only that directory")
+    print(" --exact=yes/no: whether the retrieved EnKF members must be valid exactly at vtime (default is NO)")
+    print(" --minsize=x : minimum acceptable number of ensemble members (default=81 w/ mean, 80 w/o; includes the mean if -m is YES)")
+    print(" --o3fname=filename : file name to use as sym link to ensemble mean.  Will not run unless -m is True (default=None)")
     print (" --4d=[start,stop,inchrs] : If set script assumes ensembles for 4DEnVar are requested.  Default is OFF. \n"\
           "\t\t\t\t[start=YYYMMDDHH,end=YYYYMMDDHH,inchrs=3] \n"
           "\t\t\t\tIn this mode: \n"
@@ -60,8 +60,8 @@ def usage():
           "\t\t\t\t\t The setting for -v [vtime] is ignored. \n"
           "\t\t\t\t\t The setting for --exact [yes/no] is ignored and is alsways assumed true. \n"
           "\t\t\t\t\t The starting forecast hour, -s [starting fhr], must be evenly divisble by inchrs. " )
-    print " --gfs_nemsio=yes/no : Whether to look for input EnKF files from the GFS in nemsio format (Deafult is NO)."
-    print " -h = Prints this output"
+    print(" --gfs_nemsio=yes/no : Whether to look for input EnKF files from the GFS in nemsio format (Deafult is NO).")
+    print(" -h = Prints this output")
 
 def is_non_zero_file(fpath):
     return True if os.path.isfile(fpath) and os.path.getsize(fpath) > 0 else False
@@ -69,7 +69,7 @@ def is_non_zero_file(fpath):
 def force_symlink(f1,f2):
     try:
         os.symlink(f1,f2)
-    except OSError, e:
+    except OSError as e:
         if e.errno == errno.EEXIST:
             os.remove(f2)
             os.symlink(f1,f2)
@@ -110,7 +110,7 @@ def write_filelist(fname,comenkf,fsave,svdate,retro,path,suf,o3fname,getmean,gfs
             n=n-1   # Remove the erroneously added member
     if getmean: n=n+1
     f.close()
-    print 'Grabbed %d members at fhr %s from the %s EnKF Cycle' % (n,fsave,svcdate)
+    print('Grabbed %d members at fhr %s from the %s EnKF Cycle' % (n,fsave,svcdate))
 
 
 def checkmembers(thispath,fhr,thiscdate,thissuf,gfs_nemsio):
@@ -136,7 +136,7 @@ def main():
         opts, args = getopt.getopt(sys.argv[1:], "d:v:t:r:o:m:s:h",["retro=","exact=","minsize=","o3fname=","4d=","gfs_nemsio="])
     except getopt.GetoptError as err:
         # print help information and exit:
-        print str(err) # will print something like "option -a not recognized"
+        print(str(err)) # will print something like "option -a not recognized"
         usage()
         sys.exit()
 
@@ -274,7 +274,7 @@ def main():
                             en=path+'/gdas.t'+CYC+'z.atmf'+str(f).zfill(3)+'.ensmean.nemsio'
                         else:
                             en=path+'/sfg_'+cdate+'_fhr'+str(f).zfill(2)+'_ensmean'+suf
-                        print 'Checking in %s for forecast hour %s for 4D Time %s' % (path,str(f).zfill(2),indate.strftime('%Y%m%d%H'))
+                        print('Checking in %s for forecast hour %s for 4D Time %s' % (path,str(f).zfill(2),indate.strftime('%Y%m%d%H')))
                         if is_non_zero_file(en):
                             age=(time.time()-os.stat(en).st_mtime)/60. #get difference in seconds and convert to minutes
                             if age > 5.:
@@ -291,7 +291,7 @@ def main():
                                         svdate=dateobj
                                         found[x]=int(f)
         if False in found: 
-            print 'Unable to find matching EnKF members.'
+            print('Unable to find matching EnKF members.')
             sys.exit()
         for fhr in found:
             if o3fname is not None: 
@@ -331,7 +331,7 @@ def main():
                     en=path+'/gdas.t'+CYC+'z.atmf'+str(f).zfill(3)+'.ensmean.nemsio'
                 else:
                     en=path+'/sfg_'+cdate+'_fhr'+str(f).zfill(2)+'_ensmean'+suf
-                print 'Checking in %s for forecast hour %s' % (path,str(f).zfill(2))
+                print('Checking in %s for forecast hour %s' % (path,str(f).zfill(2)))
                 if is_non_zero_file(en):
                     age=(time.time()-os.stat(en).st_mtime)/60. #get difference in seconds and convert to minutes
                     if age > 5.:
@@ -358,7 +358,7 @@ def main():
                                     fsave=f
 
         if svdate is None: 
-            print 'Unable to find matching EnKF members.'
+            print('Unable to find matching EnKF members.')
             sys.exit()
         write_filelist(fname,comenkf,fsave,svdate,retro,path,suf,o3fname,getmean,gfs_nemsio)
 
