@@ -42,7 +42,7 @@ export CYCrun=`echo $CDATE | cut -c 9-10`
 ##############################################
 # Obtain unique process id (pid) and make temp directory
 ##############################################
-export DATA=${STMP}/tmpnwprd/${job}_${CYCrun}
+export DATA=${STMP}/tmpnwprd/${job}
 mkdir -p $DATA
 cd $DATA
 

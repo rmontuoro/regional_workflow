@@ -30,7 +30,7 @@ export cycguess=`echo $CYCLEguess | cut -c 9-10`
 #####################################
 # Working directories
 #####################################
-export DATA=${DATA:-${STMP}/tmpnwprd/${job}_${cyc}}
+export DATA=${DATA:-${STMP}/tmpnwprd/${job}}
 mkdir -p $DATA
 cd $DATA
 

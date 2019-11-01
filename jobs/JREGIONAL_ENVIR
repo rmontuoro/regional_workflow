@@ -5,7 +5,7 @@ export envir=para
 
 export NET=fv3cam
 export RUN=fv3sar
-####export model=fv3sar_da	# fv3sar (cold start) or fv3sar_da (with DA)
+###export model=fv3sar_da	# fv3sar (cold start) or fv3sar_da (with DA)
 export model=fv3sar	# fv3sar (cold start) or fv3sar_da (with DA)
 export CCPP=false
 export CCPP_SUITE=FV3_GFS_2017_gfdlmp_regional
@@ -23,7 +23,7 @@ export rzdmuser=bblake
 
 export NDATE=/gpfs/dell1/nco/ops/nwprod/prod_util.v1.1.0/exec/ips/ndate
 export NHOUR=/gpfs/dell1/nco/ops/nwprod/prod_util.v1.1.0/exec/ips/nhour
-export HOMEfv3=${HOMEfv3:-/gpfs/dell2/emc/modeling/noscrub/$USER/regional_workflow}
+export HOMEfv3=${HOMEfv3:-/gpfs/dell2/emc/modeling/noscrub/$USER/regional_workflow_hera_da}
 
 elif [ ${machine} = "wcoss_cray" ]
 then
@@ -56,7 +56,7 @@ export rzdmuser=wd20er
 
 export NDATE=/scratch2/NCEPDEV/nwprod/NCEPLIBS/utils/prod_util.v1.1.0/exec/ndate
 export NHOUR=/scratch2/NCEPDEV/nwprod/NCEPLIBS/utils/prod_util.v1.1.0/exec/nhour
-export HOMEfv3=${HOMEfv3:-/scratch2/NCEPDEV/fv3-cam/$USER/regional_workflow}
+export HOMEfv3=${HOMEfv3:-/scratch2/NCEPDEV/fv3-cam/$USER/regional_workflow_hera_da}
 
 else
 
@@ -71,7 +71,8 @@ export CASE=C${CRES}
 export gtype=regional    # grid type = uniform, stretch, nest, or regional
 
 export PARMfv3=$HOMEfv3/parm
-export EXECfv3=$HOMEfv3/exec
+###export EXECfv3=$HOMEfv3/exec
+export EXECfv3=/scratch2/NCEPDEV/fv3-cam/$USER/regional_workflow/exec
 export USHfv3=$HOMEfv3/ush
 export LD_LIBRARY_PATH="${HOMEfv3}/sorc/regional_forecast.fd/ccpp/lib/${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
 

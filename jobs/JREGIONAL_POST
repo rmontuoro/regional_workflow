@@ -25,9 +25,8 @@ export WGRIB2=${WGRIB2:-${EXECfv3}/wgrib2new}
 #####################################
 # Working directories
 #####################################
-###export INPUT_DATA=${INPUT_DATA:-${STMP}/tmpnwprd/regional_forecast_${tmmark}_${dom}_${PDY}${cyc}}
-export INPUT_DATA=${INPUT_DATA:-${STMP}/tmpnwprd/forecast_${tmmark}_${cyc}}
-export DATA=${DATA:-${STMP}/tmpnwprd/${job}_${cyc}}
+export INPUT_DATA=${INPUT_DATA:-${STMP}/tmpnwprd/regional_forecast_${tmmark}_${dom}_${PDY}${cyc}}
+export DATA=${DATA:-${STMP}/tmpnwprd/${job}}
 if [ -d $DATA ]; then
   rm -rf $DATA
 fi
@@ -66,5 +65,7 @@ fi
 if [ -e $pgmout ] ; then
 cat $pgmout
 fi
+
+if [ ${RM_TMPDIR:-YES} = YES ] ; then rm -rf $DATA ; fi
 
 exit $err

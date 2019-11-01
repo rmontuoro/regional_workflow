@@ -19,8 +19,8 @@ export SENDCOM=${SENDCOM:-YES}
 ##############################################
 # Obtain unique process id (pid) and make temp directory
 ##############################################
-export INPUT_DATA=${STMP}/tmpnwprd/forecast_firstguess_${cyc}
-export DATA=${DATA:-${STMP}/tmpnwprd/${job}_${cyc}}
+export INPUT_DATA=${STMP}/tmpnwprd/regional_forecast_firstguess_${dom}_${PDY}${cyc}
+export DATA=${DATA:-${STMP}/tmpnwprd/${job}}
 mkdir -p $DATA
 cd $DATA
 
@@ -55,7 +55,7 @@ if [ -e $pgmout ] ; then
 cat $pgmout
 fi
 
-##if [ ${RM_TMPDIR:-YES} = YES ] ; then rm -rf $INPUT_DATA ; fi
-##if [ ${RM_TMPDIR:-YES} = YES ] ; then rm -rf $DATA ; fi
+if [ ${RM_TMPDIR:-YES} = YES ] ; then rm -rf $INPUT_DATA ; fi
+if [ ${RM_TMPDIR:-YES} = YES ] ; then rm -rf $DATA ; fi
 
 date
