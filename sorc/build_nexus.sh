@@ -29,14 +29,14 @@ mkdir -p ../exec
 #
 # Change directory to where the source code is located.
 # 
-cd ${package_name}/
-home_dir=`pwd`/../..
+cd ${package_name}/HEMCO
+home_dir=`pwd`/../../../
 srcDir=`pwd`
 #
 # Load modules.
 #
 set +x
-source ../../modulefiles/codes/${platform}/global_equiv_resol
+source ${home_dir}/modulefiles/codes/${platform}/global_equiv_resol
 module load cmake
 #source config/modulefiles.${platform}
 #
@@ -76,5 +76,7 @@ export CMAKE_Fortran_COMPILER=${CMAKE_Fortran_COMPILER:-mpif90}
 
 cmake CMakeLists.txt
 make -j ${BUILD_JOBS:-4}
+
+ln -sf $srcDir/bin/hemco_standalone ${home_dir}/exec
 
 exit
