@@ -155,6 +155,7 @@ settings="
   'fcst_len_hrs': $FCST_LEN_HRS
   'make_grid_tn': $MAKE_GRID_TN
   'make_orog_tn': $MAKE_OROG_TN
+  'run_nexus_tn': $RUN_NEXUS_TN
   'make_sfc_climo_tn': $MAKE_SFC_CLIMO_TN
   'get_extrn_ics_tn': $GET_EXTRN_ICS_TN
   'get_extrn_lbcs_tn': $GET_EXTRN_LBCS_TN

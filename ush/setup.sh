@@ -821,6 +821,7 @@ fi
 #
 #-----------------------------------------------------------------------
 #
+RUN_NEXUS_TN="run_nexus"
 MAKE_GRID_TN="make_grid"
 MAKE_OROG_TN="make_orog"
 MAKE_SFC_CLIMO_TN="make_sfc_climo"
@@ -2357,6 +2358,7 @@ WRTCMP_PARAMS_TMPL_FP="${WRTCMP_PARAMS_TMPL_FP}"
 #
 #-----------------------------------------------------------------------
 #
+RUN_NEXUS_TN="${RUN_NEXUS_TN}"
 MAKE_GRID_TN="${MAKE_GRID_TN}"
 MAKE_OROG_TN="${MAKE_OROG_TN}"
 MAKE_SFC_CLIMO_TN="${MAKE_SFC_CLIMO_TN}"
