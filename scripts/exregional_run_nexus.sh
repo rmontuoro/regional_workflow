@@ -176,7 +176,8 @@ Call to execute nexus standalone for the FV3SAR failed
 #
 # link NEXUS output file to INPUT directory
 #
-ln -sf NEXUS_Expt.nc ${CYCLE_DIR}/INPUT/NEXUS_Expt.nc
+cd_vrfy ${CYCLE_DIR}/INPUT
+cp_vrfy ${workdir}/NEXUS/NEXUS_Expt.nc .
 
 
 #
