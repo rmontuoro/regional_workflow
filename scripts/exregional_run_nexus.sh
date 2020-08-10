@@ -166,7 +166,7 @@ fi
 # Execute NEXUS
 #
 #${APRUN} ${EXECDIR}/nexus -c NEXUS_Config.rc -d grid_spec.nc || \
-srun ${EXECDIR}/nexus -c NEXUS_Config.rc -d grid_spec.nc || \
+srun ${EXECDIR}/nexus -c NEXUS_Config.rc -r grid_spec.nc || \
 print_err_msg_exit "\
 Call to execute nexus standalone for the FV3SAR failed
 "
