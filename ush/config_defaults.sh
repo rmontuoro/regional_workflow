@@ -792,6 +792,8 @@ OROG_DIR="/path/to/pregenerated/orog/files"
 
 RUN_TASK_MAKE_SFC_CLIMO="TRUE"
 SFC_CLIMO_DIR="/path/to/pregenerated/surface/climo/files"
+
+RUN_TASK_RUN_NEXUS="TRUE"
 #
 #-----------------------------------------------------------------------
 #

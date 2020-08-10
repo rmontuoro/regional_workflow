@@ -57,14 +57,9 @@ for FV3 (in NetCDF format).
 #-----------------------------------------------------------------------
 #
 valid_args=( \
-"EXTRN_MDL_FNS" \
-"EXTRN_MDL_FILES_DIR" \
-"EXTRN_MDL_CDATE" \
-"WGRIB2_DIR" \
-"APRUN" \
-"ICS_DIR" \
+  "APRUN" 
 )
-process_args valid_args "$@"
+# process_args valid_args "$@"
 #
 #-----------------------------------------------------------------------
 #
@@ -74,7 +69,7 @@ process_args valid_args "$@"
 #
 #-----------------------------------------------------------------------
 #
-print_input_args valid_args
+#print_input_args valid_args
 #
 #-----------------------------------------------------------------------
 #
@@ -82,14 +77,18 @@ print_input_args valid_args
 #
 #-----------------------------------------------------------------------
 #
-workdir="${ICS_DIR}/tmp_ICS"
+workdir="${CYCLE_DIR}/../NEXUS"
 mkdir_vrfy -p "$workdir"
 cd_vrfy $workdir
 #
 #-----------------------------------------------------------------------
 #
 # Copy the NEXUS config files to the tmp directory  
-
+#
+#
+cp_vrfy ${EXECDIR}/nexus ${workdir}
+cp_vrfy ${EXECDIR}/../sorc/arl_nexus/config/cmaq/*.rc ${workdir}
+cp_vrfy ${EXECDIR}/../sorc/arl_nexus/fix/grid_spec_C401.nc ${workdir}/grid_spec.nc
 
 #
 #-----------------------------------------------------------------------
@@ -99,72 +98,87 @@ cd_vrfy $workdir
 #
 #-----------------------------------------------------------------------
 #
-cyc="${EXTRN_MDL_CDATE:8:2}"
-yyyymmdd="${EXTRN_MDL_CDATE:0:8}"
-start_date=$(date -d "$yyyymmdd" +"%Y-%m-%d")
+cyc="00" #"${PDY:8:2}"
+yyyymmdd="${PDY:0:8}"
+start_date=$(date -d "$yyyymmdd" +"%Y%m%d")
+mm=$(date -d "$yyyymmdd" +"%m")
 # assume ending date is +24 hours for now
-end_date=$(date -d "$yyyymmdd + $FCST_LEN_HRS hours" +"%Y-%m-%d")
-
+end_date=$(date -d "$yyyymmdd + $FCST_LEN_HRS hours" +"%Y%m%d")
 
 #
-#----------------------------------------------------------------------
-#
-#  Copy the config files and executables to the working directory
-cp ${EXECDIR}/hemco_standalone ${workdir}
-cp ${EXECDIR}/../sorc/arl_nexus/config/cmaq/*.rc ${workdir}
+#######################################################################
+# This will be the section to set the datasets used in $workdir/NEXUS_Config.rc 
+# All Datasets in that file need to be placed here as it will link the files 
+# necessary to that folder.  In the future this will be done by a get_nexus_input 
+# script
+NEI2016="TRUE"
+TIMEZONES="TRUE"
+CEDS2014="FALSE"
+CEDS2017="FALSE"
+HTAP2010="FALSE"
+MASKS="TRUE"
+
+NEXUS_INPUT_BASE_DIR=/scratch2/NAGAPE/arl/Barry.Baker/emissions
+########################################################################
 
 #
 #----------------------------------------------------------------------
 # 
 # modify time configuration file
 #
-time_parser=${EXECDIR}/../sorc/arl_nexus/utils/hemco_time_parser.py
-./${time_parser} -f HEMCO_sa_Time.rc -s $start_date -d $end_date -c $cyc
+cp_vrfy ${EXECDIR}/../sorc/arl_nexus/utils/python/nexus_time_parser.py .
+echo ${start_date} ${end_date} ${cyc}
+./nexus_time_parser.py -f ${workdir}/HEMCO_sa_Time.rc -s $start_date -e $end_date -c $cyc
 
 #
 #---------------------------------------------------------------------
 #
 # set the root directory to the temporary directory
-# 
-root_parser=${EXECDIR}/../sorc/arl_nexus/utils/hemco_root_parser.py
-./root_parser -f HEMCO_Config.rc -d ${workdir}/nexus_inputs
+#
+cp_vrfy ${EXECDIR}/../sorc/arl_nexus/utils/python/nexus_root_parser.py .
+./nexus_root_parser.py -f ${workdir}/NEXUS_Config.rc -d ${workdir}/inputs
 
 #
 #----------------------------------------------------------------------
-# 
-# Retrieve files from HPSS for input to NEXUS
-#
-# call script to parse needed files 
-# create htar file list 
-mkdir_vrfy -p nexus_inputs
-cd_vrfy nexus_inputs
-#temporarily just copy these here
-cp /scratch2/NAGAPE/arl/Patrick.C.Campbell/NEXUS_Emissions/CAM-CMAQ_nrt_emissions/NEI2016v1_rc/input/* .
-cd_vrfy ${workdir}
+# Get all the files needed (TEMPORARILY JUST COPY FROM THE DIRECTORY)
+mkdir_vrfy -p ${workdir}/inputs
+mkdir_vrfy -p ${workdir}/output
+if [ ${NEI2016} == "TRUE" ]; then #NEI2016
+    cp_vrfy ${EXECDIR}/../sorc/arl_nexus/utils/python/nexus_nei2016_linker.py .
+    mkdir_vrfy -p ${workdir}/inputs/NEI2016v1
+    mkdir_vrfy -p ${workdir}/inputs/NEI2016v1/v2020-07
+    mkdir_vrfy -p ${workdir}/inputs/NEI2016v1/v2020-07/${mm}
+    ./nexus_nei2016_linker.py --src_dir ${NEXUS_INPUT_BASE_DIR} --date ${yyyymmdd} --work_dir ${workdir}/inputs
+    ./nexus_nei2016_control_tilefix.py -f NEXUS_Config.rc -d ${yyyymmdd}
+fi
+
+if [ ${TIMEZONES} == 'TRUE' ]; then # TIME ZONES
+    cp_vrfy -r ${NEXUS_INPUT_BASE_DIR}/TIMEZONES ${workdir}/inputs
+fi
+
+if [ ${MASKS} == 'TRUE' ]; then # MASKS
+    cp_vrfy -r ${NEXUS_INPUT_BASE_DIR}/MASKS ${workdir}/inputs
+fi
 
 #
 #----------------------------------------------------------------------
 #
 # Execute NEXUS
 #
-${APRUN} ${EXECDIR}/hemco_standalone || \
+#${APRUN} ${EXECDIR}/nexus -c NEXUS_Config.rc -d grid_spec.nc || \
+srun ${EXECDIR}/nexus -c NEXUS_Config.rc -d grid_spec.nc || \
 print_err_msg_exit "\
 Call to execute nexus standalone for the FV3SAR failed
 "
 
-#mv files (ummm ok) 
-#
-#mv_vrfy out.atm.tile${TILE_RGNL}.nc \
-#        ${ICS_DIR}/gfs_data.tile${TILE_RGNL}.halo${NH0}.nc
-
-#mv_vrfy out.sfc.tile${TILE_RGNL}.nc \
-#        ${ICS_DIR}/sfc_data.tile${TILE_RGNL}.halo${NH0}.nc
-
-#mv_vrfy gfs_ctrl.nc ${ICS_DIR}
-
-#mv_vrfy gfs_bndy.nc ${ICS_DIR}/gfs_bndy.tile${TILE_RGNL}.000.nc
 #
 #-----------------------------------------------------------------------
+#
+# link NEXUS output file to INPUT directory
+#
+ln -sf NEXUS_Expt.nc ${CYCLE_DIR}/INPUT/NEXUS_Expt.nc
+
+
 #
 # Print message indicating successful completion of script.
 #

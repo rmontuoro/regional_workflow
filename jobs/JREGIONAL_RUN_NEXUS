@@ -51,9 +51,8 @@ print_info_msg "
 Entering script:  \"${scrfunc_fn}\"
 In directory:     \"${scrfunc_dir}\"
 
-This is the J-job script for the task that generates initial condition 
-(IC), surface, and zeroth-hour lateral boundary condition (LBC0) files 
-for the FV3 (in NetCDF format).
+This is the J-job script for the task that generates the emission files 
+using NEXUS which will output for FV3 (in NetCDF format).
 ========================================================================"
 #
 #-----------------------------------------------------------------------
@@ -63,8 +62,8 @@ for the FV3 (in NetCDF format).
 #
 #-----------------------------------------------------------------------
 #
-ICS_DIR="${CYCLE_DIR}/INPUT"
-mkdir_vrfy -p "${ICS_DIR}"
+NEXUS_DIR="${CYCLE_DIR}/../NEXUS"
+mkdir_vrfy -p "${NEXUS_DIR}"
 #
 #-----------------------------------------------------------------------
 #
@@ -142,33 +141,11 @@ esac
 #
 #-----------------------------------------------------------------------
 #
-# Call the function that sets various external-model-related variables.
-# See the function defintion file for the definitions of these varia-
-# bles.
-#
-#-----------------------------------------------------------------------
-#
-get_extrn_mdl_file_dir_info \
-  extrn_mdl_name="${EXTRN_MDL_NAME_ICS}" \
-  anl_or_fcst="ANL" \
-  cdate_FV3SAR="${CDATE}" \
-  time_offset_hrs="0" \
-  varname_extrn_mdl_cdate="EXTRN_MDL_CDATE" \
-  varname_extrn_mdl_lbc_update_fhrs="EXTRN_MDL_LBC_UPDATE_FHRS" \
-  varname_extrn_mdl_fns="EXTRN_MDL_FNS" \
-  varname_extrn_mdl_sysdir="EXTRN_MDL_SYSDIR" \
-  varname_extrn_mdl_arcv_fmt="EXTRN_MDL_ARCV_FMT" \
-  varname_extrn_mdl_arcv_fns="EXTRN_MDL_ARCV_FNS" \
-  varname_extrn_mdl_arcv_fps="EXTRN_MDL_ARCV_FPS" \
-  varname_extrn_mdl_arcvrel_dir="EXTRN_MDL_ARCVREL_DIR"
-#
-#-----------------------------------------------------------------------
-#
 # Set the directory containing the external model output files.
 #
 #-----------------------------------------------------------------------
 #
-EXTRN_MDL_FILES_DIR="${CYCLE_DIR}/${EXTRN_MDL_NAME_ICS}/ICS"
+EXTRN_MDL_FILES_DIR="${CYCLE_DIR}/INPUT/tmp_nexus"
 #
 #-----------------------------------------------------------------------
 #
@@ -177,13 +154,9 @@ EXTRN_MDL_FILES_DIR="${CYCLE_DIR}/${EXTRN_MDL_NAME_ICS}/ICS"
 #
 #-----------------------------------------------------------------------
 #
-EXTRN_MDL_FNS_str="( "$( printf "\"%s\" " "${EXTRN_MDL_FNS[@]}" )")"
+#EXTRN_MDL_FNS_str="( "$( printf "\"%s\" " "${EXTRN_MDL_FNS[@]}" )")"
 
 $SCRIPTSDIR/exregional_run_nexus.sh \
-  EXTRN_MDL_FNS="${EXTRN_MDL_FNS_str}" \
-  EXTRN_MDL_FILES_DIR="${EXTRN_MDL_FILES_DIR}" \
-  EXTRN_MDL_CDATE="${EXTRN_MDL_CDATE}" \
-  ICS_DIR="${ICS_DIR}" \
   APRUN="${APRUN}" || \
 print_err_msg_exit "\
 Call to ex-script corresponding to J-job \"${scrfunc_fn}\" failed."

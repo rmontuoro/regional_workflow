@@ -166,6 +166,7 @@ settings="
   'run_task_make_grid': $RUN_TASK_MAKE_GRID
   'run_task_make_orog': $RUN_TASK_MAKE_OROG
   'run_task_make_sfc_climo': $RUN_TASK_MAKE_SFC_CLIMO
+  'run_task_run_nexus': $RUN_TASK_RUN_NEXUS
 "
 
 $USHDIR/create_xml.py -q -u "${settings}" -t $TEMPLATE_XML_FP -o $WFLOW_XML_FP || exit 1
