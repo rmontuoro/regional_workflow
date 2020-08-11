@@ -46,7 +46,11 @@ anthro_format: netcdf
 #anthro_path:
 
 # emissions file name
+<<<<<<< HEAD
 anthro_file: INPUT/NEXUS_Expt.nc
+=======
+anthro_file: /scratch1/NCEPDEV/nems/Raffaele.Montuoro/dev/fv3sar/data/anthro/NEI2016v1_emis_mole_all_nobeis_12US1_gsd_hrrr_25km_20160101.nc
+>>>>>>> 4825a005fa389c764cc51c35cfe6bcf1d0ee2e5f
 
 # emissions time dependency
 # supported settings are:

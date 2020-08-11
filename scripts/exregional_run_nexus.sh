@@ -145,6 +145,7 @@ mkdir_vrfy -p ${workdir}/inputs
 mkdir_vrfy -p ${workdir}/output
 if [ ${NEI2016} == "TRUE" ]; then #NEI2016
     cp_vrfy ${EXECDIR}/../sorc/arl_nexus/utils/python/nexus_nei2016_linker.py .
+    cp_vrfy ${EXECDIR}/../sorc/arl_nexus/utils/python/nexus_nei2016_control_tilefix.py .
     mkdir_vrfy -p ${workdir}/inputs/NEI2016v1
     mkdir_vrfy -p ${workdir}/inputs/NEI2016v1/v2020-07
     mkdir_vrfy -p ${workdir}/inputs/NEI2016v1/v2020-07/${mm}
