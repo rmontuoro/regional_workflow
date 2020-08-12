@@ -62,7 +62,7 @@ using NEXUS which will output for FV3 (in NetCDF format).
 #
 #-----------------------------------------------------------------------
 #
-NEXUS_DIR="${CYCLE_DIR}/../NEXUS"
+NEXUS_DIR="${CYCLE_DIR}/NEXUS"
 mkdir_vrfy -p "${NEXUS_DIR}"
 #
 #-----------------------------------------------------------------------
@@ -138,14 +138,6 @@ case "$MACHINE" in
   ;;
 #
 esac
-#
-#-----------------------------------------------------------------------
-#
-# Set the directory containing the external model output files.
-#
-#-----------------------------------------------------------------------
-#
-EXTRN_MDL_FILES_DIR="${CYCLE_DIR}/INPUT/tmp_nexus"
 #
 #-----------------------------------------------------------------------
 #

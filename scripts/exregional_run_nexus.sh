@@ -77,7 +77,7 @@ valid_args=( \
 #
 #-----------------------------------------------------------------------
 #
-workdir="${CYCLE_DIR}/../NEXUS"
+workdir="${CYCLE_DIR}/NEXUS"
 mkdir_vrfy -p "$workdir"
 cd_vrfy $workdir
 #
