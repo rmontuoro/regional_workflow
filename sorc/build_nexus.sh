@@ -29,16 +29,17 @@ mkdir -p ../exec
 #
 # Change directory to where the source code is located.
 # 
-cd ${package_name}/HEMCO
-home_dir=`pwd`/../../../
+cd ${package_name}
+home_dir=`pwd`/../../
 srcDir=`pwd`
 #
 # Load modules.
 #
 set +x
-source ${home_dir}/modulefiles/codes/${platform}/global_equiv_resol
-module load cmake
-#source config/modulefiles.${platform}
+if [ $target = hera ]; then 
+    source modulefiles/hera.intel
+fi
+
 #
 MPICH_UNEX_BUFFER_SIZE=256m
 MPICH_MAX_SHORT_MSG_SIZE=64000
@@ -57,6 +58,12 @@ elif [ $platform = "theia" ]; then
 elif [ $platform = "hera" ]; then
   HDF5_DIR=$HDF5
   NETCDF_DIR=$NETCDF
+  export BIN_NETCDF=$NETCDF/bin
+  export INC_NETCDF=$NETCDF/include
+  export LIB_NETCDF=$NETCDF/lib
+  export BIN_HDF5=$HDF5/bin
+  export INC_HDF5=$HDF5/include
+  export LIB_HDF5=$HDF5/lib
 elif [ $platform = "cheyenne" ]; then
   NETCDF_DIR=$NETCDF
   HDF5_DIR=$NETCDF #HDF5 resides with NETCDF on Cheyenne
@@ -74,9 +81,16 @@ export CMAKE_C_COMPILER=${CMAKE_C_COMPILER:-mpicc}
 export CMAKE_CXX_COMPILER=${CMAKE_CXX_COMPILER:-mpicxx}
 export CMAKE_Fortran_COMPILER=${CMAKE_Fortran_COMPILER:-mpif90}
 
-cmake CMakeLists.txt
-make -j ${BUILD_JOBS:-4}
 
-ln -sf $srcDir/bin/hemco_standalone ${home_dir}/exec
+if [ $platform = "hera" ]; then 
+    export FC=mpiifort; 
+else
+    export FC=mpif90
+fi
+
+cmake CMakeLists.txt
+make -j 
+
+ln -sf $srcDir/bin/nexus ${home_dir}/exec
 
 exit
