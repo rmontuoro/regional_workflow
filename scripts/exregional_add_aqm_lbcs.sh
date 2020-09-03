@@ -106,8 +106,11 @@ Fetching chemical lateral boundary condition filesfrom HPSS:
     htar -xvf ${AQM_ARCHIVE} ${CHEM_BOUNDARY_CONDITION_FILE}
 fi
 
-for hr in 00 06 12 18 24; do
-    ncks -A ${CHEM_BOUNDARY_CONDITION_FILE} ${CYCLE_DIR}/INPUT/gfs_bndy.tile7.0${hr}.nc
+for hr in 0 ${LBC_UPDATE_FCST_HRS[@]}; do
+    fhr=$( printf "%03d" "${hr}" )
+    if [ -r ${CYCLE_DIR}/INPUT/gfs_bndy.tile7.${fhr}.nc ]; then
+        ncks -A ${CHEM_BOUNDARY_CONDITION_FILE} ${CYCLE_DIR}/INPUT/gfs_bndy.tile7.${fhr}.nc
+    fi
 done
 #
 #-----------------------------------------------------------------------
