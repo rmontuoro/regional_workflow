@@ -388,7 +388,7 @@ MODULES_RUN_TASK_FP script.
 ************************************************************************
 ************************************************************************
 -->
-  <task name="&RUN_NEXUS_TN;" cycledefs="at_start" maxtries="4">
+  <task name="&RUN_NEXUS_TN;" maxtries="4">
 
     &RSRC_RUN_NEXUS;
     &RSRV_DEFAULT;
