@@ -117,7 +117,7 @@ yyyymmdd="${CYCLE_DATE:0:8}"
 # Note: a timezone offset is used to compute the end date. Consequently,
 # the code below will only work for forecast lengths up to 24 hours.
 start_date=$( date --utc --date "${yyyymmdd} ${hh}" "+%Y%m%d%H" )
-end_date=$( date --utc --date "${yyyymmdd} ${hh} -${FCST_LEN_HRS}" "+%Y%m%d%H" )
+end_date=$( date --utc --date @$(( $( date --utc --date "${yyyymmdd} ${hh}" +%s ) + ${FCST_LEN_HRS} * 3600 )) +%Y%m%d%H )
 #
 #######################################################################
 # This will be the section to set the datasets used in $workdir/NEXUS_Config.rc 
