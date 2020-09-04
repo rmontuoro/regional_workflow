@@ -101,8 +101,14 @@ killing itself off) using the exec command.
 <workflow realtime="F" scheduler="&SCHED;" cyclethrottle="20">
 
   {# Double quotes are required inside the strftime! Expect an error from reading the template if using single quotes. #}
-  <cycledef group="at_start">{{ date_first_cycl.strftime("%M %H %d %m %Y *") }}</cycledef>
-  <cycledef group="forecast">{{ date_first_cycl.strftime("%Y%m%d%H%M") }} {{ date_last_cycl.strftime("%Y%m%d%H%M") }} {{ cycl_freq }}</cycledef>
+  <cycledef group="at_start">{{ cdate_first_cycl.strftime("%M %H %d %m %Y *") }}</cycledef>
+{% for c in cycl_hrs %}
+  <cycledef group="forecast">
+  {%- set cdate_first=date_first_cycl ~ c ~ "00" -%}
+  {%- set cdate_last=date_last_cycl ~ c ~ "00" -%}
+  {{- cdate_first ~ " " ~ cdate_last ~ " " ~ cycl_freq -}}
+  </cycledef>
+{%- endfor %}
 
   <log>
     <cyclestr>&LOGDIR;/FV3SAR_wflow.log</cyclestr>

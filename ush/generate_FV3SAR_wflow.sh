@@ -109,15 +109,15 @@ if [ "${RUN_ENVIR}" = "nco" ]; then
 #
 #  CYCLE_DIR="$STMP/tmpnwprd/${EMC_GRID_NAME}_${CDATE_generic}"
 
-  cycle_basedir="$STMP/tmpnwprd/${EMC_GRID_NAME}" 
-  check_for_preexist_dir ${cycle_basedir} ${PREEXISTING_DIR_METHOD}
-  CYCLE_DIR="${cycle_basedir}/${CDATE_generic}"
+  CYCLE_BASEDIR="$STMP/tmpnwprd/${EMC_GRID_NAME}"
+  check_for_preexist_dir ${CYCLE_BASEDIR} ${PREEXISTING_DIR_METHOD}
 
 else
 
-  CYCLE_DIR="$EXPTDIR/${CDATE_generic}"
+  CYCLE_BASEDIR="${EXPTDIR}"
 
 fi
+CYCLE_DIR="${CYCLE_BASEDIR}/${CDATE_generic}"
 #
 #-----------------------------------------------------------------------
 #
@@ -149,8 +149,10 @@ settings="
   'extrn_mdl_name_lbcs': $EXTRN_MDL_NAME_LBCS
   'extrn_mdl_files_sysbasedir_ics': $EXTRN_MDL_FILES_SYSBASEDIR_ICS
   'extrn_mdl_files_sysbasedir_lbcs': $EXTRN_MDL_FILES_SYSBASEDIR_LBCS
-  'date_first_cycl': !datetime $DATE_FIRST_CYCL${CYCL_HRS[0]}
-  'date_last_cycl': !datetime $DATE_LAST_CYCL${CYCL_HRS[0]}
+  'date_first_cycl': ${DATE_FIRST_CYCL}
+  'date_last_cycl': ${DATE_LAST_CYCL}
+  'cdate_first_cycl': !datetime ${DATE_FIRST_CYCL}${CYCL_HRS[0]}
+  'cycl_hrs': [ $( printf "\'%s\', " "${CYCL_HRS[@]}" ) ]
   'cycl_freq': !!str 24:00:00
   'fcst_len_hrs': $FCST_LEN_HRS
   'make_grid_tn': $MAKE_GRID_TN
@@ -172,7 +174,21 @@ settings="
 "
 
 $USHDIR/create_xml.py -q -u "${settings}" -t $TEMPLATE_XML_FP -o $WFLOW_XML_FP || exit 1
+#
+#-----------------------------------------------------------------------
+#
+# Create the cycle directories.
+#
+#-----------------------------------------------------------------------
+#
+print_info_msg "$VERBOSE" "
+Creating the cycle directories..."
 
+for (( i=0; i<${NUM_CYCLES}; i++ )); do
+  cdate="${ALL_CDATES[$i]}"
+  cycle_dir="${CYCLE_BASEDIR}/$cdate"
+  mkdir_vrfy -p "${cycle_dir}"
+done
 #
 #-----------------------------------------------------------------------
 #

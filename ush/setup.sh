@@ -57,6 +57,7 @@ cd_vrfy ${scrfunc_dir}
 #
 #-----------------------------------------------------------------------
 #
+. ./set_cycle_dates.sh
 . ./set_gridparams_GFDLgrid.sh
 . ./set_gridparams_JPgrid.sh
 . ./link_fix.sh
@@ -599,15 +600,21 @@ done
 #
 #-----------------------------------------------------------------------
 #
-# Extract from CDATE the starting year, month, day, and hour of the
-# forecast.  These are needed below for various operations.
+# Call a function to generate the array ALL_CDATES containing the cycle
+# dates/hours for which to run forecasts.  The elements of this array
+# will have the form YYYYMMDDHH.  They are the starting dates/times of
+# the forecasts that will be run in the experiment.  Then set NUM_CYCLES
+# to the number of elements in this array.
 #
 #-----------------------------------------------------------------------
 #
-YYYY_FIRST_CYCL=${DATE_FIRST_CYCL:0:4}
-MM_FIRST_CYCL=${DATE_FIRST_CYCL:4:2}
-DD_FIRST_CYCL=${DATE_FIRST_CYCL:6:2}
-HH_FIRST_CYCL=${CYCL_HRS[0]}
+set_cycle_dates \
+  date_start="${DATE_FIRST_CYCL}" \
+  date_end="${DATE_LAST_CYCL}" \
+  cycle_hrs="${CYCL_HRS_str}" \
+  output_varname_all_cdates="ALL_CDATES"
+
+NUM_CYCLES="${#ALL_CDATES[@]}"
 #
 #-----------------------------------------------------------------------
 #
