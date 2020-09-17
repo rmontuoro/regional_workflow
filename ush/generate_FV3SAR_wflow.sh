@@ -147,17 +147,17 @@ settings="
   'global_var_defns_fp': $GLOBAL_VAR_DEFNS_FP
   'extrn_mdl_name_ics': $EXTRN_MDL_NAME_ICS
   'extrn_mdl_name_lbcs': $EXTRN_MDL_NAME_LBCS
-  'extrn_mdl_files_sysbasedir_ics': $EXTRN_MDL_FILES_SYSBASEDIR_ICS
-  'extrn_mdl_files_sysbasedir_lbcs': $EXTRN_MDL_FILES_SYSBASEDIR_LBCS
-  'date_first_cycl': ${DATE_FIRST_CYCL}
-  'date_last_cycl': ${DATE_LAST_CYCL}
+  'cycl_first': ${ALL_CDATES[0]}00
+  'cycl_next': ${ALL_CDATES[1]:-${ALL_CDATES[0]}}00
+  'cycl_last': ${ALL_CDATES[@]: -1}00
   'cdate_first_cycl': !datetime ${DATE_FIRST_CYCL}${CYCL_HRS[0]}
-  'cycl_hrs': [ $( printf "\'%s\', " "${CYCL_HRS[@]}" ) ]
-  'cycl_freq': !!str 24:00:00
+  'cycl_freq': !!str ${CYCL_INC/00/24}:00:00
+  'cycl_incr': !!str ${CYCL_INC}:00:00
   'fcst_len_hrs': $FCST_LEN_HRS
   'make_grid_tn': $MAKE_GRID_TN
   'make_orog_tn': $MAKE_OROG_TN
   'make_sfc_climo_tn': $MAKE_SFC_CLIMO_TN
+  'add_aqm_ics_tn': $ADD_AQM_ICS_TN
   'add_aqm_lbcs_tn': $ADD_AQM_LBCS_TN
   'get_extrn_ics_tn': $GET_EXTRN_ICS_TN
   'get_extrn_lbcs_tn': $GET_EXTRN_LBCS_TN
@@ -169,6 +169,7 @@ settings="
   'run_task_make_grid': $RUN_TASK_MAKE_GRID
   'run_task_make_orog': $RUN_TASK_MAKE_OROG
   'run_task_make_sfc_climo': $RUN_TASK_MAKE_SFC_CLIMO
+  'run_task_add_aqm_ics': $RUN_TASK_ADD_AQM_ICS
   'run_task_add_aqm_lbcs': $RUN_TASK_ADD_AQM_LBCS
   'run_task_run_nexus': $RUN_TASK_RUN_NEXUS
 "

@@ -18,12 +18,12 @@ FCST_MODEL="fv3gfs_aqm"
 PREDEF_GRID_NAME="GSD_HRRR25km"
 GRID_GEN_METHOD="JPgrid"
 QUILTING="TRUE"
-FCST_LEN_HRS="24"
+FCST_LEN_HRS="48"
 LBC_UPDATE_INTVL_HRS="6"
 
-DATE_FIRST_CYCL="20200603"
-DATE_LAST_CYCL="20200603"
-CYCL_HRS=( "00" )
+DATE_FIRST_CYCL="20200915"
+DATE_LAST_CYCL="20200916"
+CYCL_HRS=( "00" "06" "12" "18" )
 
 EXTRN_MDL_NAME_ICS="FV3GFS"
 EXTRN_MDL_NAME_LBCS="FV3GFS"
@@ -38,6 +38,15 @@ RUN_TASK_ADD_AQM_LBCS="TRUE"
 # Run ARL NEXUS package to generate anthropogenic emissions
 # for air quality experiments
 RUN_TASK_RUN_NEXUS="TRUE"
+# Set non-standard path to NEXUS input emission files
+# NEXUS_INPUT_DIR="/path/to/nexus/input/emission/files"
+
+# Set non-standard paths to air quality configuration
+# and emission data directories
+# AQM_CONFIG_DIR="/path/to/aqm/config"
+# AQM_EMIS_DIR="/path/to/emission/data"
+
+PRINT_ESMF="TRUE"
 
 LAYOUT_X=10
 LAYOUT_Y=11

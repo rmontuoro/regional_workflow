@@ -128,7 +128,7 @@ Setting parameter \"$param\" in file \"$file\" to \"$value\" ..."
     regex_replace="\1 $value"
     ;;
 #
-  "${DIAG_TABLE_FN}")
+  "${DIAG_TABLE_FN}" | "${AQM_RC_FN}")
     regex_search="(.*)(<$param>)(.*)"
     regex_replace="\1$value\3"
     ;;

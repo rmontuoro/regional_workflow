@@ -143,6 +143,17 @@ esac
 #
 #-----------------------------------------------------------------------
 #
+# Create RESTART subdirectory
+#
+#-----------------------------------------------------------------------
+#
+print_info_msg "$VERBOSE" "
+Creating RESTART subdirectory..."
+
+mkdir_vrfy -p ${CYCLE_DIR}/RESTART
+#
+#-----------------------------------------------------------------------
+#
 # Create links in the INPUT subdirectory of the current cycle's run di-
 # rectory to the grid and (filtered) orography files.
 #
@@ -440,10 +451,18 @@ done
 print_info_msg "$VERBOSE" "
 Installing model input files to be parsed from the templates directory..."
 
+aqm_rc_fp=
 diag_table_fp=
 model_config_fp=
 for file in ${parse_files} ; do
   case "${file}" in
+    ${AQM_RC_FN}*)
+      aqm_rc_fp="${CYCLE_DIR}/${AQM_RC_FN}"
+      print_info_msg "$VERBOSE" "
+        Copying the template air quality configuration file to the current
+        cycle's run directory..."
+      cp_vrfy ${mdl_input_path}/${file} ${aqm_rc_fp}
+      ;;
     ${DIAG_TABLE_FN}*)
       diag_table_fp="${CYCLE_DIR}/${DIAG_TABLE_FN}"
       print_info_msg "$VERBOSE" "
@@ -518,10 +537,38 @@ set_file_param "${diag_table_fp}" "YYYYMMDD" "$YYYYMMDD"
 #
 #-----------------------------------------------------------------------
 #
-# Set parameters in the model configuration file.
+# Set atmosphere restart time and air quality cold/warm start
 #
 #-----------------------------------------------------------------------
 #
+if [ "${CYCL_INC}" == "00" ]; then
+  restart_interval="0"
+  init_concentrations="true"
+else
+  restart_interval="${CYCL_INC} -1"
+  if [ "${CDATE}" == "${DATE_FIRST_CYCL}${CYCL_HRS[0]}" ]; then
+    init_concentrations="true"
+  else
+    init_concentrations="false"
+  fi
+fi
+#
+#-----------------------------------------------------------------------
+#
+# Set parameters in the model configuration files.
+#
+#-----------------------------------------------------------------------
+#
+if [ ! -z "${aqm_rc_fp}" ]; then
+  print_info_msg "$VERBOSE" "
+Setting parameters in file:
+  aqm_rc_fp = \"${aqm_rc_fp}\""
+
+  set_file_param "${aqm_rc_fp}" "init_concentrations" "${init_concentrations}"
+  set_file_param "${aqm_rc_fp}" "aqm_config_dir" "${AQM_CONFIG_DIR%/}"
+  set_file_param "${aqm_rc_fp}" "aqm_emis_dir" "${AQM_EMIS_DIR%/}"
+fi
+
 print_info_msg "$VERBOSE" "
 Setting parameters in file:
   model_config_fp = \"${model_config_fp}\""
@@ -537,6 +584,7 @@ set_file_param "${model_config_fp}" "start_day" "$DD"
 set_file_param "${model_config_fp}" "start_hour" "$HH"
 set_file_param "${model_config_fp}" "nhours_fcst" "${FCST_LEN_HRS}"
 set_file_param "${model_config_fp}" "ncores_per_node" "${NCORES_PER_NODE}"
+set_file_param "${model_config_fp}" "restart_interval" "${restart_interval}"
 set_file_param "${model_config_fp}" "quilting" "${dot_quilting_dot}"
 set_file_param "${model_config_fp}" "print_esmf" "${dot_print_esmf_dot}"
 #

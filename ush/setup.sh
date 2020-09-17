@@ -612,9 +612,15 @@ set_cycle_dates \
   date_start="${DATE_FIRST_CYCL}" \
   date_end="${DATE_LAST_CYCL}" \
   cycle_hrs="${CYCL_HRS_str}" \
-  output_varname_all_cdates="ALL_CDATES"
+  output_varname_all_cdates="ALL_CDATES" \
+  output_varname_cycle_inc="CYCL_INC"
 
 NUM_CYCLES="${#ALL_CDATES[@]}"
+if [ ${#ALL_CDATES[@]} -gt 1 ]; then
+  RUN_TASK_ADD_AQM_ICS="TRUE"
+else
+  RUN_TASK_ADD_AQM_ICS="FALSE"
+fi
 #
 #-----------------------------------------------------------------------
 #
@@ -705,6 +711,9 @@ case $MACHINE in
   FIXgsm=${FIXgsm:-"/gpfs/dell2/emc/modeling/noscrub/emc.glopara/git/fv3gfs/fix/fix_am"}
   TOPO_DIR=${TOPO_DIR:-"/gpfs/dell2/emc/modeling/noscrub/emc.glopara/git/fv3gfs/fix/fix_orog"}
   SFC_CLIMO_INPUT_DIR=${SFC_CLIMO_INPUT_DIR:-""}
+  AQM_CONFIG_DIR=${AQM_CONFIG_DIR:-"/gpfs/dell2/emc/modeling/noscrub/Jianping.Huang/fv3sar/aqm/epa/data"}
+  AQM_EMIS_DIR=${AQM_EMIS_DIR:-"/gpfs/dell2/emc/modeling/noscrub/Jianping.Huang/fv3sar/aqm/bio"}
+  NEXUS_INPUT_DIR=${NEXUS_INPUT_DIR:-"/gpfs/dell2/emc/modeling/noscrub/$USER/emissions"}
   ;;
 
 "THEIA")
@@ -715,6 +724,9 @@ case $MACHINE in
 "HERA")
   FIXgsm="/scratch1/NCEPDEV/global/glopara/fix/fix_am"
   SFC_CLIMO_INPUT_DIR="/scratch1/NCEPDEV/da/George.Gayno/ufs_utils.git/climo_fields_netcdf"
+  AQM_CONFIG_DIR=${AQM_CONFIG_DIR:-"/scratch1/NCEPDEV/nems/Raffaele.Montuoro/dev/aqm/epa/data"}
+  AQM_EMIS_DIR=${AQM_EMIS_DIR:-"/scratch1/NCEPDEV/nems/Raffaele.Montuoro/dev/fv3sar/data/bio"}
+  NEXUS_INPUT_DIR=${NEXUS_INPUT_DIR:-"/scratch2/NAGAPE/arl/Barry.Baker/emissions"}
   ;;
 
 "JET")
@@ -861,6 +873,7 @@ fi
 MAKE_GRID_TN="make_grid"
 MAKE_OROG_TN="make_orog"
 MAKE_SFC_CLIMO_TN="make_sfc_climo"
+ADD_AQM_ICS_TN="add_aqm_ics"
 ADD_AQM_LBCS_TN="add_aqm_lbcs"
 GET_EXTRN_ICS_TN="get_extrn_ics"
 GET_EXTRN_LBCS_TN="get_extrn_lbcs"
@@ -2399,6 +2412,7 @@ WRTCMP_PARAMS_TMPL_FP="${WRTCMP_PARAMS_TMPL_FP}"
 MAKE_GRID_TN="${MAKE_GRID_TN}"
 MAKE_OROG_TN="${MAKE_OROG_TN}"
 MAKE_SFC_CLIMO_TN="${MAKE_SFC_CLIMO_TN}"
+ADD_AQM_ICS_TN="${ADD_AQM_ICS_TN}"
 ADD_AQM_LBCS_TN="${ADD_AQM_LBCS_TN}"
 GET_EXTRN_ICS_TN="${GET_EXTRN_ICS_TN}"
 GET_EXTRN_LBCS_TN="${GET_EXTRN_LBCS_TN}"

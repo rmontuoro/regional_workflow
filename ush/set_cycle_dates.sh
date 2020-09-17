@@ -55,6 +55,7 @@ function set_cycle_dates() {
 "date_end" \
 "cycle_hrs" \
 "output_varname_all_cdates" \
+"output_varname_cycle_inc" \
   )
   process_args valid_args "$@"
 #
@@ -111,12 +112,44 @@ End date (date_end) must be at or after start date (date_start):
 #
 #-----------------------------------------------------------------------
 #
+# Ensure daily cycles are equally spaced. All dates are converted to the
+# number of seconds since 1970-01-01 00:00:00 UTC, then differences are
+# computed between consecutive dates and checked to verify they are all
+# identical.
+#
+#-----------------------------------------------------------------------
+#
+  all_ctime_refs=()
+  for (( i=0; i<${#all_cdates[@]}; i++ )); do
+    all_ctime_refs+=( $( date -u -d "${all_cdates[i]:0:8} ${all_cdates[i]:8:2}" +%s ) )
+  done
+
+  all_ctime_diffs=()
+  for (( i=1; i<${#all_ctime_refs[@]}; i++ )); do
+    all_ctime_diffs+=( $(( ( ${all_ctime_refs[i]} - ${all_ctime_refs[i-1]} ) / 3600 )) )
+  done
+
+  if [ ${#all_ctime_diffs[@]} -eq 0 ]; then
+    all_ctime_diffs=( 0 )
+  fi
+
+  if [ $( echo "${all_ctime_diffs[@]}" | xargs -n 1 | sort -u | wc -l ) -ne 1 ]; then
+    print_err_msg_exit "\
+Daily cycles (cycle_hrs) need to be equally spaced:
+  cycle_hrs = \"${cycle_hrs[*]}\"
+  all_cdates = \"${all_cdates[*]}\""
+  fi
+#
+#-----------------------------------------------------------------------
+#
 # Set output variables.
 #
 #-----------------------------------------------------------------------
 #
   all_cdates_str="( "$( printf "\"%s\" " "${all_cdates[@]}" )")"     
   eval ${output_varname_all_cdates}=${all_cdates_str}             
+  cycle_inc_str="( "$( printf "\"%02d\" " "${all_ctime_diffs[0]}" )")"
+  eval ${output_varname_cycle_inc}=${cycle_inc_str}
 #
 #-----------------------------------------------------------------------
 #
@@ -127,4 +160,3 @@ End date (date_end) must be at or after start date (date_start):
   { restore_shell_opts; } > /dev/null 2>&1
 
 }
-

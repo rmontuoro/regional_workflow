@@ -131,7 +131,7 @@ CEDS2017="FALSE"
 HTAP2010="FALSE"
 MASKS="TRUE"
 
-NEXUS_INPUT_BASE_DIR=/scratch2/NAGAPE/arl/Barry.Baker/emissions
+NEXUS_INPUT_BASE_DIR=${NEXUS_INPUT_DIR}
 ########################################################################
 
 #

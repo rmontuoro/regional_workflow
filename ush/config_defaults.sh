@@ -166,6 +166,9 @@ DOT_OR_USCORE="_"
 #
 # Set file names.  Definitions:
 #
+# AQM_RC_FN:
+# Name of resource file for NOAA Air Quality Model (AQM)
+#
 # RGNL_GRID_NML_FN:
 # Name of file containing the namelist settings for the code that generates
 # a "JPgrid" type of regional grid.
@@ -227,6 +230,8 @@ FV3_NML_CONFIG="FV3.input.yml"
 MODEL_CONFIG_FN="model_configure"
 NEMS_CONFIG_FN="nems.configure"
 
+AQM_RC_FN="aqm.rc"
+
 WFLOW_XML_FN="FV3SAR_wflow.xml"
 GLOBAL_VAR_DEFNS_FN="var_defns.sh"
 WFLOW_LAUNCH_SCRIPT_FN="launch_FV3SAR_wflow.sh"
@@ -251,6 +256,10 @@ WFLOW_LAUNCH_LOG_FN="log.launch_FV3SAR_wflow"
 # two-digit string representing an integer that is less than or equal to
 # 23, e.g. "00", "03", "12", "23".
 #
+# CYCL_INC:
+# Time difference (hours) between daily consecutive cycles, formatted
+# as two-digit string.
+#
 # FCST_LEN_HRS:
 # The length of each forecast, in integer hours.
 #
@@ -260,6 +269,7 @@ FCST_MODEL="ufs_weather_model"
 DATE_FIRST_CYCL="YYYYMMDD"
 DATE_LAST_CYCL="YYYYMMDD"
 CYCL_HRS=( "HH1" "HH2" )
+CYCL_INC="00"
 FCST_LEN_HRS="24"
 #
 #-----------------------------------------------------------------------
@@ -799,6 +809,8 @@ VERBOSE="TRUE"
 # Same as GRID_DIR but for the the air quality emission generation task.
 #-----------------------------------------------------------------------
 #
+RUN_TASK_ADD_AQM_ICS=""
+
 RUN_TASK_ADD_AQM_LBCS="FALSE"
 AQM_ARCHIVE="/NCEPDEV/emc-naqfc/5year/Barry.Baker/emissions/BOUNDARY_CONDITIONS/NAQFC_RRFS_CMAQ_C401.tar"
 
@@ -812,7 +824,10 @@ RUN_TASK_MAKE_SFC_CLIMO="TRUE"
 SFC_CLIMO_DIR="/path/to/pregenerated/surface/climo/files"
 
 RUN_TASK_RUN_NEXUS="FALSE"
-NEXUS_DIR="/path/to/pregenerated/emission/files"
+NEXUS_INPUT_DIR=""
+
+AQM_CONFIG_DIR=""
+AQM_EMIS_DIR=""
 #
 #-----------------------------------------------------------------------
 #

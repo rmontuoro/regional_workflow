@@ -7,16 +7,16 @@
 #
 #  General settings
 #
-ae_matrix_nml: /scratch1/NCEPDEV/nems/Raffaele.Montuoro/dev/aqm/epa/data/AE_cb6r3_ae6_aq.nml
-gc_matrix_nml: /scratch1/NCEPDEV/nems/Raffaele.Montuoro/dev/aqm/epa/data/GC_cb6r3_ae6_aq.nml
-nr_matrix_nml: /scratch1/NCEPDEV/nems/Raffaele.Montuoro/dev/aqm/epa/data/NR_cb6r3_ae6_aq.nml
-tr_matrix_nml: /scratch1/NCEPDEV/nems/Raffaele.Montuoro/dev/aqm/epa/data/Species_Table_TR_0.nml
+ae_matrix_nml: <aqm_config_dir>/AE_cb6r3_ae6_aq.nml
+gc_matrix_nml: <aqm_config_dir>/GC_cb6r3_ae6_aq.nml
+nr_matrix_nml: <aqm_config_dir>/NR_cb6r3_ae6_aq.nml
+tr_matrix_nml: <aqm_config_dir>/Species_Table_TR_0.nml
 
-csqy_data:   /scratch1/NCEPDEV/nems/Raffaele.Montuoro/dev/aqm/epa/data/CSQY_DATA_cb6r3_ae6_aq
-optics_data: /scratch1/NCEPDEV/nems/Raffaele.Montuoro/dev/aqm/epa/data/PHOT_OPTICS.dat
-omi_data:    /scratch1/NCEPDEV/nems/Raffaele.Montuoro/dev/aqm/epa/data/omi_cmaq_2015_361X179.dat
+csqy_data:   <aqm_config_dir>/CSQY_DATA_cb6r3_ae6_aq
+optics_data: <aqm_config_dir>/PHOT_OPTICS.dat
+omi_data:    <aqm_config_dir>/omi_cmaq_2015_361X179.dat
 
-init_concentrations: true
+init_concentrations: <init_concentrations>
 
 run_aerosol: true
 
@@ -46,7 +46,6 @@ anthro_format: netcdf
 #anthro_path:
 
 # emissions file name
-#anthro_file: /scratch1/NCEPDEV/nems/Raffaele.Montuoro/dev/fv3sar/data/anthro/NEI2016v1_emis_mole_all_nobeis_12US1_gsd_hrrr_25km_20160101.nc
 anthro_file: NEXUS/NEXUS_Expt.nc
 
 # emissions time dependency
@@ -146,13 +145,13 @@ bio_type: biogenic
 
 bio_format: netcdf
 
-bio_file: /scratch1/NCEPDEV/nems/Raffaele.Montuoro/dev/fv3sar/data/bio/BEIS_SARC401.ncf
+bio_file: <aqm_emis_dir>/BEIS_SARC401.ncf
 
 bio_frequency: static
 
 bio_period: summer
 
-bio_speciation_file: /scratch1/NCEPDEV/nems/Raffaele.Montuoro/dev/fv3sar/data/bio/gspro_biogenics_1mar2017.txt
+bio_speciation_file: <aqm_emis_dir>/gspro_biogenics_1mar2017.txt
 
 bio_speciation_profile: B10C6
 
