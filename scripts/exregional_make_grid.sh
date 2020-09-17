@@ -118,6 +118,15 @@ case $MACHINE in
   ulimit -a
   ;;
 
+"WCOSS_DELL_P3")
+#
+  export NODES=1
+  export APRUN="mpirun -n 1"
+  export KMP_AFFINITY=disabled
+
+  ulimit -s unlimited
+  ulimit -a
+  ;;
 
 "HERA")
 #

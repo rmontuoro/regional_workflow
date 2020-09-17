@@ -714,6 +714,7 @@ case $MACHINE in
   AQM_CONFIG_DIR=${AQM_CONFIG_DIR:-"/gpfs/dell2/emc/modeling/noscrub/Jianping.Huang/fv3sar/aqm/epa/data"}
   AQM_EMIS_DIR=${AQM_EMIS_DIR:-"/gpfs/dell2/emc/modeling/noscrub/Jianping.Huang/fv3sar/aqm/bio"}
   NEXUS_INPUT_DIR=${NEXUS_INPUT_DIR:-"/gpfs/dell2/emc/modeling/noscrub/$USER/emissions"}
+  EXPT_BASEDIR=/gpfs/dell1/ptmp/$USER/expt_dirs
   ;;
 
 "THEIA")

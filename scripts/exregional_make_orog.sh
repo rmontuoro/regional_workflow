@@ -118,6 +118,13 @@ case $MACHINE in
   ;;
 
 
+"WCOSS_DELL_P3")
+  ulimit -s unlimited
+  ulimit -a
+  export APRUN="time"
+  ;;
+
+
 "HERA")
   ulimit -s unlimited
   ulimit -a
@@ -318,10 +325,19 @@ ${tmp_dir}" \
   ;;
 
 
+"WCOSS_DELL_P3")
+  $APRUN "${exec_fp}" < "${input_redirect_fn}" || \
+    print_err_msg_exit "\
+Call to executable (exec_fp) that generates the raw orography file returned
+with nonzero exit code:
+  exec_fp = \"${exec_fp}\""
+  ;;
+
+
 "CHEYENNE" | "HERA" | "JET" | "ODIN")
   $APRUN "${exec_fp}" < "${input_redirect_fn}" || \
     print_err_msg_exit "\
-Call to executable (exec_fp) that generates the raw orography file returned 
+Call to executable (exec_fp) that generates the raw orography file returned
 with nonzero exit code:
   exec_fp = \"${exec_fp}\""
   ;;
