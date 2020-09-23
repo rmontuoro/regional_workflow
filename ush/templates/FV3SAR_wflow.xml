@@ -492,6 +492,7 @@ MODULES_RUN_TASK_FP script.
 ************************************************************************
 ************************************************************************
 -->
+{%- if run_task_run_post %}
   <metatask name="&RUN_POST_TN;">
     
     <var name="fhr"> {% for h in range(0, fcst_len_hrs+1) %}{{ " %02d" % h  }}{% endfor %} </var>
@@ -525,5 +526,6 @@ MODULES_RUN_TASK_FP script.
     </task>
 
   </metatask>
+{%- endif %}
 
 </workflow>

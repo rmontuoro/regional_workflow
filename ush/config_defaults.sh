@@ -763,10 +763,9 @@ VERBOSE="TRUE"
 #-----------------------------------------------------------------------
 #
 # Set flags (and related directories) that determine whether the grid, 
-# orography, and/or surface climatology file generation tasks should be
-# run.  Note that these are all cycle-independent tasks, i.e. if they are
-# to be run, they do so only once at the beginning of the workflow before
-# any cycles are run.  Definitions:
+# orography, surface climatology, air quality initial and boundary conditions,
+# emissions, and/or post-processing file generation tasks should be run.
+# Definitions:
 #
 # RUN_TASK_ADD_AQM_LBCS:
 # Flag that determines whether the air quality LBCs generation
@@ -805,8 +804,13 @@ VERBOSE="TRUE"
 # Same as RUN_TASK_MAKE_GRID but for the air quality emission generation
 # task.
 #
-# NEXUS_DIR:
+# NEXUS_INPUT_DIR:
 # Same as GRID_DIR but for the the air quality emission generation task.
+#
+# RUN_TASK_RUN_POST:
+# Flag that determines whether the post processing task is to be run.
+# Set to either "TRUE" or "FALSE" to enable/disable postprocessing.
+#
 #-----------------------------------------------------------------------
 #
 RUN_TASK_ADD_AQM_ICS=""
@@ -826,6 +830,15 @@ SFC_CLIMO_DIR="/path/to/pregenerated/surface/climo/files"
 RUN_TASK_RUN_NEXUS="FALSE"
 NEXUS_INPUT_DIR=""
 
+RUN_TASK_RUN_POST="TRUE"
+#
+#-----------------------------------------------------------------------
+#
+# Set configuration and emission input directories in the air quality
+# model configuration file.
+#
+#-----------------------------------------------------------------------
+#
 AQM_CONFIG_DIR=""
 AQM_EMIS_DIR=""
 #
