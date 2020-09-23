@@ -137,6 +137,18 @@ cd_vrfy ${workdir}
 #
 #-----------------------------------------------------------------------
 #
+# Select ncap or ncap2 tool based on availability
+if   command -v ncap2 >/dev/null 2>&1 ; then
+  ncap_cmd=ncap2
+elif command -v ncap  >/dev/null 2>&1 ; then
+  ncap_cmd=ncap
+else
+  print_err_msg_exit "\
+  Neither ncap nor ncap2 was found."
+fi
+#
+#-----------------------------------------------------------------------
+#
 gfs_ic_file=${CYCLE_DIR}/INPUT/gfs_data.tile${TILE_RGNL}.halo${NH0}.nc
 wrk_ic_file=gfs.nc
 
@@ -162,7 +174,7 @@ ncks --mk_rec_dmn lev -O -o tmp1.nc tmp2.nc
 
 ncks -d lev,0,0 tmp1.nc tmp1_top.nc
 
-ncap2 -s 'lev+=1' tmp1.nc tmp1_pfull.nc
+${ncap_cmd} -s 'lev+=1' tmp1.nc tmp1_pfull.nc
 
 ncdiff -O -o tmp1_ptop.nc tmp1_top.nc tmp1_top.nc
 
