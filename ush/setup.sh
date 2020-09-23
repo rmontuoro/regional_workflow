@@ -273,6 +273,77 @@ check_var_valid_value "DOT_OR_USCORE" "valid_vals_DOT_OR_USCORE"
 #
 #-----------------------------------------------------------------------
 #
+# Make sure that RUN_TASK_ADD_AQM_LBCS is set to a valid value.
+#
+#-----------------------------------------------------------------------
+#
+if [ ! -z "${RUN_TASK_ADD_AQM_ICS}" ]; then
+  check_var_valid_value \
+    "RUN_TASK_ADD_AQM_ICS" "valid_vals_RUN_TASK_ADD_AQM_ICS"
+  RUN_TASK_ADD_AQM_ICS=${RUN_TASK_ADD_AQM_ICS^^}
+  if [ "${RUN_TASK_ADD_AQM_ICS}" = "TRUE" ] || \
+     [ "${RUN_TASK_ADD_AQM_ICS}" = "YES" ]; then
+    RUN_TASK_ADD_AQM_ICS="TRUE"
+  elif [ "${RUN_TASK_ADD_AQM_ICS}" = "FALSE" ] || \
+       [ "${RUN_TASK_ADD_AQM_ICS}" = "NO" ]; then
+    RUN_TASK_ADD_AQM_ICS="FALSE"
+  fi
+#
+fi
+#
+#-----------------------------------------------------------------------
+#
+# Make sure that RUN_TASK_ADD_AQM_LBCS is set to a valid value.
+#
+#-----------------------------------------------------------------------
+#
+check_var_valid_value \
+  "RUN_TASK_ADD_AQM_LBCS" "valid_vals_RUN_TASK_ADD_AQM_LBCS"
+RUN_TASK_ADD_AQM_LBCS=${RUN_TASK_ADD_AQM_LBCS^^}
+if [ "${RUN_TASK_ADD_AQM_LBCS}" = "TRUE" ] || \
+   [ "${RUN_TASK_ADD_AQM_LBCS}" = "YES" ]; then
+  RUN_TASK_ADD_AQM_LBCS="TRUE"
+elif [ "${RUN_TASK_ADD_AQM_LBCS}" = "FALSE" ] || \
+     [ "${RUN_TASK_ADD_AQM_LBCS}" = "NO" ]; then
+  RUN_TASK_ADD_AQM_LBCS="FALSE"
+fi
+#
+#-----------------------------------------------------------------------
+#
+# Make sure that RUN_TASK_RUN_NEXUS is set to a valid value.
+#
+#-----------------------------------------------------------------------
+#
+check_var_valid_value \
+  "RUN_TASK_RUN_NEXUS" "valid_vals_RUN_TASK_RUN_NEXUS"
+RUN_TASK_RUN_NEXUS=${RUN_TASK_RUN_NEXUS^^}
+if [ "${RUN_TASK_RUN_NEXUS}" = "TRUE" ] || \
+   [ "${RUN_TASK_RUN_NEXUS}" = "YES" ]; then
+  RUN_TASK_RUN_NEXUS="TRUE"
+elif [ "${RUN_TASK_RUN_NEXUS}" = "FALSE" ] || \
+     [ "${RUN_TASK_RUN_NEXUS}" = "NO" ]; then
+  RUN_TASK_RUN_NEXUS="FALSE"
+fi
+#
+#-----------------------------------------------------------------------
+#
+# Make sure that RUN_TASK_RUN_POST is set to a valid value.
+#
+#-----------------------------------------------------------------------
+#
+check_var_valid_value \
+  "RUN_TASK_RUN_POST" "valid_vals_RUN_TASK_RUN_POST"
+RUN_TASK_RUN_POST=${RUN_TASK_RUN_POST^^}
+if [ "${RUN_TASK_RUN_POST}" = "TRUE" ] || \
+   [ "${RUN_TASK_RUN_POST}" = "YES" ]; then
+  RUN_TASK_RUN_POST="TRUE"
+elif [ "${RUN_TASK_RUN_POST}" = "FALSE" ] || \
+     [ "${RUN_TASK_RUN_POST}" = "NO" ]; then
+  RUN_TASK_RUN_POST="FALSE"
+fi
+#
+#-----------------------------------------------------------------------
+#
 # Convert machine name to upper case if necessary.  Then make sure that
 # MACHINE is set to a valid value.
 #
@@ -621,9 +692,9 @@ set_cycle_dates \
 
 NUM_CYCLES="${#ALL_CDATES[@]}"
 if [ ${#ALL_CDATES[@]} -gt 1 ]; then
-  RUN_TASK_ADD_AQM_ICS="TRUE"
+  RUN_TASK_ADD_AQM_ICS="${RUN_TASK_ADD_AQM_ICS:-TRUE}"
 else
-  RUN_TASK_ADD_AQM_ICS="FALSE"
+  RUN_TASK_ADD_AQM_ICS="${RUN_TASK_ADD_AQM_ICS:-FALSE}"
 fi
 #
 #-----------------------------------------------------------------------
