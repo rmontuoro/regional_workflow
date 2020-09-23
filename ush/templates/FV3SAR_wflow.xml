@@ -39,15 +39,23 @@ Rocoto task names.
 <!ENTITY MAKE_GRID_TN      "{{ make_grid_tn }}">
 <!ENTITY MAKE_OROG_TN      "{{ make_orog_tn }}">
 <!ENTITY MAKE_SFC_CLIMO_TN "{{ make_sfc_climo_tn }}">
+{%- if run_task_add_aqm_ics %}
 <!ENTITY ADD_AQM_ICS_TN    "{{ add_aqm_ics_tn }}">
+{%- endif %}
+{%- if run_task_add_aqm_lbcs %}
 <!ENTITY ADD_AQM_LBCS_TN   "{{ add_aqm_lbcs_tn }}">
+{%- endif %}
 <!ENTITY GET_EXTRN_ICS_TN  "{{ get_extrn_ics_tn }}">
 <!ENTITY GET_EXTRN_LBCS_TN "{{ get_extrn_lbcs_tn }}">
 <!ENTITY MAKE_ICS_TN       "{{ make_ics_tn }}">
 <!ENTITY MAKE_LBCS_TN      "{{ make_lbcs_tn }}">
+{%- if run_task_run_nexus %}
 <!ENTITY RUN_NEXUS_TN      "{{ run_nexus_tn }}">
+{%- endif %}
 <!ENTITY RUN_FCST_TN       "{{ run_fcst_tn }}">
+{%- if run_task_run_post %}
 <!ENTITY RUN_POST_TN       "{{ run_post_tn }}">
+{%- endif %}
 
 <!--
 Task compute resources
@@ -55,8 +63,12 @@ Task compute resources
 
 <!ENTITY PROC_MAKE_GRID            "1:ppn=24">
 <!ENTITY PROC_MAKE_OROG            "1:ppn=24">
+{%- if run_task_add_aqm_ics %}
 <!ENTITY PROC_ADD_AQM_ICS          "1:ppn=24">
+{%- endif %}
+{%- if run_task_add_aqm_lbcs %}
 <!ENTITY PROC_ADD_AQM_LBCS         "1:ppn=1">
+{%- endif %}
 <!ENTITY PROC_GET_EXTRN_MDL_FILES  "1:ppn=1">
 
 <!ENTITY PROC_MAKE_SFC_CLIMO       "2:ppn=24">
@@ -68,26 +80,38 @@ Task compute resources
 <!ENTITY PROC_MAKE_LBC1_TO_LBCN    "4:ppn=12">
 <!ENTITY NPROCS_MAKE_LBC1_TO_LBCN  "48">
 
+{%- if run_task_run_nexus %}
 <!ENTITY PROC_RUN_NEXUS            "1:ppn={{ ncores_per_node }}">
+{%- endif %}
 
 <!ENTITY PROC_RUN_FCST             "{{ proc_run_fcst }}">
 <!ENTITY NPROCS_RUN_FCST           "{{ nprocs_run_fcst }}">
 <!ENTITY NCORES_PER_NODE           "{{ ncores_per_node }}">
 
+{%- if run_task_run_post %}
 <!ENTITY PROC_POST                "2:ppn=24">
 <!ENTITY NPROCS_POST              "48">
+{%- endif %}
 
 <!ENTITY RSRC_MAKE_GRID           "<walltime>00:10:00</walltime>">
 <!ENTITY RSRC_MAKE_OROG           "<walltime>00:10:00</walltime>">
 <!ENTITY RSRC_MAKE_SFC_CLIMO      "<walltime>00:25:00</walltime>">
+{%- if run_task_add_aqm_ics %}
 <!ENTITY RSRC_ADD_AQM_ICS         "<walltime>00:15:00</walltime>">
+{%- endif %}
+{%- if run_task_add_aqm_lbcs %}
 <!ENTITY RSRC_ADD_AQM_LBCS        "<walltime>00:15:00</walltime>">
+{%- endif %}
 <!ENTITY RSRC_GET_EXTRN_MDL_FILES "<walltime>00:45:00</walltime>">
 <!ENTITY RSRC_MAKE_ICS_SURF_LBC0  "<walltime>00:30:00</walltime>">
 <!ENTITY RSRC_MAKE_LBC1_TO_LBCN   "<walltime>01:00:00</walltime>">
+{%- if run_task_run_nexus %}
 <!ENTITY RSRC_RUN_NEXUS           "<walltime>00:30:00</walltime>">
+{%- endif %}
 <!ENTITY RSRC_RUN_FCST            "<walltime>04:30:00</walltime>">
+{%- if run_task_run_post %}
 <!ENTITY RSRC_POST                "<walltime>00:30:00</walltime>">
+{%- endif %}
 
 <!ENTITY RSRV_DEFAULT  "&QUEUE_DEFAULT;<account>&ACCOUNT;</account>"> 
 <!ENTITY RSRV_HPSS     "&QUEUE_HPSS;<account>&ACCOUNT;</account>"> 

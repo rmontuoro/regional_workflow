@@ -142,11 +142,15 @@ fcst_model_name=$( get_fcst_model_name ./${EXPT_CONFIG_FN} ) || \
   print_err_msg_exit "\
   Call to function get_fcst_model_name failed."
 
-get_fcst_model_info ${mdl_extrns_cfg_fp} "${fcst_model_name}" build_opt ccpp_suite
+get_fcst_model_info ${mdl_extrns_cfg_fp} "${fcst_model_name}" \
+  build_opt ccpp_suite require_tasks
 
 mdl_build_opts=( ${build_opt} )
 is_element_of mdl_build_opts "CCPP=Y" && USE_CCPP="TRUE" || USE_CCPP="FALSE"
 [ ! -z "${ccpp_suite}" ] && CCPP_PHYS_SUITE="${ccpp_suite}"
+
+mdl_require_tasks=( ${require_tasks:-none} )
+is_element_of mdl_require_tasks "airquality" && ENABLE_AQ="TRUE" || ENABLE_AQ="FALSE"
 #
 #-----------------------------------------------------------------------
 #
@@ -620,6 +624,21 @@ if [ ${#ALL_CDATES[@]} -gt 1 ]; then
   RUN_TASK_ADD_AQM_ICS="TRUE"
 else
   RUN_TASK_ADD_AQM_ICS="FALSE"
+fi
+#
+#-----------------------------------------------------------------------
+#
+# Disable air quality tasks if the forecast model does not require them.
+# Air quality workflow tasks are enabled by default.
+#
+#-----------------------------------------------------------------------
+#
+if [ "${ENABLE_AQ}" == "FALSE" ]; then
+  RUN_TASK_ADD_AQM_ICS="FALSE"
+  RUN_TASK_ADD_AQM_LBCS="FALSE"
+  RUN_TASK_RUN_NEXUS="FALSE"
+  print_info_msg "
+Disabling air quality tasks since forecast model does not require them."
 fi
 #
 #-----------------------------------------------------------------------
