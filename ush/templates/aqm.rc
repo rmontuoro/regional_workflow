@@ -234,3 +234,61 @@ bio_species::
     LAI_METHS            1.00000  LAI_METHS         1
     LAI_METHW            1.00000  LAI_METHW         1
 ::
+
+#
+#  Fire emissions from GBBEPx
+#
+fire_type: gbbepx
+
+fire_file: <aqm_emis_dir>/gbbepx.nc
+
+fire_frequency: static
+
+fire_plume_rise: sofiev
+
+fire_species::
+    PAL     0.0006     PM25    KG/S
+    PCA     0.0039     PM25    KG/S
+    PCL     0.0415     PM25    KG/S
+    PEC     0.0949     PM25    KG/S
+    PFE     0.0004     PM25    KG/S
+    PK      0.0294     PM25    KG/S
+    PMG     0.0003     PM25    KG/S
+    PMN     0.0000     PM25    KG/S
+    PMOTHR  0.0137     PM25    KG/S
+    PNA     0.0057     PM25    KG/S
+    PNCOM   0.3232     PM25    KG/S
+    PNH4    0.0088     PM25    KG/S
+    PNO3    0.0013     PM25    KG/S
+    POC     0.0013     PM25    KG/S
+    PSI     0.0018     PM25    KG/S
+    PSO4    0.0126     PM25    KG/S
+    PTI     0.0001     PM25    KG/S
+    NO      0.013      CO       KG/S
+    NO2     0.037      CO       KG/S
+    SO2     0.008      CO       KG/S
+    NH3     0.015      CO       KG/S
+    CO      1.000      CO       KG/S
+    ACET    0.001092   CO       G/S
+    ALD2    0.0009828  CO       KG/S
+    ALDX    0.0030368  CO       KG/S
+    BENZ    0.0009612  CO       KG/S
+    CH4     0.0092508  CO       KG/S
+    ETH     0.0022048  CO       KG/S
+    ETHA    0.0011804  CO       KG/S
+    ETHY    0.0005304  CO       KG/S
+    ETOH    3.64e-05   CO       KG/S
+    FORM    0.0043316  CO       KG/S
+    IOLE    0.0004836  CO       KG/S
+    ISOP    0.0001976  CO       KG/S
+    KET     0.0002652  CO       KG/S
+    MEOH    0.0039364  CO       KG/S
+    OLE     0.0034424  CO       KG/S
+    PAR     0.0074776  CO       KG/S
+    PRPA    0.0004888  CO       KG/S
+    TERP    0.0004316  CO       KG/S
+    TOL     0.0013208  CO       KG/S
+    UNR     0.0100516  CO       KG/S
+    XYL     0.0002964  CO       KG/S
+    FRP     1000000    MeanFRP  1
+::
