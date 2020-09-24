@@ -173,6 +173,8 @@ settings="
   'run_task_add_aqm_lbcs': $RUN_TASK_ADD_AQM_LBCS
   'run_task_run_nexus': $RUN_TASK_RUN_NEXUS
   'run_task_run_post': $RUN_TASK_RUN_POST
+  'restart_workflow': $RESTART_WORKFLOW
+  'restart_cycle_dir': $RESTART_CYCLE_DIR
 "
 
 $USHDIR/create_xml.py -q -u "${settings}" -t $TEMPLATE_XML_FP -o $WFLOW_XML_FP || exit 1

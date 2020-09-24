@@ -13,7 +13,6 @@ PREEXISTING_DIR_METHOD="rename"
 
 # Set forecast model
 FCST_MODEL="fv3gfs_aqm"
-#FCST_MODEL="ufs_weather_model_ccpp_gfs_2017_gfdlmp"
 
 PREDEF_GRID_NAME="GSD_HRRR25km"
 GRID_GEN_METHOD="JPgrid"
@@ -21,8 +20,8 @@ QUILTING="TRUE"
 FCST_LEN_HRS="48"
 LBC_UPDATE_INTVL_HRS="6"
 
-DATE_FIRST_CYCL="20200915"
-DATE_LAST_CYCL="20200916"
+DATE_FIRST_CYCL="20200923"
+DATE_LAST_CYCL="20200923"
 CYCL_HRS=( "00" "06" "12" "18" )
 
 EXTRN_MDL_NAME_ICS="FV3GFS"
@@ -32,8 +31,16 @@ RUN_TASK_MAKE_GRID="TRUE"
 RUN_TASK_MAKE_OROG="TRUE"
 RUN_TASK_MAKE_SFC_CLIMO="TRUE"
 
+# Post-processing of meteorological output is enabled by default.
+# Please set the variable below to FALSE to disable it.
+# RUN_TASK_RUN_POST="FALSE"
+
 # Generate air quality ICs and LBCs
+# Set the following variable to TRUE to add air quality LBCs
 RUN_TASK_ADD_AQM_LBCS="TRUE"
+# Air quality ICs are added automatically between cycled runs
+# To disable air quality ICs, set the variable below to FALSE
+# RUN_TASK_ADD_AQM_ICS="FALSE"
 
 # Run ARL NEXUS package to generate anthropogenic emissions
 # for air quality experiments
@@ -45,6 +52,14 @@ RUN_TASK_RUN_NEXUS="TRUE"
 # and emission data directories
 # AQM_CONFIG_DIR="/path/to/aqm/config"
 # AQM_EMIS_DIR="/path/to/emission/data"
+
+# Please set RESTART_WORKFLOW to TRUE if continuing to run
+# from a previous workflow cycle. Default is FALSE.
+# RESTART_WORKFLOW="FALSE"
+# Set full path to restart cycle. The restart cycle date and
+# time must coincide with those from the workflow cycle that
+# is expected to precede the starting cycle.
+# RESTART_CYCLE_DIR=/scratch1/NCEPDEV/nems/Raffaele.Montuoro/dev/firex/dev/dev/expt_dirs/test_update/2020092100
 
 PRINT_ESMF="TRUE"
 

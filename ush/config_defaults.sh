@@ -874,4 +874,5 @@ FNVMXC="global_shdmax.0.144x0.144.grb"
 FNSLPC="global_slope.1x1.grb"
 FNABSC="global_mxsnoalb.uariz.t126.384.190.rg.grb"
 
-
+RESTART_WORKFLOW="FALSE"
+RESTART_CYCLE_DIR=""

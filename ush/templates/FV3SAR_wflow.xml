@@ -31,6 +31,9 @@ The following are variables that are passed to the ex-scripts through
 
 <!ENTITY GLOBAL_VAR_DEFNS_FP "{{ global_var_defns_fp }}">
 <!ENTITY CYCLE_DIR           "{{ cycle_dir }}">
+{%- if restart_workflow %}
+<!ENTITY RESTART_CYCLE_DIR   "{{ restart_cycle_dir }}">
+{%- endif %}
 
 <!--
 Rocoto task names.
@@ -40,6 +43,9 @@ Rocoto task names.
 <!ENTITY MAKE_OROG_TN      "{{ make_orog_tn }}">
 <!ENTITY MAKE_SFC_CLIMO_TN "{{ make_sfc_climo_tn }}">
 {%- if run_task_add_aqm_ics %}
+{%- if restart_workflow %}
+<!ENTITY ADD_AQM_EXTRN_ICS_TN    "{{ add_aqm_ics_tn }}_ext">
+{%- endif %}
 <!ENTITY ADD_AQM_ICS_TN    "{{ add_aqm_ics_tn }}">
 {%- endif %}
 {%- if run_task_add_aqm_lbcs %}
@@ -327,6 +333,39 @@ MODULES_RUN_TASK_FP script.
   </task>
 {% endif %}
 {% if run_task_add_aqm_ics %}
+{%- if restart_workflow %}
+<!--
+************************************************************************
+************************************************************************
+-->
+  <task name="&ADD_AQM_EXTRN_ICS_TN;" cycledefs="at_start" maxtries="3">
+
+    &RSRC_ADD_AQM_ICS;
+    &RSRV_DEFAULT;
+
+    <command>&LOAD_MODULES_RUN_TASK_FP; "&ADD_AQM_ICS_TN;" "&JOBSDIR;/JREGIONAL_ADD_AQM_ICS"</command>
+    <nodes>&PROC_ADD_AQM_ICS;</nodes>
+    <nodesize>&NCORES_PER_NODE;</nodesize>
+    <jobname>&ADD_AQM_ICS_TN;</jobname>
+    <join><cyclestr>&LOGDIR;/&ADD_AQM_EXTRN_ICS_TN;_@Y@m@d@H.log</cyclestr></join>
+
+    <envar><name>GLOBAL_VAR_DEFNS_FP</name><value>&GLOBAL_VAR_DEFNS_FP;</value></envar>
+    <envar><name>PREV_CYCLE_DIR</name><value>&RESTART_CYCLE_DIR;</value></envar>
+    <envar><name>CYCLE_DIR</name><value><cyclestr>&CYCLE_DIR;</cyclestr></value></envar>
+    <envar><name>CDATE</name><value><cyclestr>@Y@m@d@H</cyclestr></value></envar>
+
+    <dependency>
+      <and>
+        <taskdep task="&MAKE_ICS_TN;"/>
+        <or>
+          <datadep age="00:00:00:05">&RESTART_CYCLE_DIR;/RESTART/<cyclestr>@Y@m@d.@H@M@S.fv_tracer.res.tile1.nc</cyclestr></datadep>
+          <datadep age="00:00:00:05">&RESTART_CYCLE_DIR;/RESTART/fv_tracer.res.tile1.nc</datadep>
+        </or>
+      </and>
+    </dependency>
+
+  </task>
+{%- endif %}
 <!--
 ************************************************************************
 ************************************************************************
@@ -343,24 +382,22 @@ MODULES_RUN_TASK_FP script.
     <join><cyclestr>&LOGDIR;/&ADD_AQM_ICS_TN;_@Y@m@d@H.log</cyclestr></join>
 
     <envar><name>GLOBAL_VAR_DEFNS_FP</name><value>&GLOBAL_VAR_DEFNS_FP;</value></envar>
-    <envar><name>CYCLE_DIR</name><value><cyclestr>&CYCLE_DIR;</cyclestr></value></envar>
     <envar><name>PREV_CYCLE_DIR</name><value><cyclestr offset="-{{- cycl_incr -}}">&CYCLE_DIR;</cyclestr></value></envar>
+    <envar><name>CYCLE_DIR</name><value><cyclestr>&CYCLE_DIR;</cyclestr></value></envar>
     <envar><name>CDATE</name><value><cyclestr>@Y@m@d@H</cyclestr></value></envar>
-    <envar><name>PREV_CDATE</name><value><cyclestr offset="-{{- cycl_incr -}}">@Y@m@d@H</cyclestr></value></envar>
-    <envar><name>PDY</name><value><cyclestr>@Y@m@d</cyclestr></value></envar>
 
     <dependency>
       <and>
         <taskdep task="&MAKE_ICS_TN;"/>
         <or>
-          <datadep age="00:00:00:05"><cyclestr offset="-{{- cycl_incr -}}">&CYCLE_DIR;/RESTART/</cyclestr><cyclestr>@Y@m@d.@H@M@S.fv_tracer.res.tile1.nc</cyclestr></datadep>
-          <datadep age="00:00:00:05"><cyclestr offset="-{{- cycl_incr -}}">&CYCLE_DIR;/RESTART/fv_tracer.res.tile1.nc</cyclestr></datadep>
+          <datadep age="00:00:00:05"><cyclestr offset="-{{- cycl_incr -}}">&CYCLE_DIR;</cyclestr>/RESTART/<cyclestr>@Y@m@d.@H@M@S.fv_tracer.res.tile1.nc</cyclestr></datadep>
+          <datadep age="00:00:00:05"><cyclestr offset="-{{- cycl_incr -}}">&CYCLE_DIR;</cyclestr>/RESTART/fv_tracer.res.tile1.nc</datadep>
         </or>
       </and>
     </dependency>
 
   </task>
-{% endif %}
+{%- endif %}
 <!--
 ************************************************************************
 ************************************************************************
@@ -502,7 +539,14 @@ MODULES_RUN_TASK_FP script.
 {%- if run_task_add_aqm_ics %}
         <or>
           <taskdep task="&ADD_AQM_ICS_TN;"/>
+{%- if restart_workflow %}
+          <and>
+            <not><cycleexistdep cycle_offset="-{{- cycl_incr -}}"/></not>
+            <taskdep task="&ADD_AQM_EXTRN_ICS_TN;"/>
+          </and>
+{%- else %}
           <not><cycleexistdep cycle_offset="-{{- cycl_incr -}}"/></not>
+{%- endif %}
         </or>
 {%- endif %}
 {%- if run_task_add_aqm_lbcs %}
