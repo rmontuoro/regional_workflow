@@ -1,0 +1,15 @@
+
+write_groups:            <write_groups>
+write_tasks_per_group:   <write_tasks_per_group>
+num_files:               2
+filename_base:           'dyn''phy'
+output_file:             'netcdf'
+write_nemsioflip:        .false.
+write_fsyncflag:         .false.
+
+output_grid:             <output_grid>  # Coordinate system used by output grid.
+
+nfhout:                  1              # Output frequency in hours after forecast hour "nfhmax_hf"
+nfhmax_hf:               60             # Number of forecast hours until output frequency "nfhout" takes affect
+nfhout_hf:               1              # Output frequency in hours until forecast hour "nfhmax_hf"
+nsout:                   -1             # Output frequency in time steps (positive values override "nfhout" and "nfhout_hf")
