@@ -610,10 +610,13 @@ if [ "$QUILTING" = "TRUE" ]; then
   set_file_param "${model_config_fp}" "write_tasks_per_group" "$WRTCMP_write_tasks_per_group"
 
   set_file_param "${model_config_fp}" "output_grid" "\'$WRTCMP_output_grid\'"
-  set_file_param "${model_config_fp}" "cen_lon" "$WRTCMP_cen_lon"
-  set_file_param "${model_config_fp}" "cen_lat" "$WRTCMP_cen_lat"
-  set_file_param "${model_config_fp}" "lon1" "$WRTCMP_lon_lwr_left"
-  set_file_param "${model_config_fp}" "lat1" "$WRTCMP_lat_lwr_left"
+
+  if [ "${WRTCMP_output_grid}" != "cubed_sphere_grid" ]; then
+    set_file_param "${model_config_fp}" "cen_lon" "$WRTCMP_cen_lon"
+    set_file_param "${model_config_fp}" "cen_lat" "$WRTCMP_cen_lat"
+    set_file_param "${model_config_fp}" "lon1" "$WRTCMP_lon_lwr_left"
+    set_file_param "${model_config_fp}" "lat1" "$WRTCMP_lat_lwr_left"
+  fi
 
   if [ "${WRTCMP_output_grid}" = "rotated_latlon" ]; then
     set_file_param "${model_config_fp}" "lon2" "$WRTCMP_lon_upr_rght"

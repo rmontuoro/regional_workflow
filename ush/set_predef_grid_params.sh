@@ -354,7 +354,7 @@ predefined domain:
     if [ "$QUILTING" = "TRUE" ]; then
       WRTCMP_write_groups="1"
       WRTCMP_write_tasks_per_group="2"
-      WRTCMP_output_grid="lambert_conformal"
+      WRTCMP_output_grid="${WRTCMP_output_grid:-lambert_conformal}"
       WRTCMP_cen_lon="${JPgrid_LON_CTR}"
       WRTCMP_cen_lat="${JPgrid_LAT_CTR}"
       WRTCMP_stdlat1="${JPgrid_LAT_CTR}"

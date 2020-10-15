@@ -20,8 +20,8 @@ QUILTING="TRUE"
 FCST_LEN_HRS="48"
 LBC_UPDATE_INTVL_HRS="6"
 
-DATE_FIRST_CYCL="20200923"
-DATE_LAST_CYCL="20200923"
+DATE_FIRST_CYCL="20201013"
+DATE_LAST_CYCL="20201013"
 CYCL_HRS=( "00" "06" "12" "18" )
 
 EXTRN_MDL_NAME_ICS="FV3GFS"
@@ -67,3 +67,6 @@ LAYOUT_X=10
 LAYOUT_Y=11
 WRTCMP_write_groups=1
 WRTCMP_write_tasks_per_group=10
+
+# Use "cubed_sphere_grid" for output on the dynamical core grid
+# WRTCMP_output_grid="cubed_sphere_grid"
