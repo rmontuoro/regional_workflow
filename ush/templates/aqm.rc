@@ -23,6 +23,7 @@ run_aerosol: true
 mp_tracer_map: gfdl
 
 ctm_aod: true
+ctm_pmdiag: true
 
 #
 #  Input emissions
