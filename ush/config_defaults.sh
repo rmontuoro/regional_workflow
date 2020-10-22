@@ -663,7 +663,7 @@ PRINT_ESMF="FALSE"
 WRTCMP_write_groups="1"
 WRTCMP_write_tasks_per_group="20"
 
-WRTCMP_output_grid="''"
+WRTCMP_output_grid=""
 WRTCMP_cen_lon=""
 WRTCMP_cen_lat=""
 WRTCMP_lon_lwr_left=""
