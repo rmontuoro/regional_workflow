@@ -763,6 +763,19 @@
            "longname",  "LV_PCSOG"
            "units",     "ppmV"
            "profile_type", "fixed", "surface_value=1.e-7" /
+# diagnostic air quality tracers
+ "TRACER", "atmos_mod", "PM25AT"
+           "longname",     "PM2.5 fraction of Aitken mode"
+           "units",        "1"
+       "profile_type", "fixed", "surface_value=0.0" /
+ "TRACER", "atmos_mod", "PM25AC"
+           "longname",     "PM2.5 fraction of accumulation mode"
+           "units",        "1"
+       "profile_type", "fixed", "surface_value=0.0" /
+ "TRACER", "atmos_mod", "PM25CO"
+           "longname",     "PM2.5 fraction of coarse mode"
+           "units",        "1"
+       "profile_type", "fixed", "surface_value=0.0" /
 # non-prognostic cloud amount
  "TRACER", "atmos_mod", "cld_amt"
            "longname",     "cloud amount"
