@@ -66,9 +66,9 @@ anthro_frequency: hourly
 # provided factors (positive for sources, negative for sinks).
 # For instance:
 #      
-#     NO2           MOL/S       0.750       no2_source_1
-#     NO2           MOL/S       0.250       no2_source_2
-#     NO2           MOL/S      -0.050       no2_sink_1
+#   NO2           0.75000 no2_source_1   kg/s
+#   NO2           0.25000 no2_source_2   kg/s
+#   NO2          -0.05000 no2_sink_1     kg/s
 #
 anthro_species::
     ACET          1.00000  ACET          KG/S
