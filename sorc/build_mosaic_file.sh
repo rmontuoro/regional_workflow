@@ -80,6 +80,11 @@ fi
 #
 if [ $platform = "cray" ]; then
   alias make="make HDF5_HOME=${HDF5} NETCDF_HOME=${NETCDF} NC_BLKSZ=64K SITE=${platform}"
+elif [ $platform = "wcoss_dell_p3" ]; then
+  alias make="make FC=ifort INCS=-I${NETCDF}/include LIBS=\"-L${NETCDF}/lib -lnetcdf -lnetcdff -L${HDF5}/lib -lhdf5_hl -lhdf5\""
+  if [ ! -f $srcDir/Makefile_${platform} ]; then
+    cp $srcDir/Makefile_odin $srcDir/Makefile_${platform}
+  fi
 else
   alias make="make HDF5_HOME=${HDF5_DIR} NETCDF_HOME=${NETCDF_DIR} NC_BLKSZ=64K SITE=${platform}"
 fi
