@@ -1,0 +1,8 @@
+#%Module#####################################################
+## global_equiv_resol build module for WCOSS-Dell P3
+#############################################################
+module purge
+
+module load ips/19.0.5.281
+module load NetCDF/4.5.0
+module load HDF5-serial/1.10.1
