@@ -1,2 +1,9 @@
 module load lsf/10.1
 module load python/3.6.3
+
+module use /usrx/local/nceplibs/dev/NCEPLIBS/modulefiles
+module load wgrib2/2.0.8
+export PATH="`dirname ${WGRIB2_EXE}`:${PATH}"
+
+module load ips/19.0.5.281
+set +u && source activate regional_workflow
