@@ -119,13 +119,8 @@ case $MACHINE in
   ;;
 
 "WCOSS_DELL_P3")
-#
-  module load prod_envir/1.1.0
-  module list
 
-  export NODES=1
-  export APRUN="mpirun -n 1"
-  export KMP_AFFINITY=disabled
+  export APRUN="time"
 
   ulimit -s unlimited
   ulimit -a
