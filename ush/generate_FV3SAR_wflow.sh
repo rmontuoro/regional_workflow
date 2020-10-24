@@ -255,8 +255,11 @@ case $MACHINE in
   ;;
 
 *)
-  ln_vrfy -fs "${EMC_POST_DIR}/modulefiles/post/v8.0.0-$machine" \
-            "${RUN_POST_TN}"
+  cp_vrfy "${EMC_POST_DIR}/modulefiles/post/v8.0.0-$machine" \
+          "${RUN_POST_TN}"
+  if [ -f "${RUN_POST_TN}.local" ]; then
+    cat "${RUN_POST_TN}.local" >> "${RUN_POST_TN}"
+  fi
   ;;
 
 esac
