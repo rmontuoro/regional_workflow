@@ -76,7 +76,7 @@ print_input_args valid_args
 #
 case $MACHINE in
 #
-"WCOSS_C" | "WCOSS" | "WCOSS_DELL_P3")
+"WCOSS_C" | "WCOSS")
 #
 
   if [ "${USE_CCPP}" = "TRUE" ]; then
@@ -103,6 +103,12 @@ case $MACHINE in
   
   fi
 
+  ulimit -s unlimited
+  ulimit -a
+  APRUN="mpirun -l -np ${PE_MEMBER01}"
+  ;;
+#
+"WCOSS_DELL_P3")
   ulimit -s unlimited
   ulimit -a
   APRUN="mpirun -l -np ${PE_MEMBER01}"
