@@ -118,6 +118,7 @@ Task compute resources
 {%- if run_task_run_post %}
 <!ENTITY RSRC_POST                "<walltime>00:30:00</walltime>">
 {%- endif %}
+<!ENTITY RSRC_HPSS                "{{ queue_hpss_rsrc }}">
 
 <!ENTITY RSRV_DEFAULT  "&QUEUE_DEFAULT;<account>&ACCOUNT;</account>"> 
 <!ENTITY RSRV_HPSS     "&QUEUE_HPSS;<account>&ACCOUNT;</account>"> 
@@ -267,6 +268,7 @@ MODULES_RUN_TASK_FP script.
 
     &RSRC_GET_EXTRN_MDL_FILES;
     &RSRV_HPSS;
+    &RSRC_HPSS;
 
     <command>&LOAD_MODULES_RUN_TASK_FP; "&GET_EXTRN_ICS_TN;" "&JOBSDIR;/JREGIONAL_GET_EXTRN_FILES"</command>
     <nodes>&PROC_GET_EXTRN_MDL_FILES;</nodes>
@@ -290,6 +292,7 @@ MODULES_RUN_TASK_FP script.
 
     &RSRC_GET_EXTRN_MDL_FILES;
     &RSRV_HPSS;
+    &RSRC_HPSS;
 
     <command>&LOAD_MODULES_RUN_TASK_FP; "&GET_EXTRN_LBCS_TN;" "&JOBSDIR;/JREGIONAL_GET_EXTRN_FILES"</command>
     <nodes>&PROC_GET_EXTRN_MDL_FILES;</nodes>
@@ -314,6 +317,7 @@ MODULES_RUN_TASK_FP script.
 
     &RSRC_ADD_AQM_LBCS;
     &RSRV_HPSS;
+    &RSRC_HPSS;
 
     <command>&LOAD_MODULES_RUN_TASK_FP; "&ADD_AQM_LBCS_TN;" "&JOBSDIR;/JREGIONAL_ADD_AQM_LBCS"</command>
     <nodes>&PROC_ADD_AQM_LBCS;</nodes>

@@ -396,6 +396,7 @@ Then remove this message and rerun."
   QUEUE_DEFAULT=${QUEUE_DEFAULT:-"dev"}
   QUEUE_HPSS=${QUEUE_HPSS:-"dev_transfer"}
   QUEUE_HPSS_TAG="queue"       # lsf does not support "partition" tag
+  QUEUE_HPSS_RSRC="<memory>2000M</memory><native>-R affinity[core]</native>"
   QUEUE_FCST=${QUEUE_FCST:-"dev"}
   ;;
 #
