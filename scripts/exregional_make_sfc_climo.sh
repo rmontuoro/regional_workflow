@@ -139,15 +139,8 @@ case $MACHINE in
   ;;
 
 "WCOSS_DELL_P3")
-  export NODES=2
-  export ntasks=48
-  export ptile=24
-  export threads=1
-  export MP_LABELIO=yes
-  export OMP_NUM_THREADS=$threads
-
   APRUN="mpirun"
-;;
+  ;;
 
 "HERA")
   APRUN="srun"
