@@ -60,6 +60,9 @@ RUN_TASK_RUN_NEXUS="TRUE"
 # time must coincide with those from the workflow cycle that
 # is expected to precede the starting cycle.
 # RESTART_CYCLE_DIR=/scratch1/NCEPDEV/nems/Raffaele.Montuoro/dev/firex/dev/dev/expt_dirs/test_update/2020092100
+# Set custom restart interval to an integer number of hours
+# via RESTART_INTERVAL as shown below:
+# RESTART_INTERVAL=01
 
 PRINT_ESMF="TRUE"
 
