@@ -241,6 +241,11 @@ bio_species::
 #
 fire_type: gbbepx
 
+#
+#  Note: the regional workflow will replace the <YYYYMMDD>, <MMDD>, <DD>
+#  keywords with the current cycle's date, month/day, and day, respectively.
+#
+#fire_file: /gpfs/dell2/emc/modeling/noscrub/Raffaele.Montuoro/data/gbbepx/GBBEPx_C401GRID.emissions_v003_2019<MMDD>.nc
 fire_file: NEXUS/NEXUS_Expt.nc
 
 fire_frequency: static
