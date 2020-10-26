@@ -43,7 +43,7 @@ function set_file_param() {
 #
 #-----------------------------------------------------------------------
 #
-  if [ "$#" -ne 3 ]; then
+  if [ "$#" -lt 3 -o "$#" -gt 4 ]; then
 
     print_err_msg_exit "
 Incorrect number of arguments specified:
@@ -53,7 +53,7 @@ Incorrect number of arguments specified:
 
 Usage:
 
-  ${func_name}  file_full_path  param  value
+  ${func_name}  file_full_path  param  value [--optional]
 
 where the arguments are defined as follows:
 
@@ -79,6 +79,15 @@ where the arguments are defined as follows:
   local file_full_path="$1"
   local param="$2"
   local value="$3"
+  local optional=0
+
+  if [ $# -eq 4 ]; then
+    case "$4" in
+      --optional)
+        optional=1
+        ;;
+    esac
+  fi
 #
 #-----------------------------------------------------------------------
 #
@@ -168,7 +177,9 @@ specified for this file:
 #
 #-----------------------------------------------------------------------
 #
-  grep -q -E "${regex_search}" "${file_full_path}"
+  if [ $optional -eq 0 ]; then
+    grep -q -E "${regex_search}" "${file_full_path}"
+  fi
 
   if [ $? -eq 0 ]; then
     sed -i -r -e "s%${regex_search}%${regex_replace}%" "${file_full_path}"
