@@ -134,7 +134,7 @@ settings="
   'queue_default_tag': $QUEUE_DEFAULT_TAG
   'queue_hpss': $QUEUE_HPSS
   'queue_hpss_tag': $QUEUE_HPSS_TAG
-  'queue_hpss_rsrc': !!str $QUEUE_HPSS_RSRC
+  'queue_hpss_rsrc': !!str ${QUEUE_HPSS_RSRC:-}
   'queue_fcst': $QUEUE_FCST
   'queue_fcst_tag': $QUEUE_FCST_TAG
   'proc_run_fcst': $PROC_RUN_FCST
