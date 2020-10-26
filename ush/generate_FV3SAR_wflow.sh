@@ -222,8 +222,11 @@ cd_vrfy "${MODULES_DIR}/tasks/$machine"
 #            "${MAKE_OROG_TN}"
 ln_vrfy -fs "${MAKE_OROG_TN}.hardcoded" "${MAKE_OROG_TN}"
 
-ln_vrfy -fs "${UFS_UTILS_DIR}/modulefiles/modulefile.sfc_climo_gen.$machine" \
-            "${MAKE_SFC_CLIMO_TN}"
+cp_vrfy "${UFS_UTILS_DIR}/modulefiles/modulefile.sfc_climo_gen.$machine" \
+        "${MAKE_SFC_CLIMO_TN}"
+if [ -f "${MAKE_SFC_CLIMO_TN}.local" ]; then
+  cat "${MAKE_SFC_CLIMO_TN}.local" >> "${MAKE_SFC_CLIMO_TN}"
+fi
 
 #ln_vrfy -fs "${CHGRES_DIR}/modulefiles/chgres_cube.$machine" \
 #            "${MAKE_ICS_TN}"
