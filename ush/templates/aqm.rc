@@ -245,56 +245,55 @@ fire_type: gbbepx
 #  Note: the regional workflow will replace the <YYYYMMDD>, <MMDD>, <DD>
 #  keywords with the current cycle's date, month/day, and day, respectively.
 #
-#fire_file: /gpfs/dell2/emc/modeling/noscrub/Raffaele.Montuoro/data/gbbepx/GBBEPx_C401GRID.emissions_v003_2019<MMDD>.nc
-fire_file: NEXUS/NEXUS_Expt.nc
+fire_file: /gpfs/dell2/emc/retros/noscrub/Barry.Baker/emissions/GSCE/GBBEPx.in.C401/Reprocessed/2019<MMDD>/GBBEPx_C401GRID.emissions_v003_2019<MMDD>.nc
 
 fire_frequency: static
 
 fire_plume_rise: sofiev
 
 fire_species::
-    PAL     0.0006     GBBEPx_F_PM       KG/S
-    PCA     0.0039     GBBEPx_F_PM       KG/S
-    PCL     0.0415     GBBEPx_F_PM       KG/S
-    PEC     0.0949     GBBEPx_F_PM       KG/S
-    PFE     0.0004     GBBEPx_F_PM       KG/S
-    PK      0.0294     GBBEPx_F_PM       KG/S
-    PMG     0.0003     GBBEPx_F_PM       KG/S
-    PMN     0.0000     GBBEPx_F_PM       KG/S
-    PMOTHR  0.0137     GBBEPx_F_PM       KG/S
-    PNA     0.0057     GBBEPx_F_PM       KG/S
-    PNCOM   0.3232     GBBEPx_F_PM       KG/S
-    PNH4    0.0088     GBBEPx_F_PM       KG/S
-    PNO3    0.0013     GBBEPx_F_PM       KG/S
-    POC     0.0013     GBBEPx_F_PM       KG/S
-    PSI     0.0018     GBBEPx_F_PM       KG/S
-    PSO4    0.0126     GBBEPx_F_PM       KG/S
-    PTI     0.0001     GBBEPx_F_PM       KG/S
-    NO      0.013      GBBEPx_F_CO       KG/S
-    NO2     0.037      GBBEPx_F_CO       KG/S
-    SO2     0.008      GBBEPx_F_CO       KG/S
-    NH3     0.015      GBBEPx_F_CO       KG/S
-    CO      1.000      GBBEPx_F_CO       KG/S
-    ACET    0.001092   GBBEPx_F_CO       KG/S
-    ALD2    0.0009828  GBBEPx_F_CO       KG/S
-    ALDX    0.0030368  GBBEPx_F_CO       KG/S
-    BENZ    0.0009612  GBBEPx_F_CO       KG/S
-    CH4     0.0092508  GBBEPx_F_CO       KG/S
-    ETH     0.0022048  GBBEPx_F_CO       KG/S
-    ETHA    0.0011804  GBBEPx_F_CO       KG/S
-    ETHY    0.0005304  GBBEPx_F_CO       KG/S
-    ETOH    3.64e-05   GBBEPx_F_CO       KG/S
-    FORM    0.0043316  GBBEPx_F_CO       KG/S
-    IOLE    0.0004836  GBBEPx_F_CO       KG/S
-    ISOP    0.0001976  GBBEPx_F_CO       KG/S
-    KET     0.0002652  GBBEPx_F_CO       KG/S
-    MEOH    0.0039364  GBBEPx_F_CO       KG/S
-    OLE     0.0034424  GBBEPx_F_CO       KG/S
-    PAR     0.0074776  GBBEPx_F_CO       KG/S
-    PRPA    0.0004888  GBBEPx_F_CO       KG/S
-    TERP    0.0004316  GBBEPx_F_CO       KG/S
-    TOL     0.0013208  GBBEPx_F_CO       KG/S
-    UNR     0.0100516  GBBEPx_F_CO       KG/S
-    XYL     0.0002964  GBBEPx_F_CO       KG/S
-    FRP     1000000    GBBEPx_F_FRP      1
+    PAL     0.0006     PM2.5       KG/M2/S
+    PCA     0.0039     PM2.5       KG/M2/S
+    PCL     0.0415     PM2.5       KG/M2/S
+    PEC     0.0949     PM2.5       KG/M2/S
+    PFE     0.0004     PM2.5       KG/M2/S
+    PK      0.0294     PM2.5       KG/M2/S
+    PMG     0.0003     PM2.5       KG/M2/S
+    PMN     0.0000     PM2.5       KG/M2/S
+    PMOTHR  0.0137     PM2.5       KG/M2/S
+    PNA     0.0057     PM2.5       KG/M2/S
+    PNCOM   0.3232     PM2.5       KG/M2/S
+    PNH4    0.0088     PM2.5       KG/M2/S
+    PNO3    0.0013     PM2.5       KG/M2/S
+    POC     0.0013     PM2.5       KG/M2/S
+    PSI     0.0018     PM2.5       KG/M2/S
+    PSO4    0.0126     PM2.5       KG/M2/S
+    PTI     0.0001     PM2.5       KG/M2/S
+    NO      0.013      CO          KG/M2/S
+    NO2     0.037      CO          KG/M2/S
+    SO2     0.008      CO          KG/M2/S
+    NH3     0.015      CO          KG/M2/S
+    CO      1.000      CO          KG/M2/S
+    ACET    0.001092   CO          KG/M2/S
+    ALD2    0.0009828  CO          KG/M2/S
+    ALDX    0.0030368  CO          KG/M2/S
+    BENZ    0.0009612  CO          KG/M2/S
+    CH4     0.0092508  CO          KG/M2/S
+    ETH     0.0022048  CO          KG/M2/S
+    ETHA    0.0011804  CO          KG/M2/S
+    ETHY    0.0005304  CO          KG/M2/S
+    ETOH    3.64e-05   CO          KG/M2/S
+    FORM    0.0043316  CO          KG/M2/S
+    IOLE    0.0004836  CO          KG/M2/S
+    ISOP    0.0001976  CO          KG/M2/S
+    KET     0.0002652  CO          KG/M2/S
+    MEOH    0.0039364  CO          KG/M2/S
+    OLE     0.0034424  CO          KG/M2/S
+    PAR     0.0074776  CO          KG/M2/S
+    PRPA    0.0004888  CO          KG/M2/S
+    TERP    0.0004316  CO          KG/M2/S
+    TOL     0.0013208  CO          KG/M2/S
+    UNR     0.0100516  CO          KG/M2/S
+    XYL     0.0002964  CO          KG/M2/S
+    FRP     1000000    MeanFRP     1
 ::
