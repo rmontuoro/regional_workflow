@@ -43,7 +43,7 @@ function set_file_param() {
 #
 #-----------------------------------------------------------------------
 #
-  if [ "$#" -lt 3 -o "$#" -gt 4 ]; then
+  if [ "$#" -lt 3 -o "$#" -gt 5 ]; then
 
     print_err_msg_exit "
 Incorrect number of arguments specified:
@@ -80,14 +80,22 @@ where the arguments are defined as follows:
   local param="$2"
   local value="$3"
   local optional=0
+  local global=0
 
-  if [ $# -eq 4 ]; then
-    case "$4" in
+  shift 3
+
+  while [ $# -gt 0 ]; do
+    case "$1" in
       --optional)
         optional=1
+        shift
+        ;;
+      --global)
+        global=1
+        shift
         ;;
     esac
-  fi
+  done
 #
 #-----------------------------------------------------------------------
 #
@@ -137,7 +145,7 @@ Setting parameter \"$param\" in file \"$file\" to \"$value\" ..."
     regex_replace="\1 $value"
     ;;
 #
-  "${DIAG_TABLE_FN}" | "${AQM_RC_FN}")
+  "${DIAG_TABLE_FN}")
     regex_search="(.*)(<$param>)(.*)"
     regex_replace="\1$value\3"
     ;;
@@ -145,6 +153,11 @@ Setting parameter \"$param\" in file \"$file\" to \"$value\" ..."
   "${MODEL_CONFIG_FN}")
     regex_search="^(\s*$param:\s*)(.*)"
     regex_replace="\1$value"
+    ;;
+#
+  "${AQM_RC_FN}")
+    regex_search="(<$param>)"
+    regex_replace="$value"
     ;;
 #
   "${GLOBAL_VAR_DEFNS_FN}")
@@ -181,8 +194,13 @@ specified for this file:
     grep -q -E "${regex_search}" "${file_full_path}"
   fi
 
+  sed_script="s%${regex_search}%${regex_replace}%"
+  if [ $global -eq 0 ]; then
+    sed_script="${sed_script}g"
+  fi
+
   if [ $? -eq 0 ]; then
-    sed -i -r -e "s%${regex_search}%${regex_replace}%" "${file_full_path}"
+    sed -i -r -e "${sed_script}" "${file_full_path}"
   else
     print_err_msg_exit "\
 Specified file (file_full_path) does not contain the searched-for regu-

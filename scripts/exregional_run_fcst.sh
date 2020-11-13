@@ -583,9 +583,9 @@ Setting parameters in file:
   set_file_param "${aqm_rc_fp}" "init_concentrations" "${init_concentrations}"
   set_file_param "${aqm_rc_fp}" "aqm_config_dir" "${AQM_CONFIG_DIR%/}"
   set_file_param "${aqm_rc_fp}" "aqm_emis_dir" "${AQM_EMIS_DIR%/}"
-  set_file_param "${aqm_rc_fp}" "YYYYMMDD" "${YYYYMMDD}" --optional
-  set_file_param "${aqm_rc_fp}" "MMDD" "${MM}${DD}" --optional
-  set_file_param "${aqm_rc_fp}" "DD" "${DD}" --optional
+  set_file_param "${aqm_rc_fp}" "YYYYMMDD" "${YYYYMMDD}" --optional --global
+  set_file_param "${aqm_rc_fp}" "MMDD" "${MM}${DD}" --optional --global
+  set_file_param "${aqm_rc_fp}" "DD" "${DD}" --optional --global
 fi
 
 print_info_msg "$VERBOSE" "
