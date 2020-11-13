@@ -195,7 +195,7 @@ specified for this file:
   fi
 
   sed_script="s%${regex_search}%${regex_replace}%"
-  if [ $global -eq 0 ]; then
+  if [ $global -eq 1 ]; then
     sed_script="${sed_script}g"
   fi
 
