@@ -28,7 +28,7 @@ ctm_pmdiag: true
 #
 #  Input emissions
 #
-emission_sources: anthro bio
+emission_sources: anthro bio fire
 
 #
 #  Anthropogenic
