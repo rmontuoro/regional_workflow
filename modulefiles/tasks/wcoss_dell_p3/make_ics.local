@@ -1,9 +1,12 @@
 module load lsf/10.1
 module load python/3.6.3
-
-module use /usrx/local/nceplibs/dev/NCEPLIBS/modulefiles
-module load wgrib2/2.0.8
-export PATH="`dirname ${WGRIB2_EXE}`:${PATH}"
-
 module load ips/19.0.5.281
 set +u && source activate regional_workflow
+
+module use /usrx/local/nceplibs/dev/hpc-stack/test/hpc-stack/modulefiles/stack
+
+module load hpc/1.0.0-beta1
+module load hpc-ips/18.0.1.163
+module load hpc-impi/18.0.1
+
+module load wgrib2/2.0.8
