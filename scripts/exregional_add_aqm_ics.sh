@@ -159,7 +159,6 @@ print_info_msg "
 
 cp_vrfy ${gfs_ic_file} ${wrk_ic_file}
 
-# exclude_vars="Time,cld_amt,graupel,ice_wat,liq_wat,o3mr,rainwat,snowwat,sphum"
 exclude_vars="Time,graupel,ice_wat,liq_wat,o3mr,rainwat,snowwat,sphum"
 ncwa -a Time -C -x -v "${exclude_vars}" -O ${fv_tracer_file} tmp1.nc
 
@@ -172,11 +171,9 @@ ncrename -d xaxis_1,lon -v xaxis_1,lon \
 
 ncks --mk_rec_dmn lev -O -o tmp1.nc tmp2.nc
 
-ncks -d lev,0,0 tmp1.nc tmp1_top.nc
+ncks -d lev,0,0 tmp1.nc tmp1_ptop.nc
 
 ${ncap_cmd} -s 'lev+=1' tmp1.nc tmp1_pfull.nc
-
-ncdiff -O -o tmp1_ptop.nc tmp1_top.nc tmp1_top.nc
 
 ncrcat -O -o tmp1.nc tmp1_ptop.nc tmp1_pfull.nc
 
@@ -186,7 +183,7 @@ ncks -A -C -x -v lon,lat,lev tmp2.nc ${wrk_ic_file}
 
 mv_vrfy ${wrk_ic_file} ${gfs_ic_file}
 
-rm_vrfy tmp1.nc tmp1_top.nc tmp1_ptop.nc tmp1_pfull.nc tmp2.nc
+rm_vrfy tmp1.nc tmp1_ptop.nc tmp1_pfull.nc tmp2.nc
 #
 #-----------------------------------------------------------------------
 #
