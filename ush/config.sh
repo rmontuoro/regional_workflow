@@ -61,7 +61,7 @@ RUN_TASK_RUN_NEXUS="TRUE"
 # AQM_LBCS_DIR="/path/to/boundary/conditions/files"
 # AQM_LBCS_FILES="bndy_file_name_<MM>.ext"
 
-# Please set RESTART_WORKFLOW to TRUE if continuing to run
+# Please set RESTART_WORKFLOW to TRUE or YES if continuing to run
 # from a previous workflow cycle. Default is FALSE.
 # RESTART_WORKFLOW="FALSE"
 # Set full path to restart cycle. The restart cycle date and

@@ -727,6 +727,24 @@ fi
 #
 #-----------------------------------------------------------------------
 #
+# Make sure that RESTART_WORKFLOW is set to a valid value.
+#
+#-----------------------------------------------------------------------
+#
+check_var_valid_value \
+  "RESTART_WORKFLOW" "valid_vals_RESTART_WORKFLOW"
+RESTART_WORKFLOW=${RESTART_WORKFLOW^^}
+if [ "${RESTART_WORKFLOW}" = "TRUE" ] || \
+   [ "${RESTART_WORKFLOW}" = "YES" ]; then
+  RESTART_WORKFLOW="TRUE"
+elif [ "${RESTART_WORKFLOW}" = "FALSE" ] || \
+     [ "${RESTART_WORKFLOW}" = "NO" ]; then
+  RESTART_WORKFLOW="FALSE"
+fi
+#
+#
+#-----------------------------------------------------------------------
+#
 # Set various directories.
 #
 # HOMErrfs:
