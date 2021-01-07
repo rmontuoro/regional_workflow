@@ -84,7 +84,6 @@ process_args valid_args "$@"
 #
 #-----------------------------------------------------------------------
 #
-cyc="00" #"${PDY:8:2}"
 yyyymmdd="${PDY:0:8}"
 mm=$(date -d "$yyyymmdd" +"%m")
 
@@ -99,7 +98,7 @@ if [ -f ${FULL_CHEMICAL_BOUNDARY_FILE} ]; then
 else
     CHEM_BOUNDARY_CONDITION_FILE=LBCS/${CHEM_BOUNDARY_CONDITION_FILE}
     print_info_msg "
-Fetching chemical lateral boundary condition filesfrom HPSS:
+Fetching chemical lateral boundary condition files from HPSS:
   AQM_ARCHIVE = ${AQM_ARCHIVE}
   CHEM_BOUNDARY_CONDITION_FILE = ${CHEM_BOUNDARY_CONDITION_FILE}
   "
