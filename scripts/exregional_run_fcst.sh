@@ -543,30 +543,38 @@ set_file_param "${diag_table_fp}" "YYYYMMDD" "$YYYYMMDD"
 #
 #-----------------------------------------------------------------------
 #
-# Set atmosphere restart time and air quality cold/warm start
+# Set atmosphere's restart interval
 #
 #-----------------------------------------------------------------------
 #
-if [ "${CYCL_INC}" == "00" ]; then
-  restart_interval="0"
-  init_concentrations="true"
-else
-  restart_interval="${CYCL_INC} -1"
-  if [ "${CDATE}" == "${DATE_FIRST_CYCL}${CYCL_HRS[0]}" ]; then
-    init_concentrations="true"
+if [ -z "${RESTART_INTERVAL}" ]; then
+
+  if [ "${CYCL_INC}" = "00" ]; then
+    restart_interval="0"
   else
-    init_concentrations="false"
+    restart_interval="${CYCL_INC} -1"
   fi
+
+else
+
+  restart_interval="${RESTART_INTERVAL}"
+
 fi
 #
 #-----------------------------------------------------------------------
 #
-# Override restart interval if provided by user
+# Setup air quality model cold/warm start
 #
 #-----------------------------------------------------------------------
 #
-if [ ! -z "${RESTART_INTERVAL}" ]; then
-  restart_interval="${RESTART_INTERVAL}"
+init_concentrations="false"
+
+if [ "${RESTART_WORKFLOW}" = "FALSE" ]; then
+
+  if [ "${CDATE}" = "${DATE_FIRST_CYCL}${CYCL_HRS[0]}" ]; then
+    init_concentrations="true"
+  fi
+
 fi
 #
 #-----------------------------------------------------------------------
