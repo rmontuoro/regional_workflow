@@ -48,10 +48,18 @@ RUN_TASK_RUN_NEXUS="TRUE"
 # Set non-standard path to NEXUS input emission files
 # NEXUS_INPUT_DIR="/path/to/nexus/input/emission/files"
 
-# Set non-standard paths to air quality configuration
-# and emission data directories
+# Set non-standard path to air quality configuration files
 # AQM_CONFIG_DIR="/path/to/aqm/config"
+
+# Set non-standard path to air quality emission directory
 # AQM_EMIS_DIR="/path/to/emission/data"
+
+# Set non-standard path to air quality boundary conditions
+# directory and file names. File names can contain wildcards:
+# <YYYYMMDD>, <YYYY>, <MM>, <DD>, which will be replaced with
+# the current cycle date, year, month, and day, respectively.
+# AQM_LBCS_DIR="/path/to/boundary/conditions/files"
+# AQM_LBCS_FILES="bndy_file_name_<MM>.ext"
 
 # Please set RESTART_WORKFLOW to TRUE if continuing to run
 # from a previous workflow cycle. Default is FALSE.

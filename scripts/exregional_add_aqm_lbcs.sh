@@ -85,13 +85,18 @@ process_args valid_args "$@"
 #-----------------------------------------------------------------------
 #
 yyyymmdd="${PDY:0:8}"
-mm=$(date -d "$yyyymmdd" +"%m")
+yyyy="${PDY:0:4}"
+mm="${PDY:4:2}"
 
-CHEM_BOUNDARY_CONDITION_FILE=gfs_bndy_chem_${mm}.tile7.000.nc
+ext_lbcs_file=${AQM_LBCS_FILES}
+ext_lbcs_file=${ext_lbcs_file//<YYYYMMDD>/${yyyymmdd}}
+ext_lbcs_file=${ext_lbcs_file//<YYYY>/${yyyy}}
+ext_lbcs_file=${ext_lbcs_file//<MM>/${mm}}
+ext_lbcs_file=${ext_lbcs_file//<DD>/${dd}}
 
-boundary_file_loc=/scratch2/NAGAPE/arl/Barry.Baker/boundary_conditions
+CHEM_BOUNDARY_CONDITION_FILE=${ext_lbcs_file}
 
-FULL_CHEMICAL_BOUNDARY_FILE=${boundary_file_loc}/${CHEM_BOUNDARY_CONDITION_FILE}
+FULL_CHEMICAL_BOUNDARY_FILE=${AQM_LBCS_DIR}/${CHEM_BOUNDARY_CONDITION_FILE}
 if [ -f ${FULL_CHEMICAL_BOUNDARY_FILE} ]; then
     #Copy the boundary condition file to the current location
     cp ${FULL_CHEMICAL_BOUNDARY_FILE} .

@@ -841,6 +841,8 @@ RUN_TASK_RUN_POST="TRUE"
 #
 AQM_CONFIG_DIR=""
 AQM_EMIS_DIR=""
+AQM_LBCS_DIR=""
+AQM_LBCS_FILES="gfs_bndy_chem_<MM>.tile7.000.nc"
 #
 #-----------------------------------------------------------------------
 #

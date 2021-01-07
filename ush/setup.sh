@@ -830,6 +830,7 @@ case $MACHINE in
   SFC_CLIMO_INPUT_DIR="/scratch1/NCEPDEV/da/George.Gayno/ufs_utils.git/climo_fields_netcdf"
   AQM_CONFIG_DIR=${AQM_CONFIG_DIR:-"/scratch1/NCEPDEV/nems/Raffaele.Montuoro/dev/aqm/epa/data"}
   AQM_EMIS_DIR=${AQM_EMIS_DIR:-"/scratch1/NCEPDEV/nems/Raffaele.Montuoro/dev/fv3sar/data/bio"}
+  AQM_LBCS_DIR=${AQM_LBCS_DIR:-"/scratch2/NAGAPE/arl/Barry.Baker/boundary_conditions"}
   NEXUS_INPUT_DIR=${NEXUS_INPUT_DIR:-"/scratch2/NAGAPE/arl/Barry.Baker/emissions"}
   ;;
 
