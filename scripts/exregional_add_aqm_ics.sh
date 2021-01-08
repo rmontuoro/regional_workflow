@@ -144,8 +144,11 @@ elif command -v ncap  >/dev/null 2>&1 ; then
   ncap_cmd=ncap
 else
   print_err_msg_exit "\
-  Neither ncap nor ncap2 was found."
+  NCO Arithmetic Processor not found (neither ncap nor ncap2)"
 fi
+
+print_info_msg "
+  Found NCO Arithmetic Processor: ${ncap_cmd}"
 #
 #-----------------------------------------------------------------------
 #
@@ -173,7 +176,7 @@ ncks --mk_rec_dmn lev -O -o tmp1.nc tmp2.nc
 
 ncks -d lev,0,0 tmp1.nc tmp1_ptop.nc
 
-${ncap_cmd} -s 'lev+=1' tmp1.nc tmp1_pfull.nc
+${ncap_cmd} -s 'lev=lev+1' tmp1.nc tmp1_pfull.nc
 
 ncrcat -O -o tmp1.nc tmp1_ptop.nc tmp1_pfull.nc
 
