@@ -1092,7 +1092,7 @@ fi
 #-----------------------------------------------------------------------
 #
 EXPT_BASEDIR="${EXPT_BASEDIR:-${HOMErrfs}/../expt_dirs}"
-EXPT_BASEDIR="$( readlink -f ${EXPT_BASEDIR} )"
+EXPT_BASEDIR="$( readlink -f -m ${EXPT_BASEDIR} )"
 mkdir_vrfy -p "${EXPT_BASEDIR}"
 #
 #-----------------------------------------------------------------------
