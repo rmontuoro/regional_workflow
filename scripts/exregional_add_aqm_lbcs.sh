@@ -87,6 +87,7 @@ process_args valid_args "$@"
 yyyymmdd="${PDY:0:8}"
 yyyy="${PDY:0:4}"
 mm="${PDY:4:2}"
+dd="${PDY:6:2}"
 
 ext_lbcs_file=${AQM_LBCS_FILES}
 ext_lbcs_file=${ext_lbcs_file//<YYYYMMDD>/${yyyymmdd}}
