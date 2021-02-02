@@ -31,6 +31,9 @@ RUN_TASK_MAKE_GRID="TRUE"
 RUN_TASK_MAKE_OROG="TRUE"
 RUN_TASK_MAKE_SFC_CLIMO="TRUE"
 
+# Perform chemical (NO2, PM2.5, AOD) analysis task
+RUN_TASK_CHEM_ANAL="TRUE"
+
 # Post-processing of meteorological output is enabled by default.
 # Please set the variable below to FALSE to disable it.
 # RUN_TASK_RUN_POST="FALSE"
