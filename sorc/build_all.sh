@@ -85,6 +85,14 @@ echo " .... GSI build not currently supported .... "
 #./build_gsi.sh > $logs_dir/build_gsi.log 2>&1
 }
 
+#------------------------------------
+# build JEDI
+#------------------------------------
+$Build_JEDI && {
+echo " .... Building JEDI .... "
+./build_JEDI.sh > $logs_dir/build_JEDI.log 2>&1
+}
+
 echo;echo " .... Build system finished .... "
 echo;echo " .... Installing executables .... "
 

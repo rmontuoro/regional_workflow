@@ -1,5 +1,5 @@
 MACHINE="hera"
-ACCOUNT="gsd-fv3"
+ACCOUNT="da-cpu"
 EXPT_SUBDIR="test_update"
 
 QUEUE_DEFAULT="batch"

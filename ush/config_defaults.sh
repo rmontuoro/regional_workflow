@@ -811,6 +811,9 @@ VERBOSE="TRUE"
 # Flag that determines whether the post processing task is to be run.
 # Set to either "TRUE" or "FALSE" to enable/disable postprocessing.
 #
+# RUN_TASK_CHEM_ANAL:
+# Set to "TRUE" or "FALSE" to enable/disable chemical data assimiation step
+#
 #-----------------------------------------------------------------------
 #
 RUN_TASK_ADD_AQM_ICS=""
@@ -831,6 +834,8 @@ RUN_TASK_RUN_NEXUS="FALSE"
 NEXUS_INPUT_DIR=""
 
 RUN_TASK_RUN_POST="TRUE"
+
+RUN_TASK_CHEM_ANAL="FALSE"
 #
 #-----------------------------------------------------------------------
 #
