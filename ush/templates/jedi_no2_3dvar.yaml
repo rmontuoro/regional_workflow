@@ -1,7 +1,7 @@
 cost function:
   cost type: 3D-Var
   window begin: '%windowbegin%'
-  window length: PT6H
+  window length: PT%windt%H
   analysis variables: [no2]
   geometry:
     nml_file: Data/input.nml
