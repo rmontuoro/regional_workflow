@@ -165,6 +165,7 @@ settings="
   'make_ics_tn': $MAKE_ICS_TN
   'make_lbcs_tn': $MAKE_LBCS_TN
   'run_nexus_tn': $RUN_NEXUS_TN
+  'run_chem_anal': $RUN_CHEM_ANAL
   'run_fcst_tn': $RUN_FCST_TN
   'run_post_tn': $RUN_POST_TN
   'run_task_make_grid': $RUN_TASK_MAKE_GRID

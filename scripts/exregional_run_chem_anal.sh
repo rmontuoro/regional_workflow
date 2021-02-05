@@ -86,24 +86,51 @@ case $MACHINE in
   ulimit -s unlimited
   ulimit -a
   APRUN="srun -n ${PE_MEMBER01}"
+  source $MODULES_DIR/codes/hera/JEDI
   ;;
 esac
 #
 #-----------------------------------------------------------------------
 #
-# Create RESTART subdirectory
+# Create JEDI subdirectory
 #
 #-----------------------------------------------------------------------
 #
 print_info_msg "$VERBOSE" "
-Creating RESTART subdirectory..."
+Creating JEDI subdirectory..."
 
-mkdir_vrfy -p ${CYCLE_DIR}/RESTART
+mkdir_vrfy -p ${CYCLE_DIR}/JEDI/Data
 #
 #-----------------------------------------------------------------------
 #
-# Create links in the INPUT subdirectory of the current cycle's run di-
-# rectory to the grid and (filtered) orography files.
+# Create links to fix files and  executables
+#
+#-----------------------------------------------------------------------
+#
+# executables
+ln_vrfy -sf $EXECDIR/fv3jedi_parameters.x ${CYCLE_DIR}/JEDI/.
+ln_vrfy -sf $EXECDIR/fv3jedi_var.x ${CYCLE_DIR}/JEDI/.
+# FV3-JEDI fix files
+ln_vrfy -sf $JEDI_DIR/build/fv3-jedi/test/Data/fieldsets ${CYCLE_DIR}/JEDI/Data/fieldsets
+ln_vrfy -sf $JEDI_DIR/build/fv3-jedi/test/Data/fv3files ${CYCLE_DIR}/JEDI/Data/fv3files
+# TODO FV3 namelist
+# TODO FV3 input dir (grid info, etc.)
+#
+#-----------------------------------------------------------------------
+#
+# create output directories for the analysis and hofx files
+#
+#-----------------------------------------------------------------------
+#
+mkdir_vrfy -p ${CYCLE_DIR}/JEDI/Data/hofx
+mkdir_vrfy -p ${CYCLE_DIR}/JEDI/Data/analysis
+#
+#-----------------------------------------------------------------------
+#
+# link model forecast file location to bkg/ directory
+#
+#-----------------------------------------------------------------------
+#
 #
 #-----------------------------------------------------------------------
 #

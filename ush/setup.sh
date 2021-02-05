@@ -987,6 +987,25 @@ Please clone the external repository containing the code in this directory,
 build the executable, and then rerun the workflow."
 fi
 #
+# Get the base directory of the JEDI code if required
+#
+external_name="jedi-fv3-bundle"
+JEDI_DIR=$( \
+get_manage_externals_config_property \
+"${mng_extrns_cfg_fn}" "${external_name}" "${property_name}" ) || \
+print_err_msg_exit "\
+Call to function get_manage_externals_config_property failed."
+
+JEDI_DIR="$HOMErrfs/${JEDI_DIR}"
+if [ ! -d "${JEDI_DIR}" ]; then
+  print_err_msg_exit "\
+The base directory in which the JEDI source code should be located
+(JEDI_DIR) does not exist:
+  JEDI_DIR = \"${JEDI_DIR}\"
+Please clone the external repository containing the code in this directory,
+build the executable, and then rerun the workflow."
+fi
+#
 #-----------------------------------------------------------------------
 #
 # Set the names of the various tasks in the rocoto workflow XML.
@@ -1003,6 +1022,7 @@ GET_EXTRN_LBCS_TN="get_extrn_lbcs"
 MAKE_ICS_TN="make_ics"
 MAKE_LBCS_TN="make_lbcs"
 RUN_NEXUS_TN="run_nexus"
+RUN_CHEM_ANAL="run_chem_anal"
 RUN_FCST_TN="run_fcst"
 RUN_POST_TN="run_post"
 #
