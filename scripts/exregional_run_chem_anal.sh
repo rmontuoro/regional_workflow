@@ -131,529 +131,43 @@ mkdir_vrfy -p ${CYCLE_DIR}/JEDI/Data/analysis
 #
 #-----------------------------------------------------------------------
 #
-#
-#-----------------------------------------------------------------------
-#
-print_info_msg "$VERBOSE" "
-Creating links in the INPUT subdirectory of the current cycle's run di-
-rectory to the grid and (filtered) orography files ..."
-
-
-# Create links to fix files in the FIXsar directory.
-
-
-cd_vrfy ${CYCLE_DIR}/INPUT
-
-relative_or_null=""
-if [ "${RUN_TASK_MAKE_GRID}" = "TRUE" ]; then
-  relative_or_null="--relative"
-fi
-
-# Symlink to mosaic file with a completely different name.
-#target="${FIXsar}/${CRES}${DOT_OR_USCORE}mosaic.halo${NH4}.nc"   # Should this point to this halo4 file or a halo3 file???
-target="${FIXsar}/${CRES}${DOT_OR_USCORE}mosaic.halo${NH3}.nc"   # Should this point to this halo4 file or a halo3 file???
-symlink="grid_spec.nc"
-if [ -f "${target}" ]; then
-  ln_vrfy -sf ${relative_or_null} $target $symlink
-else
-  print_err_msg_exit "\
-Cannot create symlink because target does not exist:
-  target = \"$target}\""
-fi
-
-## Symlink to halo-3 grid file with "halo3" stripped from name.
-#target="${FIXsar}/${CRES}${DOT_OR_USCORE}grid.tile${TILE_RGNL}.halo${NH3}.nc"
-#if [ "${RUN_TASK_MAKE_SFC_CLIMO}" = "TRUE" ] && \
-#   [ "${GRID_GEN_METHOD}" = "GFDLgrid" ] && \
-#   [ "${GFDLgrid_USE_GFDLgrid_RES_IN_FILENAMES}" = "FALSE" ]; then
-#  symlink="C${GFDLgrid_RES}${DOT_OR_USCORE}grid.tile${TILE_RGNL}.nc"
-#else
-#  symlink="${CRES}${DOT_OR_USCORE}grid.tile${TILE_RGNL}.nc"
-#fi
-
-# Symlink to halo-3 grid file with "halo3" stripped from name.
-mosaic_fn="grid_spec.nc"
-grid_fn=$( get_charvar_from_netcdf "${mosaic_fn}" "gridfiles" )
-
-target="${FIXsar}/${grid_fn}"
-symlink="${grid_fn}"
-if [ -f "${target}" ]; then
-  ln_vrfy -sf ${relative_or_null} $target $symlink
-else
-  print_err_msg_exit "\
-Cannot create symlink because target does not exist:
-  target = \"$target}\""
-fi
-
-# Symlink to halo-4 grid file with "${CRES}_" stripped from name.
-#
-# If this link is not created, then the code hangs with an error message
-# like this:
-#
-#   check netcdf status=           2
-#  NetCDF error No such file or directory
-# Stopped
-#
-# Note that even though the message says "Stopped", the task still con-
-# sumes core-hours.
-#
-target="${FIXsar}/${CRES}${DOT_OR_USCORE}grid.tile${TILE_RGNL}.halo${NH4}.nc"
-symlink="grid.tile${TILE_RGNL}.halo${NH4}.nc"
-if [ -f "${target}" ]; then
-  ln_vrfy -sf ${relative_or_null} $target $symlink
-else
-  print_err_msg_exit "\
-Cannot create symlink because target does not exist:
-  target = \"$target}\""
-fi
-
-
-
-relative_or_null=""
-if [ "${RUN_TASK_MAKE_OROG}" = "TRUE" ]; then
-  relative_or_null="--relative"
-fi
-
-# Symlink to halo-0 orography file with "${CRES}_" and "halo0" stripped from name.
-target="${FIXsar}/${CRES}${DOT_OR_USCORE}oro_data.tile${TILE_RGNL}.halo${NH0}.nc"
-symlink="oro_data.nc"
-if [ -f "${target}" ]; then
-  ln_vrfy -sf ${relative_or_null} $target $symlink
-else
-  print_err_msg_exit "\
-Cannot create symlink because target does not exist:
-  target = \"$target}\""
-fi
-
-#
-# Symlink to halo-4 orography file with "${CRES}_" stripped from name.
-#
-# If this link is not created, then the code hangs with an error message
-# like this:
-#
-#   check netcdf status=           2
-#  NetCDF error No such file or directory
-# Stopped
-#
-# Note that even though the message says "Stopped", the task still con-
-# sumes core-hours.
-#
-target="${FIXsar}/${CRES}${DOT_OR_USCORE}oro_data.tile${TILE_RGNL}.halo${NH4}.nc"
-symlink="oro_data.tile${TILE_RGNL}.halo${NH4}.nc"
-if [ -f "${target}" ]; then
-  ln_vrfy -sf ${relative_or_null} $target $symlink
-else
-  print_err_msg_exit "\
-Cannot create symlink because target does not exist:
-  target = \"$target}\""
-fi
-
-
-#
-#-----------------------------------------------------------------------
-#
-# The FV3 model looks for the following files in the INPUT subdirectory
-# of the run directory:
-#
-#   gfs_data.nc
-#   sfc_data.nc
-#   gfs_bndy*.nc
-#   gfs_ctrl.nc
-#
-# Some of these files (gfs_ctrl.nc, gfs_bndy*.nc) already exist, but
-# others do not.  Thus, create links with these names to the appropriate
-# files (in this case the initial condition and surface files only).
-#
-#-----------------------------------------------------------------------
-#
-print_info_msg "$VERBOSE" "
-Creating links with names that FV3 looks for in the INPUT subdirectory
-of the current cycle's run directory (CYCLE_DIR)..."
-
-cd_vrfy ${CYCLE_DIR}/INPUT
-#ln_vrfy -sf gfs_data.tile${TILE_RGNL}.halo${NH0}.nc gfs_data.nc
-#ln_vrfy -sf sfc_data.tile${TILE_RGNL}.halo${NH0}.nc sfc_data.nc
-
-relative_or_null=""
-
-target="gfs_data.tile${TILE_RGNL}.halo${NH0}.nc"
-symlink="gfs_data.nc"
-if [ -f "${target}" ]; then
-  ln_vrfy -sf ${relative_or_null} $target $symlink
-else
-  print_err_msg_exit "\
-Cannot create symlink because target does not exist:
-  target = \"$target}\""
-fi
-
-target="sfc_data.tile${TILE_RGNL}.halo${NH0}.nc"
-symlink="sfc_data.nc"
-if [ -f "${target}" ]; then
-  ln_vrfy -sf ${relative_or_null} $target $symlink
-else
-  print_err_msg_exit "\
-Cannot create symlink because target does not exist:
-  target = \"$target}\""
-fi
-#
-#-----------------------------------------------------------------------
-#
-# Create links in the current cycle's run directory to "fix" files in
-# the main experiment directory.
-#
-#-----------------------------------------------------------------------
-#
-cd_vrfy ${CYCLE_DIR}
-
-print_info_msg "$VERBOSE" "
-Creating links in the current cycle's run directory to static (fix)
-files in the FIXam directory..."
-#
-# If running in "nco" mode, FIXam is simply a symlink under the workflow
-# directory that points to the system directory containing the fix
-# files.  The files in this system directory are named as listed in the
-# FIXgsm_FILENAMES array.  Thus, that is the array to use to form the
-# names of the targets of the symlinks, but the names of the symlinks themselves
-# must be as specified in the FIXam_FILENAMES array (because that
-# array contains the file names that FV3 looks for).
-#
-if [ "${RUN_ENVIR}" = "nco" ]; then
-
-  for (( i=0; i<${NUM_FIXam_FILES}; i++ )); do
-# Note: Can link directly to files in FIXgsm without needing a local
-# FIXam directory, i.e. use
-#    ln_vrfy -sf $FIXgsm/${FIXgsm_FILENAMES[$i]} \
-#                ${CYCLE_DIR}/${FIXam_FILENAMES[$i]}
-    ln_vrfy -sf $FIXam/${FIXgsm_FILENAMES[$i]} \
-                ${CYCLE_DIR}/${FIXam_FILENAMES[$i]}
-  done
-#
-# If not running in "nco" mode, FIXam is an actual directory (not a sym-
-# link) in the experiment directory that contains the same files as the
-# system fix directory except that the files have been renamed to the
-# file names that FV3 looks for.  Thus, when creating links to the files
-# in this directory, both the target and symlink names should be the
-# ones specified in the FIXam_FILENAMES array (because that array
-# contains the file names that FV3 looks for).
-#
-else
-
-  for (( i=0; i<${NUM_FIXam_FILES}; i++ )); do
-    ln_vrfy -sf --relative $FIXam/${FIXam_FILENAMES[$i]} ${CYCLE_DIR}
-  done
-
-fi
-#
-#-----------------------------------------------------------------------
-#
-# If running this cycle more than once (e.g. using rocotoboot), remove
-# any time stamp file that may exist from the previous attempt.
-#
-#-----------------------------------------------------------------------
-#
-cd_vrfy ${CYCLE_DIR}
-rm_vrfy -f time_stamp.out
-#
-#-----------------------------------------------------------------------
-#
-# Create links in the current cycle's run directory to cycle-independent
-# model input files in the main experiment directory.
-#
-#-----------------------------------------------------------------------
-#
-print_info_msg "$VERBOSE" "
-Creating links in the current cycle's run directory to cycle-independent
-model input files in the main experiment directory..."
-#
-#-----------------------------------------------------------------------
-#
-# Get forecast model info
-#
-#-----------------------------------------------------------------------
-#
-mdl_extrns_cfg_fp="${CONFDIR}/fcst_model.cfg"
-workflow_cfg_fp="${USHDIR}/config.sh"
-
-fcst_model_name=$( get_fcst_model_name ${workflow_cfg_fp} ) || \
-  print_err_msg_exit "\
-  Call to function get_fcst_model_name failed."
-
-get_fcst_model_info ${mdl_extrns_cfg_fp} "${fcst_model_name}" input_dir link_files copy_files parse_files
-
-# Get full path
-mdl_input_path=$( readlink -f "${input_dir}" )
-
-# If empty, try adding workflow base path
-if [ -z "${mdl_input_path}" ]; then
-  mdl_input_path=$( readlink -f "${HOMErrfs}/${input_dir}" )
-fi
-
-# If still empty bail out
-if [ -z "${mdl_input_path}" ]; then
-  print_err_msg_exit "\
-  Could not retrieve full path to model input files"
-fi
-
-for file in ${link_files} ; do
-  target_fp=${file}
-  for ext in ${fcst_model_name} ${CCPP_PHYS_SUITE} ; do
-    [ ! -z "${ext}" ] && target_fp=${target_fp%.${ext}}
-  done
-  print_info_msg "$VERBOSE" "linking ${mdl_input_path}/${file} ... ${CYCLE_DIR}/${target_fp}"
-  ln_vrfy -sf ${mdl_input_path}/${file} ${CYCLE_DIR}/${target_fp}
-done
-
-#
-#-----------------------------------------------------------------------
-#
-# Copy templates of cycle-dependent model input files from the templates
-# directory to the current cycle's run directory.
-#
-#-----------------------------------------------------------------------
-#
-print_info_msg "$VERBOSE" "
-Copying cycle-dependent model input files from the templates directory
-to the current cycle's run directory..."
-
-for file in ${copy_files} ; do
-  target_fp=${file}
-  for ext in ${fcst_model_name} ${CCPP_PHYS_SUITE} ; do
-    [ ! -z "${ext}" ] && target_fp=${target_fp%.${ext}}
-  done
-  cp_vrfy ${mdl_input_path}/${file} ${CYCLE_DIR}/${target_fp}
-done
-
-print_info_msg "$VERBOSE" "
-Installing model input files to be parsed from the templates directory..."
-
-aqm_rc_fp=
-diag_table_fp=
-model_config_fp=
-for file in ${parse_files} ; do
-  case "${file}" in
-    ${AQM_RC_FN}*)
-      aqm_rc_fp="${CYCLE_DIR}/${AQM_RC_FN}"
-      print_info_msg "$VERBOSE" "
-        Copying the template air quality configuration file to the current
-        cycle's run directory..."
-      cp_vrfy ${mdl_input_path}/${file} ${aqm_rc_fp}
-      ;;
-    ${DIAG_TABLE_FN}*)
-      diag_table_fp="${CYCLE_DIR}/${DIAG_TABLE_FN}"
-      print_info_msg "$VERBOSE" "
-        Copying the template diagnostics table file to the current cycle's run
-        directory..."
-      cp_vrfy ${mdl_input_path}/${file} ${diag_table_fp}
-      ;;
-    ${MODEL_CONFIG_FN}*)
-      model_config_fp="${CYCLE_DIR}/${MODEL_CONFIG_FN}"
-      print_info_msg "$VERBOSE" "
-        Copying the template model configuration file to the current cycle's
-        run directory..."
-      cp_vrfy ${mdl_input_path}/${file} ${model_config_fp}
-      ;;
-    ${FV3_NML_FN%.*}*)
-      # FV3 input namelist file is staged (pre-parsed), so just link to local version
-      ln_vrfy -sf -t ${CYCLE_DIR} ${FV3_NML_FP}
-      ;;
-  esac
-done
-
-[ -z "${diag_table_fp}" ] && print_err_msg_exit "\
-Required diagnostic table file not found in property 'parse_files':
-  diag_table_fp = \"${diag_table_fp}\""
-
-[ -z "${model_config_fp}" ] && print_err_msg_exit "\
-Required model configuration file not found in property 'parse_files':
-  model_config_fp = \"${model_config_fp}\""
-
-# setup CCPP
-if [ "${USE_CCPP}" = "TRUE" ]; then
-
-  ln_vrfy -sf -t ${CYCLE_DIR} ${CCPP_PHYS_SUITE_FP}
-
-  if [ "${CCPP_PHYS_SUITE}" = "FV3_GSD_v0" ] || \
-     [ "${CCPP_PHYS_SUITE}" = "FV3_GSD_SAR_v1" ] || \
-     [ "${CCPP_PHYS_SUITE}" = "FV3_GSD_SAR" ]; then
-    ln_vrfy -sf -t ${CYCLE_DIR} $EXPTDIR/CCN_ACTIVATE.BIN
+rst_dir=${PREV_CYCLE_DIR}/RESTART
+rst_file=fv_tracer.res.tile1.nc
+fv_tracer_file=${rst_dir}/${CDATE:0:8}.${CDATE:8:2}0000.${rst_file}
+print_info_msg "
+  Looking for tracer restart file: \"${fv_tracer_file}\""
+if [ ! -r ${fv_tracer_file} ]; then
+  if [ -r ${rst_dir}/coupler.res ]; then
+    rst_info=( $( tail -n 1 ${rst_dir}/coupler.res ) )
+    rst_date=$( printf "%04d%02d%02d%02d" ${rst_info[@]:0:4} )
+    print_info_msg "
+  Tracer file not found. Checking available restart date:
+    requested date: \"${CDATE}\"
+    available date: \"${rst_date}\""
+    if [ "${rst_date}" == "${CDATE}" ] ; then
+      fv_tracer_file=${rst_dir}/${rst_file}
+      if [ -r ${fv_tracer_file} ]; then
+        print_info_msg "
+  Tracer file found: \"${fv_tracer_file}\""
+      else
+        print_err_msg_exit "\
+  No suitable tracer restart file found."
+      fi
+    fi
   fi
-
-fi
-#
-#-----------------------------------------------------------------------
-#
-# Extract from CDATE the starting year, month, day, and hour of the
-# forecast.  These are needed below for various operations.
-#
-#-----------------------------------------------------------------------
-#
-YYYY=${CDATE:0:4}
-MM=${CDATE:4:2}
-DD=${CDATE:6:2}
-HH=${CDATE:8:2}
-YYYYMMDD=${CDATE:0:8}
-#
-#-----------------------------------------------------------------------
-#
-# Set parameters in the diagnostics table file.
-#
-#-----------------------------------------------------------------------
-#
-print_info_msg "$VERBOSE" "
-Setting parameters in file:
-  diag_table_fp = \"${diag_table_fp}\""
-
-set_file_param "${diag_table_fp}" "CRES" "$CRES"
-set_file_param "${diag_table_fp}" "YYYY" "$YYYY"
-set_file_param "${diag_table_fp}" "MM" "$MM"
-set_file_param "${diag_table_fp}" "DD" "$DD"
-set_file_param "${diag_table_fp}" "HH" "$HH"
-set_file_param "${diag_table_fp}" "YYYYMMDD" "$YYYYMMDD"
-#
-#-----------------------------------------------------------------------
-#
-# Set atmosphere's restart interval
-#
-#-----------------------------------------------------------------------
-#
-if [ -z "${RESTART_INTERVAL}" ]; then
-
-  if [ "${CYCL_INC}" = "00" ]; then
-    restart_interval="0"
-  else
-    restart_interval="${CYCL_INC} -1"
-  fi
-
-else
-
-  restart_interval="${RESTART_INTERVAL}"
-
-fi
-#
-#-----------------------------------------------------------------------
-#
-# Setup air quality model cold/warm start
-#
-#-----------------------------------------------------------------------
-#
-init_concentrations="false"
-
-if [ "${RESTART_WORKFLOW}" = "FALSE" ]; then
-
-  if [ "${CDATE}" = "${DATE_FIRST_CYCL}${CYCL_HRS[0]}" ]; then
-    init_concentrations="true"
-  fi
-
-fi
-#
-#-----------------------------------------------------------------------
-#
-# Set parameters in the model configuration files.
-#
-#-----------------------------------------------------------------------
-#
-if [ ! -z "${aqm_rc_fp}" ]; then
-  print_info_msg "$VERBOSE" "
-Setting parameters in file:
-  aqm_rc_fp = \"${aqm_rc_fp}\""
-
-  set_file_param "${aqm_rc_fp}" "init_concentrations" "${init_concentrations}"
-  set_file_param "${aqm_rc_fp}" "aqm_config_dir" "${AQM_CONFIG_DIR%/}"
-  set_file_param "${aqm_rc_fp}" "aqm_emis_dir" "${AQM_EMIS_DIR%/}"
-  set_file_param "${aqm_rc_fp}" "YYYYMMDD" "${YYYYMMDD}" --optional --global
-  set_file_param "${aqm_rc_fp}" "MMDD" "${MM}${DD}" --optional --global
-  set_file_param "${aqm_rc_fp}" "DD" "${DD}" --optional --global
 fi
 
-print_info_msg "$VERBOSE" "
-Setting parameters in file:
-  model_config_fp = \"${model_config_fp}\""
+ln_vrfy -sf $rst_dir ${CYCLE_DIR}/JEDI/Data/bkg
 
-dot_quilting_dot="."${QUILTING,,}"."
-dot_print_esmf_dot="."${PRINT_ESMF,,}"."
-
-set_file_param "${model_config_fp}" "PE_MEMBER01" "${PE_MEMBER01}"
-set_file_param "${model_config_fp}" "dt_atmos" "${DT_ATMOS}"
-set_file_param "${model_config_fp}" "start_year" "$YYYY"
-set_file_param "${model_config_fp}" "start_month" "$MM"
-set_file_param "${model_config_fp}" "start_day" "$DD"
-set_file_param "${model_config_fp}" "start_hour" "$HH"
-set_file_param "${model_config_fp}" "nhours_fcst" "${FCST_LEN_HRS}"
-set_file_param "${model_config_fp}" "ncores_per_node" "${NCORES_PER_NODE}"
-set_file_param "${model_config_fp}" "restart_interval" "${restart_interval}"
-set_file_param "${model_config_fp}" "quilting" "${dot_quilting_dot}"
-set_file_param "${model_config_fp}" "print_esmf" "${dot_print_esmf_dot}"
 #
 #-----------------------------------------------------------------------
 #
-# If the write component is to be used, then a set of parameters, in-
-# cluding those that define the write component's output grid, need to
-# be specified in the model configuration file (model_config_fp).  This
-# is done by appending a template file (in which some write-component
-# parameters are set to actual values while others are set to placehol-
-# ders) to model_config_fp and then replacing the placeholder values in
-# the (new) model_config_fp file with actual values.  The full path of
-# this template file is specified in the variable WRTCMP_PA RAMS_TEMP-
-# LATE_FP.
-#
+# Run Python script to create YAML
 #-----------------------------------------------------------------------
 #
-if [ "$QUILTING" = "TRUE" ]; then
-
-  cat ${WRTCMP_PARAMS_TMPL_FP} >> ${model_config_fp}
-
-  set_file_param "${model_config_fp}" "write_groups" "$WRTCMP_write_groups"
-  set_file_param "${model_config_fp}" "write_tasks_per_group" "$WRTCMP_write_tasks_per_group"
-
-  set_file_param "${model_config_fp}" "output_grid" "\'$WRTCMP_output_grid\'"
-
-  if [ "${WRTCMP_output_grid}" != "cubed_sphere_grid" ]; then
-    set_file_param "${model_config_fp}" "cen_lon" "$WRTCMP_cen_lon"
-    set_file_param "${model_config_fp}" "cen_lat" "$WRTCMP_cen_lat"
-    set_file_param "${model_config_fp}" "lon1" "$WRTCMP_lon_lwr_left"
-    set_file_param "${model_config_fp}" "lat1" "$WRTCMP_lat_lwr_left"
-  fi
-
-  if [ "${WRTCMP_output_grid}" = "rotated_latlon" ]; then
-    set_file_param "${model_config_fp}" "lon2" "$WRTCMP_lon_upr_rght"
-    set_file_param "${model_config_fp}" "lat2" "$WRTCMP_lat_upr_rght"
-    set_file_param "${model_config_fp}" "dlon" "$WRTCMP_dlon"
-    set_file_param "${model_config_fp}" "dlat" "$WRTCMP_dlat"
-  elif [ "${WRTCMP_output_grid}" = "lambert_conformal" ]; then
-    set_file_param "${model_config_fp}" "stdlat1" "$WRTCMP_stdlat1"
-    set_file_param "${model_config_fp}" "stdlat2" "$WRTCMP_stdlat2"
-    set_file_param "${model_config_fp}" "nx" "$WRTCMP_nx"
-    set_file_param "${model_config_fp}" "ny" "$WRTCMP_ny"
-    set_file_param "${model_config_fp}" "dx" "$WRTCMP_dx"
-    set_file_param "${model_config_fp}" "dy" "$WRTCMP_dy"
-  elif [ "${WRTCMP_output_grid}" = "regional_latlon" ]; then
-    set_file_param "${model_config_fp}" "lon2" "$WRTCMP_lon_upr_rght"
-    set_file_param "${model_config_fp}" "lat2" "$WRTCMP_lat_upr_rght"
-    set_file_param "${model_config_fp}" "dlon" "$WRTCMP_dlon"
-    set_file_param "${model_config_fp}" "dlat" "$WRTCMP_dlat"
-  fi
-
-fi
-#
-#-----------------------------------------------------------------------
-#
-# Copy the FV3SAR executable to the run directory.
-#
-#-----------------------------------------------------------------------
-#
-get_fcst_model_info ${mdl_extrns_cfg_fp} "${fcst_model_name}" exec_path
-FV3SAR_EXEC=${UFS_WTHR_MDL_DIR}/${exec_path}
-
-if [ -f $FV3SAR_EXEC ]; then
-  print_info_msg "$VERBOSE" "
-Copying the FV3SAR executable to the run directory..."
-  cp_vrfy ${FV3SAR_EXEC} ${CYCLE_DIR}/fv3_gfs.x
-else
-  print_err_msg_exit "\
-The FV3SAR executable specified in FV3SAR_EXEC does not exist:
-  FV3SAR_EXEC = \"$FV3SAR_EXEC\"
-Build FV3SAR and rerun."
-fi
+YAMLS='jedi_no2_3dvar.yaml jedi_no2_bump.yaml'
+TEMPLATEDIR=${USHDIR}/templates
+${USHDIR}/gen_JEDI_yaml.py -i $TEMPLATEDIR -o ${CYCLE_DIR}/JEDI/ -c ${CDATE} -y $YAMLS
 #
 #-----------------------------------------------------------------------
 #
@@ -661,23 +175,36 @@ fi
 #
 #-----------------------------------------------------------------------
 #
-export KMP_AFFINITY=scatter
-export OMP_NUM_THREADS=1 #Needs to be 1 for dynamic build of CCPP with GFDL fast physics, was 2 before.
+export OMP_NUM_THREADS=1
 export OMP_STACKSIZE=1024m
 #
 #-----------------------------------------------------------------------
 #
-# Run the FV3SAR model.  Note that we have to launch the forecast from
-# the current cycle's run directory because the FV3 executable will look
-# for input files in the current directory.  Since those files have been
-# staged in the run directory, the current directory must be the run di-
-# rectory (which it already is).
+# Run BUMP first
 #
 #-----------------------------------------------------------------------
 #
-$APRUN ./fv3_gfs.x || print_err_msg_exit "\
-Call to executable to run FV3SAR forecast returned with nonzero exit
+$APRUN ./fv3jedi_parameters.x || print_err_msg_exit "\
+Call to executable to run fv3jedi_parameters.x returned with nonzero exit
 code."
+#
+#-----------------------------------------------------------------------
+#
+# Run JEDI var now
+#
+#-----------------------------------------------------------------------
+#
+$APRUN ./fv3jedi_var.x || print_err_msg_exit "\
+Call to executable to run fv3jedi_var.x returned with nonzero exit
+code."
+#
+#-----------------------------------------------------------------------
+#
+# Use nco tools to take variables in analysis and put in RESTART/
+#
+#-----------------------------------------------------------------------
+#
+echo "TO DO; add nco tools to grab analysis no2 (can it be smart to get all vars?)"
 #
 #-----------------------------------------------------------------------
 #
@@ -687,7 +214,7 @@ code."
 #
 print_info_msg "
 ========================================================================
-FV3 forecast completed successfully!!!
+chemical data assimilation completed successfully!!!
 
 Exiting script:  \"${scrfunc_fn}\"
 In directory:    \"${scrfunc_dir}\"
