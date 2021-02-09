@@ -107,14 +107,119 @@ mkdir_vrfy -p ${CYCLE_DIR}/JEDI/Data
 #
 #-----------------------------------------------------------------------
 #
+print_info_msg "$VERBOSE" "
+Creating links in the JEDI subdirectory of the current cycle's run di-
+rectory to the necessary executables and fix files ..."
 # executables
 ln_vrfy -sf $EXECDIR/fv3jedi_parameters.x ${CYCLE_DIR}/JEDI/.
 ln_vrfy -sf $EXECDIR/fv3jedi_var.x ${CYCLE_DIR}/JEDI/.
 # FV3-JEDI fix files
 ln_vrfy -sf $JEDI_DIR/build/fv3-jedi/test/Data/fieldsets ${CYCLE_DIR}/JEDI/Data/fieldsets
 ln_vrfy -sf $JEDI_DIR/build/fv3-jedi/test/Data/fv3files ${CYCLE_DIR}/JEDI/Data/fv3files
-# TODO FV3 namelist
-# TODO FV3 input dir (grid info, etc.)
+# FV3 namelist
+ln_vrfy -sf $FV3_NML_FP ${CYCLE_DIR}/JEDI/Data/input.nml
+# FV3 input dir (grid info, etc.)
+mkdir_vrfy -p ${CYCLE_DIR}/JEDI/input
+
+print_info_msg "$VERBOSE" "
+Creating links in the JEDI/input subdirectory of the current cycle's run di-
+rectory to the grid and (filtered) orography files ..."
+
+cd_vrfy ${CYCLE_DIR}/JEDI/input
+
+relative_or_null=""
+if [ "${RUN_TASK_MAKE_GRID}" = "TRUE" ]; then
+  relative_or_null="--relative"
+fi
+
+# Symlink to mosaic file with a completely different name.
+target="${FIXsar}/${CRES}${DOT_OR_USCORE}mosaic.halo${NH3}.nc"   # Should this point to this halo4 file or a halo3 file???
+symlink="grid_spec.nc"
+if [ -f "${target}" ]; then
+  ln_vrfy -sf ${relative_or_null} $target $symlink
+else
+  print_err_msg_exit "\
+Cannot create symlink because target does not exist:
+  target = \"$target}\""
+fi
+
+# Symlink to halo-3 grid file with "halo3" stripped from name.
+mosaic_fn="grid_spec.nc"
+grid_fn=$( get_charvar_from_netcdf "${mosaic_fn}" "gridfiles" )
+
+target="${FIXsar}/${grid_fn}"
+symlink="${grid_fn}"
+if [ -f "${target}" ]; then
+  ln_vrfy -sf ${relative_or_null} $target $symlink
+else
+  print_err_msg_exit "\
+Cannot create symlink because target does not exist:
+  target = \"$target}\""
+fi
+
+# Symlink to halo-4 grid file with "${CRES}_" stripped from name.
+#
+# If this link is not created, then the code hangs with an error message
+# like this:
+#
+#   check netcdf status=           2
+#  NetCDF error No such file or directory
+# Stopped
+#
+# Note that even though the message says "Stopped", the task still con-
+# sumes core-hours.
+#
+target="${FIXsar}/${CRES}${DOT_OR_USCORE}grid.tile${TILE_RGNL}.halo${NH4}.nc"
+symlink="grid.tile${TILE_RGNL}.halo${NH4}.nc"
+if [ -f "${target}" ]; then
+  ln_vrfy -sf ${relative_or_null} $target $symlink
+else
+  print_err_msg_exit "\
+Cannot create symlink because target does not exist:
+  target = \"$target}\""
+fi
+
+
+
+relative_or_null=""
+if [ "${RUN_TASK_MAKE_OROG}" = "TRUE" ]; then
+  relative_or_null="--relative"
+fi
+
+# Symlink to halo-0 orography file with "${CRES}_" and "halo0" stripped from name.
+target="${FIXsar}/${CRES}${DOT_OR_USCORE}oro_data.tile${TILE_RGNL}.halo${NH0}.nc"
+symlink="oro_data.nc"
+if [ -f "${target}" ]; then
+  ln_vrfy -sf ${relative_or_null} $target $symlink
+else
+  print_err_msg_exit "\
+Cannot create symlink because target does not exist:
+  target = \"$target}\""
+fi
+
+#
+# Symlink to halo-4 orography file with "${CRES}_" stripped from name.
+#
+# If this link is not created, then the code hangs with an error message
+# like this:
+#
+#   check netcdf status=           2
+#  NetCDF error No such file or directory
+# Stopped
+#
+# Note that even though the message says "Stopped", the task still con-
+# sumes core-hours.
+#
+target="${FIXsar}/${CRES}${DOT_OR_USCORE}oro_data.tile${TILE_RGNL}.halo${NH4}.nc"
+symlink="oro_data.tile${TILE_RGNL}.halo${NH4}.nc"
+if [ -f "${target}" ]; then
+  ln_vrfy -sf ${relative_or_null} $target $symlink
+else
+  print_err_msg_exit "\
+Cannot create symlink because target does not exist:
+  target = \"$target}\""
+fi
+
 #
 #-----------------------------------------------------------------------
 #
@@ -180,6 +285,14 @@ export OMP_STACKSIZE=1024m
 #
 #-----------------------------------------------------------------------
 #
+# change to JEDI working directory
+#
+#-----------------------------------------------------------------------
+#
+cd_vrfy ${CYCLE_DIR}/JEDI/
+#
+#-----------------------------------------------------------------------
+#
 # Run BUMP first
 #
 #-----------------------------------------------------------------------
@@ -197,6 +310,16 @@ code."
 $APRUN ./fv3jedi_var.x || print_err_msg_exit "\
 Call to executable to run fv3jedi_var.x returned with nonzero exit
 code."
+#
+#-----------------------------------------------------------------------
+#
+# Move original RESTART files to .ges suffix
+#
+#-----------------------------------------------------------------------
+#
+print_info_msg "$VERBOSE" "
+Moving original RESTART fv_tracer to fv_tracer.ges"
+mv_vrfy ${fv_tracer_file} ${fv_tracer_file}.ges
 #
 #-----------------------------------------------------------------------
 #
