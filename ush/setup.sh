@@ -850,6 +850,7 @@ case $MACHINE in
   AQM_EMIS_DIR=${AQM_EMIS_DIR:-"/scratch1/NCEPDEV/nems/Raffaele.Montuoro/dev/fv3sar/data/bio"}
   AQM_LBCS_DIR=${AQM_LBCS_DIR:-"/scratch2/NAGAPE/arl/Barry.Baker/boundary_conditions"}
   NEXUS_INPUT_DIR=${NEXUS_INPUT_DIR:-"/scratch2/NAGAPE/arl/Barry.Baker/emissions"}
+  DA_OBS_DIR=${DA_OBS_DIR:-"/scratch1/NCEPDEV/da/Cory.R.Martin/Datasets/Observations/RRFS-CMAQ"}
   ;;
 
 "JET")

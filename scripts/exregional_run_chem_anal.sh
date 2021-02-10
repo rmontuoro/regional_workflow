@@ -267,6 +267,15 @@ ln_vrfy -sf $rst_dir ${CYCLE_DIR}/JEDI/Data/bkg
 #
 #-----------------------------------------------------------------------
 #
+# Link observations to working directory
+#-----------------------------------------------------------------------
+#
+print_info_msg "$VERBOSE" "
+Linking observation directory ${DA_OBS_DIR}/${CDATE} to working directory"
+ln_vrfy -sf ${DA_OBS_DIR}/${CDATE} ${CYCLE_DIR}/JEDI/Data/obs
+#
+#-----------------------------------------------------------------------
+#
 # Run Python script to create YAML
 #-----------------------------------------------------------------------
 #
@@ -327,7 +336,13 @@ mv_vrfy ${fv_tracer_file} ${fv_tracer_file}.ges
 #
 #-----------------------------------------------------------------------
 #
-echo "TO DO; add nco tools to grab analysis no2 (can it be smart to get all vars?)"
+print_info_msg "$VERBOSE" "
+Using ncks to merge analysis fields into RESTART file"
+dimvars="xaxis_1,yaxis_1,zaxis_1,Time"
+anl_data_dir=${CYCLE_DIR}/JEDI/Data/analysis
+fv_tracer_anl=${anl_data_dir}/${CDATE:0:8}.${CDATE:8:2}0000.3dvar_anl.fv_tracer.res.nc
+ncks -A -x -v $dimvars ${fv_tracer_anl} ${fv_tracer_file} || print_err_msg_exit "\
+Call to ncks returned with nonzero exit code."
 #
 #-----------------------------------------------------------------------
 #

@@ -64,6 +64,10 @@ RUN_TASK_RUN_NEXUS="TRUE"
 # AQM_LBCS_DIR="/path/to/boundary/conditions/files"
 # AQM_LBCS_FILES="bndy_file_name_<MM>.ext"
 
+# Set non-standard path to input observations directory
+# note: this would be BUFR for GSI or IODA-formatted files for JEDI
+# DA_OBS_DIR="/path/to/observation/data"
+
 # Please set RESTART_WORKFLOW to TRUE or YES if continuing to run
 # from a previous workflow cycle. Default is FALSE.
 # RESTART_WORKFLOW="FALSE"
