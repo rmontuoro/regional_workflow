@@ -768,6 +768,9 @@ fi
 # EXECDIR:
 # Directory containing various executable files.
 #
+# JEDI_DIR:
+# Directory of JEDI clone and build
+#
 # TEMPLATE_DIR:
 # Directory in which templates of various FV3SAR input files are locat-
 # ed.
@@ -811,6 +814,7 @@ SORCDIR="$HOMErrfs/sorc"
 PARMDIR="$HOMErrfs/parm"
 MODULES_DIR="$HOMErrfs/modulefiles"
 EXECDIR="$HOMErrfs/exec"
+JEDI_DIR="$HOMErrfs/sorc/JEDI"
 FIXrrfs="$HOMErrfs/fix"
 FIXupp="$FIXrrfs/fix_upp"
 FIXgsd="$FIXrrfs/fix_gsd"
@@ -2507,6 +2511,7 @@ UFS_WTHR_MDL_DIR="${UFS_WTHR_MDL_DIR}"
 UFS_UTILS_DIR="${UFS_UTILS_DIR}"
 CHGRES_DIR="${CHGRES_DIR}"
 SFC_CLIMO_INPUT_DIR="${SFC_CLIMO_INPUT_DIR}"
+JEDI_DIR="$JEDI_DIR"
 
 EXPTDIR="$EXPTDIR"
 LOGDIR="$LOGDIR"

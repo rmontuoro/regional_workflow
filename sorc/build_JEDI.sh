@@ -19,7 +19,9 @@ cd build
 moduledir=$(readlink -f ../../../modulefiles/codes/$target)
 if [ "$target" = "hera" ] ; then
   source $moduledir/JEDI
+  module list
   ecbuild -DMPIEXEC_EXECUTABLE=`which srun` -DMPIEXEC_NUMPROC_FLAG="-n" ../
+  make -j8
 elif [ "$target" = "wcoss_dell_p3" ] ; then
   module use $moduledir
   module load JEDI
