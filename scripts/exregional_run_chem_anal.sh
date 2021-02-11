@@ -306,7 +306,7 @@ cd_vrfy ${CYCLE_DIR}/JEDI/
 #
 #-----------------------------------------------------------------------
 #
-$APRUN ./fv3jedi_parameters.x || print_err_msg_exit "\
+$APRUN ./fv3jedi_parameters.x jedi_no2_bump.yaml || print_err_msg_exit "\
 Call to executable to run fv3jedi_parameters.x returned with nonzero exit
 code."
 #
@@ -316,7 +316,7 @@ code."
 #
 #-----------------------------------------------------------------------
 #
-$APRUN ./fv3jedi_var.x || print_err_msg_exit "\
+$APRUN ./fv3jedi_var.x jedi_no2_3dvar.yaml || print_err_msg_exit "\
 Call to executable to run fv3jedi_var.x returned with nonzero exit
 code."
 #
