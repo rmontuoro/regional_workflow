@@ -2131,6 +2131,13 @@ fi
 #
 #-----------------------------------------------------------------------
 #
+# Calculate the number of nodes needed for JEDI analysis
+# for this we are going to use the same input.nml so the
+# number should be layout_x * layout_y
+PE_JEDI=$(( LAYOUT_X*LAYOUT_Y ))
+#
+#-----------------------------------------------------------------------
+#
 # Calculate the number of nodes (NUM_NODES) to request from the job
 # scheduler.  This is just PE_MEMBER01 dividied by the number of cores
 # per node (NCORES_PER_NODE) rounded up to the nearest integer, i.e.

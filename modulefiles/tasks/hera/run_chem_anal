@@ -20,3 +20,5 @@ module load nceplibs-bufr
 
 module use -a /scratch2/NCEPDEV/marineda/Jong.Kim/save/modulefiles/
 module load anaconda/3.15.1
+
+module load nco

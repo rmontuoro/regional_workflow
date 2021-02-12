@@ -79,14 +79,13 @@ case $MACHINE in
 "WCOSS_DELL_P3")
   ulimit -s unlimited
   ulimit -a
-  APRUN="mpirun -l -np ${PE_MEMBER01}"
+  APRUN="mpirun -l -np ${PE_JEDI}"
   ;;
 #
 "HERA")
   ulimit -s unlimited
   ulimit -a
-  APRUN="srun -n ${PE_MEMBER01}"
-  source $MODULES_DIR/codes/hera/JEDI
+  APRUN="srun -n ${PE_JEDI}"
   ;;
 esac
 #
@@ -223,12 +222,13 @@ fi
 #
 #-----------------------------------------------------------------------
 #
-# create output directories for the analysis and hofx files
+# create output directories for the bump, analysis and hofx files
 #
 #-----------------------------------------------------------------------
 #
 mkdir_vrfy -p ${CYCLE_DIR}/JEDI/Data/hofx
 mkdir_vrfy -p ${CYCLE_DIR}/JEDI/Data/analysis
+mkdir_vrfy -p ${CYCLE_DIR}/JEDI/Data/bump
 #
 #-----------------------------------------------------------------------
 #
@@ -268,8 +268,19 @@ ln_vrfy -sf $rst_dir ${CYCLE_DIR}/JEDI/Data/bkg
 #-----------------------------------------------------------------------
 #
 # Link observations to working directory
+# if Observation directory does not exist, we are going to assume
+# the analysis is moot and exit gracefully, but print a message!
 #-----------------------------------------------------------------------
 #
+if [ ! -d "${DA_OBS_DIR}/${CDATE}" ] ; then
+  print_info_msg "!===================================="
+  print_info_msg "! While setting up the JEDI working directory, it was found that"
+  print_info_msg "! ${DA_OBS_DIR}/${CDATE} does not exist. Assuming we will skip analysis step."
+  print_info_msg "! Exiting this task gracefully"
+  print_info_msg "!===================================="
+  rm_vrfy -rf ${CYCLE_DIR}/JEDI/
+  exit 0
+fi
 print_info_msg "$VERBOSE" "
 Linking observation directory ${DA_OBS_DIR}/${CDATE} to working directory"
 ln_vrfy -sf ${DA_OBS_DIR}/${CDATE} ${CYCLE_DIR}/JEDI/Data/obs
