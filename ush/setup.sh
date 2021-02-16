@@ -2760,6 +2760,7 @@ LBC_UPDATE_FCST_HRS=(${LBC_UPDATE_FCST_HRS[@]})
 #
 NCORES_PER_NODE="${NCORES_PER_NODE}"
 PE_MEMBER01="${PE_MEMBER01}"
+PE_JEDI="${PE_JEDI}"
 EOM
 } || print_err_msg_exit "\
 Heredoc (cat) command to append new variable definitions to variable 
