@@ -338,8 +338,8 @@ code."
 #-----------------------------------------------------------------------
 #
 print_info_msg "$VERBOSE" "
-Moving original RESTART fv_tracer to fv_tracer.ges"
-mv_vrfy ${fv_tracer_file} ${fv_tracer_file}.ges
+Copying original RESTART fv_tracer to fv_tracer.ges"
+cp_vrfy ${fv_tracer_file} ${fv_tracer_file}.ges
 #
 #-----------------------------------------------------------------------
 #

@@ -1010,6 +1010,7 @@ The base directory in which the JEDI source code should be located
 Please clone the external repository containing the code in this directory,
 build the executable, and then rerun the workflow."
 fi
+DA_OBS_DIR="${DA_OBS_DIR}"
 #
 #-----------------------------------------------------------------------
 #
