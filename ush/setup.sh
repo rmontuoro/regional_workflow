@@ -838,7 +838,9 @@ case $MACHINE in
   SFC_CLIMO_INPUT_DIR=${SFC_CLIMO_INPUT_DIR:-"/gpfs/dell2/emc/modeling/noscrub/emc.glopara/git/fv3gfs/fix/fix_sfc_climo"}
   AQM_CONFIG_DIR=${AQM_CONFIG_DIR:-"/gpfs/dell2/emc/modeling/noscrub/Jianping.Huang/fv3sar/aqm/epa/data"}
   AQM_EMIS_DIR=${AQM_EMIS_DIR:-"/gpfs/dell2/emc/modeling/noscrub/Jianping.Huang/fv3sar/aqm/bio"}
-  NEXUS_INPUT_DIR=${NEXUS_INPUT_DIR:-"/gpfs/dell2/emc/modeling/noscrub/$USER/emissions"}
+  AQM_LBCS_DIR=${AQM_LBCS_DIR:-"/gpfs/dell2/emc/retros/noscrub/Barry.Baker/emission"}
+  AQM_LBCS_FILES=${AQM_LBCS_FILES:-"gfs_bndy_chem_<MM>.tile7.000.nc"}
+  NEXUS_INPUT_DIR=${NEXUS_INPUT_DIR:-"/gpfs/dell2/emc/retros/noscrub/Barry.Baker/emissions"}
   EXPT_BASEDIR=/gpfs/dell1/ptmp/$USER/expt_dirs
   ;;
 
@@ -852,9 +854,9 @@ case $MACHINE in
   SFC_CLIMO_INPUT_DIR="/scratch1/NCEPDEV/da/George.Gayno/ufs_utils.git/climo_fields_netcdf"
   AQM_CONFIG_DIR=${AQM_CONFIG_DIR:-"/scratch1/NCEPDEV/nems/Raffaele.Montuoro/dev/aqm/epa/data"}
   AQM_EMIS_DIR=${AQM_EMIS_DIR:-"/scratch1/NCEPDEV/nems/Raffaele.Montuoro/dev/fv3sar/data/bio"}
-  AQM_LBCS_DIR=${AQM_LBCS_DIR:-"/scratch2/NAGAPE/arl/Barry.Baker/boundary_conditions"}
-  NEXUS_INPUT_DIR=${NEXUS_INPUT_DIR:-"/scratch2/NAGAPE/arl/Barry.Baker/emissions"}
-  DA_OBS_DIR=${DA_OBS_DIR:-"/scratch1/NCEPDEV/da/Cory.R.Martin/Datasets/Observations/RRFS-CMAQ"}
+  AQM_LBCS_DIR=${AQM_LBCS_DIR:-"/scratch1/NCEPDEV/rstprod/nexus_emissions/LBCS"}
+  AQM_LBCS_FILES=${AQM_LBCS_FILES:-"gfs_bndy_chem_<MM>.tile7.000.nc"}
+  NEXUS_INPUT_DIR=${NEXUS_INPUT_DIR:-"/scratch1/NCEPDEV/rstprod/nexus_emissions"}
   ;;
 
 "JET")
