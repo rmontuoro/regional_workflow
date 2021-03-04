@@ -836,6 +836,7 @@ NEXUS_INPUT_DIR=""
 RUN_TASK_RUN_POST="TRUE"
 
 RUN_TASK_CHEM_ANAL="FALSE"
+DA_OBS_DIR="/scratch1/NCEPDEV/da/Cory.R.Martin/Datasets/Observations/RRFS-CMAQ/"
 #
 #-----------------------------------------------------------------------
 #
