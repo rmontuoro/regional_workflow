@@ -814,6 +814,12 @@ VERBOSE="TRUE"
 # RUN_TASK_CHEM_ANAL:
 # Set to "TRUE" or "FALSE" to enable/disable chemical data assimiation step
 #
+# USE_CHEM_ANAL:
+# Set to "TRUE" or "FALSE" to enable using updated chem analysis restart file
+#
+# DA_OBS_DIR:
+# path to IODA formatted observations for assimilation
+#
 #-----------------------------------------------------------------------
 #
 RUN_TASK_ADD_AQM_ICS=""
@@ -836,6 +842,7 @@ NEXUS_INPUT_DIR=""
 RUN_TASK_RUN_POST="TRUE"
 
 RUN_TASK_CHEM_ANAL="FALSE"
+USE_CHEM_ANAL="TRUE"
 DA_OBS_DIR="/scratch1/NCEPDEV/da/Cory.R.Martin/Datasets/Observations/RRFS-CMAQ/"
 #
 #-----------------------------------------------------------------------

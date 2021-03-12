@@ -176,6 +176,7 @@ settings="
   'run_task_add_aqm_lbcs': $RUN_TASK_ADD_AQM_LBCS
   'run_task_run_nexus': $RUN_TASK_RUN_NEXUS
   'run_task_run_post': $RUN_TASK_RUN_POST
+  'use_chem_anal': $USE_CHEM_ANAL
   'restart_workflow': $RESTART_WORKFLOW
   'restart_cycle_dir': !!str $RESTART_CYCLE_DIR
 "
