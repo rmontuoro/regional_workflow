@@ -1,6 +1,6 @@
 MACHINE="hera"
 ACCOUNT="da-cpu"
-EXPT_SUBDIR="ctrl_newlbcs"
+EXPT_SUBDIR="datest1_newlbcs"
 
 QUEUE_DEFAULT="batch"
 QUEUE_HPSS="service"
@@ -33,7 +33,7 @@ RUN_TASK_MAKE_SFC_CLIMO="TRUE"
 
 # Perform chemical (NO2, PM2.5, AOD) analysis task
 RUN_TASK_CHEM_ANAL="TRUE"
-USE_CHEM_ANAL="FALSE"
+USE_CHEM_ANAL="TRUE"
 
 # Post-processing of meteorological output is enabled by default.
 # Please set the variable below to FALSE to disable it.
