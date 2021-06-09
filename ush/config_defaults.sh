@@ -844,6 +844,18 @@ RUN_TASK_RUN_POST="TRUE"
 RUN_TASK_CHEM_ANAL="FALSE"
 USE_CHEM_ANAL="TRUE"
 DA_OBS_DIR="/scratch1/NCEPDEV/da/Cory.R.Martin/Datasets/Observations/RRFS-CMAQ/"
+
+# GSI analysis for AOD PM2.5
+RUN_TASK_DACYC="FALSE"
+DA_CYCLE_INTERV="6"
+ANALYSIS_CYCLEDEF="00 01 01 01 2100 *"
+FORECAST_CYCLEDEF="00 01 01 01 2100 *"
+
+# path of ensemble members for hybrid GSI,
+# it is 3dvar for now, so set to empty, 
+ENKF_FCST=""
+
+
 #
 #-----------------------------------------------------------------------
 #

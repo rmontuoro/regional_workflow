@@ -857,6 +857,8 @@ case $MACHINE in
   AQM_LBCS_DIR=${AQM_LBCS_DIR:-"/scratch1/NCEPDEV/rstprod/nexus_emissions/LBCS"}
   AQM_LBCS_FILES=${AQM_LBCS_FILES:-"gfs_bndy_chem_<MM>.tile7.000.nc"}
   NEXUS_INPUT_DIR=${NEXUS_INPUT_DIR:-"/scratch1/NCEPDEV/rstprod/nexus_emissions"}
+  FIX_GSI=${FIX_GSI:-"/scratch1/BMC/wrfruc/mhu/rrfs/fix/fix_gsi"}
+  FIX_CRTM=${FIX_CRTM:-"/scratch1/BMC/wrfruc/mhu/rrfs/fix/CRTM_v2.3.0"}
   ;;
 
 "JET")
@@ -1033,6 +1035,8 @@ RUN_NEXUS_TN="run_nexus"
 RUN_CHEM_ANAL="run_chem_anal"
 RUN_FCST_TN="run_fcst"
 RUN_POST_TN="run_post"
+ANAL_GSI_INPUT_TN="anal_gsi_input"
+ANAL_GSI_RESTART_TN="anal_gsi_restart"
 #
 #-----------------------------------------------------------------------
 #
@@ -2528,6 +2532,23 @@ LOGDIR="$LOGDIR"
 GRID_DIR="${GRID_DIR}"
 OROG_DIR="${OROG_DIR}"
 SFC_CLIMO_DIR="${SFC_CLIMO_DIR}"
+
+# for data assimilation, put variables here show them in var_defns.sh
+#FIX_GSI="${FIX_GSI}"
+#FIX_CRTM="${FIX_CRTM}"
+#AIRCRAFT_REJECT="${FIX_GSI}"
+#SFCOBS_USELIST="${FIX_GSI}"
+
+OBSPATH=""
+AODPATH="/scratch1/BMC/wrfruc/hwang/viis/viirsaod2bufr/"
+PMPATH="/scratch2/BMC/wrfruc/hwang/wf1/data/PM/anowpm_hourly"
+AOD_LUTS=1
+
+FIXgsi="${FIXrrfs}/fix_gsi"
+FIXcrtm="${FIXrrfs}/fix_crtm"
+AIRCRAFT_REJECT="${FIXrrfs}/fix_gsi"
+SFCOBS_USELIST="${FIXrrfs}/fix_gsi"
+
 #
 #-----------------------------------------------------------------------
 #

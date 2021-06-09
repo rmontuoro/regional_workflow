@@ -145,6 +145,7 @@ settings="
   'exptdir': $EXPTDIR
   'logdir': $LOGDIR
   'cycle_dir': $CYCLE_DIR
+  'cycle_basedir': $CYCLE_BASEDIR
   'global_var_defns_fp': $GLOBAL_VAR_DEFNS_FP
   'extrn_mdl_name_ics': $EXTRN_MDL_NAME_ICS
   'extrn_mdl_name_lbcs': $EXTRN_MDL_NAME_LBCS
@@ -155,6 +156,8 @@ settings="
   'cycl_freq': !!str ${CYCL_INC/00/24}:00:00
   'cycl_incr': !!str ${CYCL_INC}:00:00
   'fcst_len_hrs': $FCST_LEN_HRS
+  'analysis_cycledef': ${ANALYSIS_CYCLEDEF}
+  'forecast_cycledef': ${FORECAST_CYCLEDEF}
   'make_grid_tn': $MAKE_GRID_TN
   'make_orog_tn': $MAKE_OROG_TN
   'make_sfc_climo_tn': $MAKE_SFC_CLIMO_TN
@@ -166,13 +169,17 @@ settings="
   'make_lbcs_tn': $MAKE_LBCS_TN
   'run_nexus_tn': $RUN_NEXUS_TN
   'run_chem_anal': $RUN_CHEM_ANAL
+  'anal_gsi_input': ${ANAL_GSI_INPUT_TN}
+  'anal_gsi_restart': ${ANAL_GSI_RESTART_TN}
   'run_fcst_tn': $RUN_FCST_TN
   'run_post_tn': $RUN_POST_TN
+
   'run_task_make_grid': $RUN_TASK_MAKE_GRID
   'run_task_make_orog': $RUN_TASK_MAKE_OROG
   'run_task_make_sfc_climo': $RUN_TASK_MAKE_SFC_CLIMO
   'run_task_add_aqm_ics': $RUN_TASK_ADD_AQM_ICS
   'run_task_chem_anal': $RUN_TASK_CHEM_ANAL
+  'run_task_dacyc'   : $RUN_TASK_DACYC
   'run_task_add_aqm_lbcs': $RUN_TASK_ADD_AQM_LBCS
   'run_task_run_nexus': $RUN_TASK_RUN_NEXUS
   'run_task_run_post': $RUN_TASK_RUN_POST

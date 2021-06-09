@@ -80,9 +80,8 @@ echo " .... Building utils .... "
 # build gsi
 #------------------------------------
 $Build_gsi && {
-echo " .... GSI build not currently supported .... "
-#echo " .... Building gsi .... "
-#./build_gsi.sh > $logs_dir/build_gsi.log 2>&1
+echo " .... Building gsi .... "
+./build_gsi.sh > $logs_dir/build_gsi.log 2>&1
 }
 
 #------------------------------------

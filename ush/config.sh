@@ -1,6 +1,6 @@
 MACHINE="hera"
-ACCOUNT="da-cpu"
-EXPT_SUBDIR="datest1_newlbcs"
+ACCOUNT="naqfc"
+EXPT_SUBDIR="test_AOD_PM25"
 
 QUEUE_DEFAULT="batch"
 QUEUE_HPSS="service"
@@ -32,8 +32,17 @@ RUN_TASK_MAKE_OROG="TRUE"
 RUN_TASK_MAKE_SFC_CLIMO="TRUE"
 
 # Perform chemical (NO2, PM2.5, AOD) analysis task
-RUN_TASK_CHEM_ANAL="TRUE"
+# set RUN_TASK_CHEM_ANAL TRUE to generate NO2 tasks 
+RUN_TASK_CHEM_ANAL="FALSE" 
 USE_CHEM_ANAL="TRUE"
+
+
+# set RUN_TASK_DACYC TRUE to generate PM2.5/AOD DA tasks 
+RUN_TASK_DACYC="TRUE"        
+DA_CYCLE_INTERV="6"
+ANALYSIS_CYCLEDEF="00 06,12,18 06-06 08 2019 *"
+FORECAST_CYCLEDEF="00 00,06,12,18 06-06 08 2019 *"
+
 
 # Post-processing of meteorological output is enabled by default.
 # Please set the variable below to FALSE to disable it.
