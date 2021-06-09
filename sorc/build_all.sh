@@ -9,6 +9,17 @@ set -eux
 
 export USE_PREINST_LIBS="true"
 
+# Check for input argument: this should be the "platform" if it exists.
+#
+if [ $# -eq 0 ]; then
+  echo
+  echo "No 'platform' argument supplied"
+  echo "Using directory structure to determine machine settings"
+  platform=''
+else
+  platform=$1
+fi
+
 #------------------------------------
 # END USER DEFINED STUFF
 #------------------------------------
@@ -49,6 +60,17 @@ then
     $Build_nexus && {
 echo " .... Building nexus .... "
 ./build_nexus.sh > $logs_dir/build_nexus.log 2>&1
+}
+fi
+
+#------------------------------------
+# Check and build nacc
+#------------------------------------
+if [ -d "./arl_nacc" ]
+then
+    $Build_nacc && {
+echo " .... Building nacc .... "
+./build_nacc.sh $platform > $logs_dir/build_nacc.log 2>&1
 }
 fi
 
