@@ -2533,7 +2533,8 @@ GRID_DIR="${GRID_DIR}"
 OROG_DIR="${OROG_DIR}"
 SFC_CLIMO_DIR="${SFC_CLIMO_DIR}"
 
-# for data assimilation, put variables here show them in var_defns.sh
+
+# for AOD and PM2.5 assimilation
 #FIX_GSI="${FIX_GSI}"
 #FIX_CRTM="${FIX_CRTM}"
 #AIRCRAFT_REJECT="${FIX_GSI}"
@@ -2544,10 +2545,10 @@ AODPATH="/scratch1/BMC/wrfruc/hwang/viis/viirsaod2bufr/"
 PMPATH="/scratch2/BMC/wrfruc/hwang/wf1/data/PM/anowpm_hourly"
 AOD_LUTS=1
 
-FIXgsi="${FIXrrfs}/fix_gsi"
-FIXcrtm="${FIXrrfs}/fix_crtm"
-AIRCRAFT_REJECT="${FIXrrfs}/fix_gsi"
-SFCOBS_USELIST="${FIXrrfs}/fix_gsi"
+FIXgsi="/scratch2/BMC/wrfruc/rli/WF1/fix/fix_gsi"
+FIXcrtm="/scratch2/BMC/wrfruc/rli/WF1/fix/fix_crtm"
+AIRCRAFT_REJECT="/scratch2/BMC/wrfruc/rli/WF1/fix/fix_gsi"
+SFCOBS_USELIST="/scratch2/BMC/wrfruc/rli/WF1/fix/fix_gsi"
 
 #
 #-----------------------------------------------------------------------

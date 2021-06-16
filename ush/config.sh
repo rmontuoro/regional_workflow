@@ -71,7 +71,7 @@ RUN_TASK_RUN_NEXUS="TRUE"
 # directory and file names. File names can contain wildcards:
 # <YYYYMMDD>, <YYYY>, <MM>, <DD>, which will be replaced with
 # the current cycle date, year, month, and day, respectively.
-# AQM_LBCS_DIR="/path/to/boundary/conditions/files"
+ AQM_LBCS_DIR="/scratch2/BMC/wrfruc/rli/WF1/data/AQM_LBCS"
 # AQM_LBCS_FILES="bndy_file_name_<MM>.ext"
 
 # Set non-standard path to input observations directory
