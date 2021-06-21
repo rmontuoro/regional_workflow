@@ -811,6 +811,15 @@ VERBOSE="TRUE"
 # Flag that determines whether the post processing task is to be run.
 # Set to either "TRUE" or "FALSE" to enable/disable postprocessing.
 #
+# RUN_TASK_CHEM_ANAL:
+# Set to "TRUE" or "FALSE" to enable/disable chemical data assimiation step
+#
+# USE_CHEM_ANAL:
+# Set to "TRUE" or "FALSE" to enable using updated chem analysis restart file
+#
+# DA_OBS_DIR:
+# path to IODA formatted observations for assimilation
+#
 #-----------------------------------------------------------------------
 #
 RUN_TASK_ADD_AQM_ICS=""
@@ -831,6 +840,22 @@ RUN_TASK_RUN_NEXUS="FALSE"
 NEXUS_INPUT_DIR=""
 
 RUN_TASK_RUN_POST="TRUE"
+
+RUN_TASK_CHEM_ANAL="FALSE"
+USE_CHEM_ANAL="TRUE"
+DA_OBS_DIR="/scratch1/NCEPDEV/da/Cory.R.Martin/Datasets/Observations/RRFS-CMAQ/"
+
+# GSI analysis for AOD PM2.5
+RUN_TASK_DACYC="FALSE"
+DA_CYCLE_INTERV="6"
+ANALYSIS_CYCLEDEF="00 01 01 01 2100 *"
+FORECAST_CYCLEDEF="00 01 01 01 2100 *"
+
+# path of ensemble members for hybrid GSI,
+# it is 3dvar for now, so set to empty, 
+ENKF_FCST=""
+
+
 #
 #-----------------------------------------------------------------------
 #

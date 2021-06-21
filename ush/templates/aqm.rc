@@ -245,7 +245,8 @@ fire_type: gbbepx
 #  Note: the regional workflow will replace the <YYYYMMDD>, <MMDD>, <DD>
 #  keywords with the current cycle's date, month/day, and day, respectively.
 #
-fire_file: /gpfs/dell2/emc/retros/noscrub/Barry.Baker/emissions/GSCE/GBBEPx.in.C401/Reprocessed/2019<MMDD>/GBBEPx_C401GRID.emissions_v003_2019<MMDD>.nc
+#fire_file: /gpfs/dell2/emc/retros/noscrub/Barry.Baker/emissions/GSCE/GBBEPx.in.C401/Reprocessed/2019<MMDD>/GBBEPx_C401GRID.emissions_v003_2019<MMDD>.nc
+fire_file: /scratch2/NAGAPE/arl/Barry.Baker/emissions/GSCE/firex/Reprocessed/2019<MMDD>/GBBEPx_C401GRID.emissions_v003_2019<MMDD>.nc
 
 fire_frequency: static
 

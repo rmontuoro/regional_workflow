@@ -768,6 +768,9 @@ fi
 # EXECDIR:
 # Directory containing various executable files.
 #
+# JEDI_DIR:
+# Directory of JEDI clone and build
+#
 # TEMPLATE_DIR:
 # Directory in which templates of various FV3SAR input files are locat-
 # ed.
@@ -811,6 +814,7 @@ SORCDIR="$HOMErrfs/sorc"
 PARMDIR="$HOMErrfs/parm"
 MODULES_DIR="$HOMErrfs/modulefiles"
 EXECDIR="$HOMErrfs/exec"
+JEDI_DIR="$HOMErrfs/sorc/JEDI"
 FIXrrfs="$HOMErrfs/fix"
 FIXupp="$FIXrrfs/fix_upp"
 FIXgsd="$FIXrrfs/fix_gsd"
@@ -853,6 +857,8 @@ case $MACHINE in
   AQM_LBCS_DIR=${AQM_LBCS_DIR:-"/scratch1/NCEPDEV/rstprod/nexus_emissions/LBCS"}
   AQM_LBCS_FILES=${AQM_LBCS_FILES:-"gfs_bndy_chem_<MM>.tile7.000.nc"}
   NEXUS_INPUT_DIR=${NEXUS_INPUT_DIR:-"/scratch1/NCEPDEV/rstprod/nexus_emissions"}
+  FIX_GSI=${FIX_GSI:-"/scratch1/BMC/wrfruc/mhu/rrfs/fix/fix_gsi"}
+  FIX_CRTM=${FIX_CRTM:-"/scratch1/BMC/wrfruc/mhu/rrfs/fix/CRTM_v2.3.0"}
   ;;
 
 "JET")
@@ -990,6 +996,26 @@ Please clone the external repository containing the code in this directory,
 build the executable, and then rerun the workflow."
 fi
 #
+# Get the base directory of the JEDI code if required
+#
+external_name="jedi-fv3-bundle"
+JEDI_DIR=$( \
+get_manage_externals_config_property \
+"${mng_extrns_cfg_fn}" "${external_name}" "${property_name}" ) || \
+print_err_msg_exit "\
+Call to function get_manage_externals_config_property failed."
+
+JEDI_DIR="$HOMErrfs/${JEDI_DIR}"
+if [ ! -d "${JEDI_DIR}" ]; then
+  print_err_msg_exit "\
+The base directory in which the JEDI source code should be located
+(JEDI_DIR) does not exist:
+  JEDI_DIR = \"${JEDI_DIR}\"
+Please clone the external repository containing the code in this directory,
+build the executable, and then rerun the workflow."
+fi
+DA_OBS_DIR="${DA_OBS_DIR}"
+#
 #-----------------------------------------------------------------------
 #
 # Set the names of the various tasks in the rocoto workflow XML.
@@ -1006,8 +1032,11 @@ GET_EXTRN_LBCS_TN="get_extrn_lbcs"
 MAKE_ICS_TN="make_ics"
 MAKE_LBCS_TN="make_lbcs"
 RUN_NEXUS_TN="run_nexus"
+RUN_CHEM_ANAL="run_chem_anal"
 RUN_FCST_TN="run_fcst"
 RUN_POST_TN="run_post"
+ANAL_GSI_INPUT_TN="anal_gsi_input"
+ANAL_GSI_RESTART_TN="anal_gsi_restart"
 #
 #-----------------------------------------------------------------------
 #
@@ -2109,6 +2138,13 @@ fi
 #
 #-----------------------------------------------------------------------
 #
+# Calculate the number of nodes needed for JEDI analysis
+# for this we are going to use the same input.nml so the
+# number should be layout_x * layout_y
+PE_JEDI=$(( LAYOUT_X*LAYOUT_Y ))
+#
+#-----------------------------------------------------------------------
+#
 # Calculate the number of nodes (NUM_NODES) to request from the job
 # scheduler.  This is just PE_MEMBER01 dividied by the number of cores
 # per node (NCORES_PER_NODE) rounded up to the nearest integer, i.e.
@@ -2489,12 +2525,31 @@ UFS_WTHR_MDL_DIR="${UFS_WTHR_MDL_DIR}"
 UFS_UTILS_DIR="${UFS_UTILS_DIR}"
 CHGRES_DIR="${CHGRES_DIR}"
 SFC_CLIMO_INPUT_DIR="${SFC_CLIMO_INPUT_DIR}"
+JEDI_DIR="$JEDI_DIR"
 
 EXPTDIR="$EXPTDIR"
 LOGDIR="$LOGDIR"
 GRID_DIR="${GRID_DIR}"
 OROG_DIR="${OROG_DIR}"
 SFC_CLIMO_DIR="${SFC_CLIMO_DIR}"
+
+
+# for AOD and PM2.5 assimilation
+#FIX_GSI="${FIX_GSI}"
+#FIX_CRTM="${FIX_CRTM}"
+#AIRCRAFT_REJECT="${FIX_GSI}"
+#SFCOBS_USELIST="${FIX_GSI}"
+
+OBSPATH=""
+AODPATH="/scratch1/BMC/wrfruc/hwang/viis/viirsaod2bufr/"
+PMPATH="/scratch2/BMC/wrfruc/hwang/wf1/data/PM/anowpm_hourly"
+AOD_LUTS=1
+
+FIXgsi="/scratch2/BMC/wrfruc/rli/WF1/fix/fix_gsi"
+FIXcrtm="/scratch2/BMC/wrfruc/rli/WF1/fix/fix_crtm"
+AIRCRAFT_REJECT="/scratch2/BMC/wrfruc/rli/WF1/fix/fix_gsi"
+SFCOBS_USELIST="/scratch2/BMC/wrfruc/rli/WF1/fix/fix_gsi"
+
 #
 #-----------------------------------------------------------------------
 #
@@ -2730,6 +2785,7 @@ LBC_UPDATE_FCST_HRS=(${LBC_UPDATE_FCST_HRS[@]})
 #
 NCORES_PER_NODE="${NCORES_PER_NODE}"
 PE_MEMBER01="${PE_MEMBER01}"
+PE_JEDI="${PE_JEDI}"
 EOM
 } || print_err_msg_exit "\
 Heredoc (cat) command to append new variable definitions to variable 
