@@ -1,6 +1,6 @@
 # Regional workflow
 
-This is the community\_chemical branch of the regional\_workflow used to run the stand-alone regional (SAR) version of FV3 for Wild Fire project.
+This is the community\_develop branch of the regional\_workflow used to run the stand-alone regional (SAR) version of FV3.
 
 ## Check out and build the regional workflow:
 
